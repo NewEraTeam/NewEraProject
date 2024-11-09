@@ -33,7 +33,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0'); /* Use a direct online image URL */
+            background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0');
             background-size: cover;
             background-position: center;
             filter: blur(8px);
@@ -112,7 +112,8 @@
             <button type="submit" class="login-btn">Login</button>
         </form>
 
-        <form action="{{ route('search.page') }}" method="GET">
+        <!-- Redirect to Register Page -->
+        <form action="{{ route('register.page') }}" method="GET">
             <button type="submit" class="signup-btn">New User Signup</button>
         </form>
     </div>

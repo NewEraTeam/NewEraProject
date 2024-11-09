@@ -1,24 +1,25 @@
 <?php
 
-use App\Http\Controllers\UserDataController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-// Display the login page
-Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
+Route::get('/', function () {
+    return view('login'); // Load the login page by default
+})->name('login.page');
 
-// Handle login submission (this will not check for a database in this example)
-Route::post('/login', [UserDataController::class, 'login'])->name('login.submit');
+Route::get('/register', function () {
+    return view('register'); // Load the register page
+})->name('register.page');
 
-// Display the signup form (second page)
-Route::get('/signup', [UserDataController::class, 'showForm'])->name('signup.page');
+Route::post('/login', [UserController::class, 'login'])->name('login.submit');
 
-// Handle form submission (sign up)
-Route::post('/submit', [UserDataController::class, 'store'])->name('form.submit');
+Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register.page');
+Route::post('/register', [UserController::class, 'register'])->name('register.submit');
+Route::get('/login', [UserController::class, 'showLoginForm'])->name('login.page');
+Route::post('/login', [UserController::class, 'login'])->name('login.submit');
+Route::get('/register', function () {
+    return view('register');
+})->name('register.page');
 
-// Display the search page
-Route::get('/search', [UserDataController::class, 'showSearch'])->name('search.page');
-
-// Handle search request
-Route::post('/search', [UserDataController::class, 'search'])->name('search.result');
 
 
