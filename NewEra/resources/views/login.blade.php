@@ -33,7 +33,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0');
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyYwz565mvoGTdviUr9mhH2oh2XLEzi4pRyg&s');
             background-size: cover;
             background-position: center;
             filter: blur(8px);
@@ -42,8 +42,10 @@
 
         /* Title styling */
         .title {
-            color: black;
+            color: white;
+            text-shadow: 2px 2px black;
             font-size: 2rem;
+            font-family: Verdana;
             font-weight: bold;
             text-align: center;
             margin-bottom: 2rem;
