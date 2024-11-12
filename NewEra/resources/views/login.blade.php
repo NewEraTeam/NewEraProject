@@ -94,6 +94,12 @@
             color: white;
             margin-top: 0.5rem;
         }
+
+        small {
+            display: block;
+            color: red;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -107,10 +113,24 @@
     <div class="login-container">
         <h2>Login</h2>
 
+        <!-- Login Form -->
         <form action="{{ route('login.submit') }}" method="POST">
             @csrf
-            <input type="text" name="username" placeholder="Username" required><br>
-            <input type="password" name="password" placeholder="Password" required><br>
+            <input type="text" name="username" placeholder="Username" required>
+            @error('username')
+                <small>{{ $message }}</small>
+            @enderror
+            <br>
+
+            <input type="password" name="password" placeholder="Password" required>
+            @error('password')
+                <small>{{ $message }}</small>
+            @enderror
+            @if ($errors->has('login'))
+                <small>{{ $errors->first('login') }}</small>
+            @endif
+            <br>
+
             <button type="submit" class="login-btn">Login</button>
         </form>
 

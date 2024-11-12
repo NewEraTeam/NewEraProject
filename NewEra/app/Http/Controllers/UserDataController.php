@@ -4,16 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Models\UserData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserDataController extends Controller
 {
-    // Display the form page
+    public function showLogin()
+    {
+        return view('login');
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        // Fetch the user by username
+        $user = UserData::where('username', $request->username)->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
+            // Login the user using session
+            Auth::login($user);
+
+            // Redirect to the main page after login
+            return redirect()->route('MainPage.page');  // Ensure this route exists in routes/web.php
+        }
+
+        // If login fails, redirect back with error message
+        return back()->withErrors(['login' => 'Invalid username or password.']);
+    }
+
     public function showForm()
     {
         return view('form');
     }
 
-    // Store user data in MongoDB
     public function store(Request $request)
     {
         $request->validate([
@@ -29,13 +56,11 @@ class UserDataController extends Controller
         return redirect()->route('form.page')->with('success', 'User data saved successfully!');
     }
 
-    // Display the search page
     public function showSearch()
     {
         return view('search');
     }
 
-    // Search for user by name
     public function search(Request $request)
     {
         $request->validate([
@@ -46,21 +71,4 @@ class UserDataController extends Controller
 
         return view('search', compact('users'));
     }
-
-    public function showLogin()
-{
-    return view('login');
-}
-
-// Placeholder for login logic (not fully implemented here)
-public function login(Request $request)
-{
-    $request->validate([
-        'username' => 'required|string',
-        'password' => 'required|string'
-    ]);
-
-    // Here you can add authentication logic
-    return redirect()->route('search.page'); // Redirecting to search as a placeholder
-}
 }
