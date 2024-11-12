@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use MongoDB\Laravel\Eloquent\Model as Eloquent; // Import the new MongoDB model
 
 class UserData extends Eloquent
 {
