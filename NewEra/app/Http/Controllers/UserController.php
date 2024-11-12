@@ -49,7 +49,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:user_data,email', //email from register or login 
         ]);
 
-        return view('MainPage');
+        return view('MainPageModule.MainPage');
     }
 
 }

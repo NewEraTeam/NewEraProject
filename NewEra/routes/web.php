@@ -16,7 +16,7 @@ Route::post('/register', [UserController::class, 'register'])->name('register.su
 
 //Route to Main Page
 Route::get('/MainPageModule', function () {
-    return view('MainPage'); //Load Main Page
+    return view('MainPageModule.MainPage');
 })->name('MainPage.page');
 
 Route::post('/login', [UserController::class, 'login'])->name('login.submit');
