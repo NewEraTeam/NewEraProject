@@ -24,7 +24,7 @@ Route::get('/mainpage', [MainPageController::class, 'index'])->name('mainpage');
 
 // Route to Main Page (once logged in)
 Route::get('/MainPageModule', function () {
-    return view('MainPage');
+    return view('MainPageModule.MainPage');
 })->name('MainPage.page');
 
 // Redirect button from login page to register page (New User Signup)
