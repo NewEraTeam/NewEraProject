@@ -1,32 +1,33 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserDataController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainPageController;
 
-Route::get('/', function () {
-    return view('login'); // Load the login page by default
-})->name('login.page');
+// Default route to load the login page
+Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
 
-Route::get('/register', function () {
-    return view('register'); // Load the register page
-})->name('register.page');
+// Show login page
+Route::get('/login', [UserDataController::class, 'showLogin'])->name('login.page');
 
-//Handle registration form submission
+// Handle login form submission
+Route::post('/login', [UserDataController::class, 'login'])->name('login.submit');
+
+// Show register page
+Route::get('/register', [UserDataController::class, 'showForm'])->name('register.page');
+
+// Handle registration form submission
 Route::post('/register', [UserController::class, 'register'])->name('register.submit');
 
-//Route to Main Page
+Route::get('/mainpage', [MainPageController::class, 'index'])->name('mainpage');
+
+// Route to Main Page (once logged in)
 Route::get('/MainPageModule', function () {
-    return view('MainPage'); //Load Main Page
+    return view('MainPage');
 })->name('MainPage.page');
 
-Route::post('/login', [UserController::class, 'login'])->name('login.submit');
-
-Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register.page');
-Route::get('/login', [UserController::class, 'showLoginForm'])->name('login.page');
-Route::post('/login', [UserController::class, 'login'])->name('login.submit');
+// Redirect button from login page to register page (New User Signup)
 Route::get('/register', function () {
-    return view('register');
+    return view('register'); // Load register.blade.php
 })->name('register.page');
-
-
-
