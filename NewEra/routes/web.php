@@ -4,6 +4,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDataController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainPageController;
+use App\Http\Controllers\BadmintonController;
+use App\Http\Controllers\SwimmingController;
+use App\Http\Controllers\StadiumController;
+use App\Http\Controllers\GymController;
 
 // Default route to load the login page
 Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
@@ -31,3 +35,29 @@ Route::get('/MainPageModule', function () {
 Route::get('/register', function () {
     return view('register'); // Load register.blade.php
 })->name('register.page');
+
+
+// Facility Pages
+Route::get('/facility/badminton', function () {
+    return view('badminton'); // Ensure this view exists
+})->name('facility.badminton');
+
+Route::get('/facility/badminton', [BadmintonController::class, 'index'])->name('badminton');
+
+Route::get('/facility/swimming', function () {
+    return view('swimming'); // Ensure this view exists
+})->name('facility.swimming');
+
+Route::get('/facility/swimming', [SwimmingController::class, 'index'])->name('swimming');
+
+Route::get('/facility/stadium', function () {
+    return view('stadium'); // Ensure this view exists
+})->name('facility.stadium');
+
+Route::get('/facility/stadium', [StadiumController::class, 'index'])->name('stadium');
+
+Route::get('/facility/gym', function () {
+    return view('gym'); // Ensure this view exists
+})->name('facility.gym');
+
+Route::get('/facility/gym', [GymController::class, 'index'])->name('gym');
