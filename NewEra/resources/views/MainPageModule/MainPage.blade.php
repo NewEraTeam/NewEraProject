@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,
- initial-scale=1.0">
-    <title>UTM Facilities</title>
-    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Hall</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Material Symbols Outlined -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
-
-=======
 <body class="min-h-screen text-gray-800 bg-gray-100">
 
         <!-- Navbar Section -->
@@ -52,7 +51,7 @@
                             <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Profile</a>
                             <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Booking History</a>
                             <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">About</a>
-                            <a href="login" class="block px-4 py-2 text-sm font-semibold text-gray-700 border-t border-gray-200 hover:bg-gray-200" >Log Out</a>
+                            <a href="login" class="block px-4 py-2 text-sm font-semibold text-gray-700 border-t border-gray-200 hover:bg-gray-200">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -217,6 +216,5 @@
         </div>
     </footer>
 
->>>>>>> Stashed changes
 </body>
 </html>
