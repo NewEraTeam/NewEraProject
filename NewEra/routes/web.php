@@ -8,6 +8,7 @@ use App\Http\Controllers\BadmintonController;
 use App\Http\Controllers\SwimmingController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\GymController;
+use App\Http\Controllers\CustomerBookingController;
 
 // Default route to load the login page
 Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
@@ -61,3 +62,9 @@ Route::get('/facility/gym', function () {
 })->name('facility.gym');
 
 Route::get('/facility/gym', [GymController::class, 'index'])->name('gym');
+
+//Customer Pages 
+
+// Customer Booking Page
+Route::get('/customer-booking', [CustomerBookingController::class, 'index'])->name('customer.booking');
+
