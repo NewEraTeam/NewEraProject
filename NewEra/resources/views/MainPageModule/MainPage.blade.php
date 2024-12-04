@@ -50,13 +50,8 @@
                         <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-gray-100 rounded-lg shadow-lg border border-gray-200 z-10">
                             <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Profile</a>
                             <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Booking History</a>
-<<<<<<< Updated upstream
-                            <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">About</a>
-                            <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200 border-t border-gray-200">Log Out</a>
-=======
                             <a href="{{ route('about-us') }}" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">About</a>
                             <a href="login" class="block px-4 py-2 text-sm font-semibold text-gray-700 border-t border-gray-200 hover:bg-gray-200">Log Out</a>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -68,11 +63,7 @@
         <script src="{{ asset('js/languageDropdown.js') }}"></script>
 
     <!-- Hero Section -->
-<<<<<<< Updated upstream
-    <header class="relative bg-cover bg-center h-96 mx-auto" style="background-image: url('https://shorturl.at/iSKRY');">
-=======
     <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('UTM Gate View.jpg');">
->>>>>>> Stashed changes
         <div class="absolute inset-0 bg-black opacity-40"></div>
         <div class="relative container mx-auto h-full flex flex-col justify-center items-center text-center text-white">
             <h1 class="text-4xl font-bold mb-4">Get Active, Book Your Place Now</h1>
@@ -86,13 +77,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
             
             <!-- Facility Card 1 -->
-<<<<<<< Updated upstream
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 p-4">
-                <img src="https://shorturl.at/KZ5v4" alt="UTM Sports Hall" class="w-full h-60 object-cover rounded-lg mb-4 mx-auto">
-=======
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="UTM Sports Hall Badminton.jpg" alt="UTM Sports Hall" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
->>>>>>> Stashed changes
                 <p class="text-sm font-semibold text-gray-500">BADMINTON</p>
                 <h3 class="text-lg font-bold mb-2">Sports Hall</h3>
                 <p class="text-sm text-gray-500 mb-4">UTM JB</p>
@@ -110,13 +96,8 @@
             </div>
     
             <!-- Facility Card 2 -->
-<<<<<<< Updated upstream
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 p-4">
-                <img src="https://shorturl.at/PNk2g" alt="Swimming Pool UTM" class="w-full h-60 object-cover rounded-lg mb-4 mx-auto">
-=======
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="UTM Swimming Pool.jpg" alt="Swimming Pool UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
->>>>>>> Stashed changes
                 <p class="text-sm font-semibold text-gray-500">SWIMMING</p>
                 <h3 class="text-lg font-bold mb-2">Swimming Pool</h3>
                 <p class="text-sm text-gray-500 mb-4">UTM JB</p>
@@ -134,13 +115,8 @@
             </div>
     
             <!-- Facility Card 3 -->
-<<<<<<< Updated upstream
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 p-4">
-                <img src="https://shashinki.com/blog/wp-content/uploads/2016/12/wp-image-1335549841jpg.jpg" alt="Stadium Azman Hashim UTM" class="w-full h-60 object-cover rounded-lg mb-4 mx-auto">
-=======
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="UTM Stadium.jpg" alt="Stadium Azman Hashim UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
->>>>>>> Stashed changes
                 <p class="text-sm font-semibold text-gray-500">TRACK & FIELD</p>
                 <h3 class="text-lg font-bold mb-2">Field</h3>
                 <p class="text-sm text-gray-500 mb-4">UTM JB</p>
@@ -158,13 +134,8 @@
             </div>
     
             <!-- Facility Card 4 -->
-<<<<<<< Updated upstream
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 p-4">
-                <img src="https://shorturl.at/hZt24" alt="UTM Gym" class="w-full h-60 object-cover rounded-lg mb-4 mx-auto">
-=======
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="UTM Gym.jpg" alt="UTM Gym" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
->>>>>>> Stashed changes
                 <p class="text-sm font-semibold text-gray-500">GYM</p>
                 <h3 class="text-lg font-bold mb-2">Gymnasium</h3>
                 <p class="text-sm text-gray-500 mb-4">UTM JB</p>
