@@ -4,6 +4,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDataController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainPageController;
+use App\Http\Controllers\BadmintonController;
+use App\Http\Controllers\SwimmingController;
+use App\Http\Controllers\StadiumController;
+use App\Http\Controllers\GymController;
+use App\Http\Controllers\CustomerBookingController;
 
 // Default route to load the login page
 Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
@@ -31,8 +36,7 @@ Route::get('/MainPageModule', function () {
 Route::get('/register', function () {
     return view('register'); // Load register.blade.php
 })->name('register.page');
-<<<<<<< Updated upstream
-=======
+
 
 
 // Facility Pages
@@ -65,8 +69,8 @@ Route::get('/facility/gym', [GymController::class, 'index'])->name('gym');
 // Customer Booking Page
 Route::get('/customer-booking', [CustomerBookingController::class, 'index'])->name('customer.booking');
 
+
 // About us Page
 Route::get('/about-us', function () {
     return view('AboutUsModule.AboutUs'); // Correct path to the view file
 })->name('about-us');
->>>>>>> Stashed changes
