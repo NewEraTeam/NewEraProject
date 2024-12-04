@@ -37,8 +37,10 @@ Route::get('/facility/swimming', [SwimmingController::class, 'index'])->name('sw
 Route::get('/facility/stadium', [StadiumController::class, 'index'])->name('stadium');
 Route::get('/facility/gym', [GymController::class, 'index'])->name('gym');
 
-// Customer booking page
-Route::get('/customer-booking', [CustomerBookingController::class, 'index'])->name('customer.booking');
+// Customer booking history page
+Route::get('/customer-booking', function(){
+    return view('CustomerBookingModule.CustomerBooking'); // Corrected path for the customer-booking
+})->name('customer-booking');
 
 // About Us page
 Route::get('/about-us', function () {
