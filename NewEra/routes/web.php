@@ -31,3 +31,42 @@ Route::get('/MainPageModule', function () {
 Route::get('/register', function () {
     return view('register'); // Load register.blade.php
 })->name('register.page');
+<<<<<<< Updated upstream
+=======
+
+
+// Facility Pages
+Route::get('/facility/badminton', function () {
+    return view('badminton'); // Ensure this view exists
+})->name('facility.badminton');
+
+Route::get('/facility/badminton', [BadmintonController::class, 'index'])->name('badminton');
+
+Route::get('/facility/swimming', function () {
+    return view('swimming'); // Ensure this view exists
+})->name('facility.swimming');
+
+Route::get('/facility/swimming', [SwimmingController::class, 'index'])->name('swimming');
+
+Route::get('/facility/stadium', function () {
+    return view('stadium'); // Ensure this view exists
+})->name('facility.stadium');
+
+Route::get('/facility/stadium', [StadiumController::class, 'index'])->name('stadium');
+
+Route::get('/facility/gym', function () {
+    return view('gym'); // Ensure this view exists
+})->name('facility.gym');
+
+Route::get('/facility/gym', [GymController::class, 'index'])->name('gym');
+
+//Customer Pages 
+
+// Customer Booking Page
+Route::get('/customer-booking', [CustomerBookingController::class, 'index'])->name('customer.booking');
+
+// About us Page
+Route::get('/about-us', function () {
+    return view('AboutUsModule.AboutUs'); // Correct path to the view file
+})->name('about-us');
+>>>>>>> Stashed changes
