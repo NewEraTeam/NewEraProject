@@ -8,29 +8,29 @@
     <!-- Material Symbols Outlined -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 </head>
-<body class="bg-gray-100 text-gray-800 min-h-screen">
-    
+<body class="min-h-screen text-gray-800 bg-gray-100">
+
         <!-- Navbar Section -->
         <nav class="bg-white shadow-md">
-            <div class="container mx-auto px-4 flex justify-between items-center py-4">
+            <div class="container flex items-center justify-between px-4 py-4 mx-auto">
                 <!-- Logo -->
                 <a href="#" class="flex items-center">
                     <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
                 </a>
-    
+
                 <!-- Language & Account Buttons -->
                 <div class="relative flex items-center space-x-4">
                     <!-- Language Dropdown -->
                     <div class="relative">
                         <!-- Language Button -->
                         <button onclick="toggleDropdown()" class="flex items-center bg-blue-100 text-blue-600 px-3 py-1.5 rounded-full font-semibold hover:bg-blue-200 focus:outline-none">
-                            <span class="material-symbols-outlined text-base mr-1">language</span>
+                            <span class="mr-1 text-base material-symbols-outlined">language</span>
                             EN
-                            <span class="material-symbols-outlined ml-1">expand_more</span>
+                            <span class="ml-1 material-symbols-outlined">expand_more</span>
                         </button>
 
                         <!-- Dropdown Menu -->
-                        <div id="languageMenu" class="hidden absolute right-0 mt-2 w-20 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+                        <div id="languageMenu" class="absolute right-0 z-10 hidden w-20 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg">
                             <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">BM</a>
                             <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">中文</a>
                         </div>
@@ -38,16 +38,16 @@
 
                     <!-- Help Link -->
                     <a href="#" class="text-gray-700 hover:text-blue-600">Help</a>
-    
+
                     <!-- Profile Icon and Dropdown -->
                     <div class="relative inline-block text-left">
                         <!-- Profile Icon Button -->
                         <button onclick="toggleProfileMenu()" class="flex items-center space-x-2 bg-blue-100 text-blue-600 px-3 py-1.5 rounded-full font-semibold hover:bg-blue-200 focus:outline-none">
-                            <span class="material-symbols-outlined text-lg">person</span>
+                            <span class="text-lg material-symbols-outlined">person</span>
                         </button>
-    
+
                         <!-- Profile Dropdown Menu -->
-                        <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-gray-100 rounded-lg shadow-lg border border-gray-200 z-10">
+                        <div id="profileMenu" class="absolute right-0 z-10 hidden w-48 mt-2 bg-gray-100 border border-gray-200 rounded-lg shadow-lg">
                             <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Profile</a>
                             <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Booking History</a>
                             <a href="{{ route('about-us') }}" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">About</a>
@@ -57,7 +57,7 @@
                 </div>
             </div>
         </nav>
-    
+
         <!-- Link to the JavaScript files -->
         <script src="{{ asset('js/profileDropdown.js') }}"></script>
         <script src="{{ asset('js/languageDropdown.js') }}"></script>
@@ -65,108 +65,108 @@
     <!-- Hero Section -->
     <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('UTM Gate View.jpg');">
         <div class="absolute inset-0 bg-black opacity-40"></div>
-        <div class="relative container mx-auto h-full flex flex-col justify-center items-center text-center text-white">
-            <h1 class="text-4xl font-bold mb-4">Get Active, Book Your Place Now</h1>
+        <div class="container relative flex flex-col items-center justify-center h-full mx-auto text-center text-white">
+            <h1 class="mb-4 text-4xl font-bold">Get Active, Book Your Place Now</h1>
             <p class="mb-6 text-lg">From favorites like badminton and swimming to track and gym, Book now to get active!</p>
         </div>
     </header>
 
     <!-- Facilities Section -->
-    <section class="container mx-auto px-4 py-8">
-        <h2 class="text-center text-2xl font-bold mb-6">Facilities Available</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-            
+    <section class="container px-4 py-8 mx-auto">
+        <h2 class="mb-6 text-2xl font-bold text-center">Facilities Available</h2>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
+
             <!-- Facility Card 1 -->
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="UTM Sports Hall Badminton.jpg" alt="UTM Sports Hall" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">BADMINTON</p>
-                <h3 class="text-lg font-bold mb-2">Sports Hall</h3>
-                <p class="text-sm text-gray-500 mb-4">UTM JB</p>
-                <div class="flex justify-between items-center">
+                <h3 class="mb-2 text-lg font-bold">Sports Hall</h3>
+                <p class="mb-4 text-sm text-gray-500">UTM JB</p>
+                <div class="flex items-center justify-between">
                     <!-- View Button -->
-                    <button class="flex items-center text-gray-600 border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100">
-                        <span class="material-symbols-outlined text-base mr-1">visibility</span>
+                    <button onclick="window.location='{{ route('badminton') }}'" class="flex items-center px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100">
+                        <span class="mr-1 text-base material-symbols-outlined">visibility</span>
                         View
                     </button>
                     <!-- Book Now Button -->
-                    <button class="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-200">
+                    <button class="px-4 py-2 font-semibold text-blue-600 bg-blue-100 rounded-lg hover:bg-blue-200">
                         Book Now
                     </button>
                 </div>
             </div>
-    
+
             <!-- Facility Card 2 -->
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="UTM Swimming Pool.jpg" alt="Swimming Pool UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">SWIMMING</p>
-                <h3 class="text-lg font-bold mb-2">Swimming Pool</h3>
-                <p class="text-sm text-gray-500 mb-4">UTM JB</p>
-                <div class="flex justify-between items-center">
+                <h3 class="mb-2 text-lg font-bold">Swimming Pool</h3>
+                <p class="mb-4 text-sm text-gray-500">UTM JB</p>
+                <div class="flex items-center justify-between">
                     <!-- View Button -->
-                    <button class="flex items-center text-gray-600 border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100">
-                        <span class="material-symbols-outlined text-base mr-1">visibility</span>
+                    <button onclick="window.location='{{ route('swimming') }}'" class="flex items-center px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100">
+                        <span class="mr-1 text-base material-symbols-outlined">visibility</span>
                         View
                     </button>
                     <!-- Book Now Button -->
-                    <button class="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-200">
+                    <button class="px-4 py-2 font-semibold text-blue-600 bg-blue-100 rounded-lg hover:bg-blue-200">
                         Book Now
                     </button>
                 </div>
             </div>
-    
+
             <!-- Facility Card 3 -->
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="UTM Stadium.jpg" alt="Stadium Azman Hashim UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">TRACK & FIELD</p>
-                <h3 class="text-lg font-bold mb-2">Field</h3>
-                <p class="text-sm text-gray-500 mb-4">UTM JB</p>
-                <div class="flex justify-between items-center">
+                <h3 class="mb-2 text-lg font-bold">Field</h3>
+                <p class="mb-4 text-sm text-gray-500">UTM JB</p>
+                <div class="flex items-center justify-between">
                     <!-- View Button -->
-                    <button class="flex items-center text-gray-600 border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100">
-                        <span class="material-symbols-outlined text-base mr-1">visibility</span>
+                    <button onclick="window.location='{{ route('stadium') }}'" class="flex items-center px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100">
+                        <span class="mr-1 text-base material-symbols-outlined">visibility</span>
                         View
                     </button>
                     <!-- Book Now Button -->
-                    <button class="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-200">
+                    <button class="px-4 py-2 font-semibold text-blue-600 bg-blue-100 rounded-lg hover:bg-blue-200">
                         Book Now
                     </button>
                 </div>
             </div>
-    
+
             <!-- Facility Card 4 -->
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="UTM Gym.jpg" alt="UTM Gym" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">GYM</p>
-                <h3 class="text-lg font-bold mb-2">Gymnasium</h3>
-                <p class="text-sm text-gray-500 mb-4">UTM JB</p>
-                <div class="flex justify-between items-center">
+                <h3 class="mb-2 text-lg font-bold">Gymnasium</h3>
+                <p class="mb-4 text-sm text-gray-500">UTM JB</p>
+                <div class="flex items-center justify-between">
                     <!-- View Button -->
-                    <button class="flex items-center text-gray-600 border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100">
-                        <span class="material-symbols-outlined text-base mr-1">visibility</span>
+                    <button onclick="window.location='{{ route('gym') }}'" class="flex items-center px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100">
+                        <span class="mr-1 text-base material-symbols-outlined">visibility</span>
                         View
                     </button>
                     <!-- Book Now Button -->
-                    <button class="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg font-semibold hover:bg-blue-200">
+                    <button class="px-4 py-2 font-semibold text-blue-600 bg-blue-100 rounded-lg hover:bg-blue-200">
                         Book Now
                     </button>
                 </div>
             </div>
-    
+
         </div>
     </section>
-    
+
     <!-- Footer Section -->
-    <footer class="bg-white border-t border-gray-200 py-8">
-        <div class="container mx-auto px-4">
+    <footer class="py-8 bg-white border-t border-gray-200">
+        <div class="container px-4 mx-auto">
             <!-- Top Section of Footer -->
-            <div class="flex flex-col lg:flex-row justify-between items-center lg:items-start space-y-6 lg:space-y-0">
+            <div class="flex flex-col items-center justify-between space-y-6 lg:flex-row lg:items-start lg:space-y-0">
                 <!-- Logo Section -->
                 <a href="#" class="flex items-center">
                     <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
                 </a>
 
                 <!-- Links Section -->
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 text-center lg:text-left">
+                <div class="grid grid-cols-2 gap-4 text-center md:grid-cols-3 lg:grid-cols-5 lg:text-left">
                     <!-- For Business -->
                     <div>
                         <h5 class="font-semibold text-gray-800">For Business</h5>
@@ -207,14 +207,14 @@
             </div>
 
             <!-- Bottom Section of Footer -->
-            <div class="mt-8 border-t border-gray-200 pt-4 flex flex-col lg:flex-row justify-between items-center">
+            <div class="flex flex-col items-center justify-between pt-4 mt-8 border-t border-gray-200 lg:flex-row">
                 <!-- Copyright -->
-                <p class="text-gray-500 text-center lg:text-left">
+                <p class="text-center text-gray-500 lg:text-left">
                     © 2024 | UTM Sports Hall
                 </p>
             </div>
         </div>
     </footer>
-    
+
 </body>
 </html>
