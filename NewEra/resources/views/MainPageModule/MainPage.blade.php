@@ -49,8 +49,8 @@
                         <!-- Profile Dropdown Menu -->
                         <div id="profileMenu" class="absolute right-0 z-10 hidden w-48 mt-2 bg-gray-100 border border-gray-200 rounded-lg shadow-lg">
                             <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Profile</a>
-                            <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Booking History</a>
-                            <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">About</a>
+                            <a href="#" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Booking History</a>    
+                            <a href="{{ route('about-us') }}" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">About</a>
                             <a href="login" class="block px-4 py-2 text-sm font-semibold text-gray-700 border-t border-gray-200 hover:bg-gray-200">Log Out</a>
                         </div>
                     </div>
@@ -63,6 +63,7 @@
         <script src="{{ asset('js/languageDropdown.js') }}"></script>
 
     <!-- Hero Section -->
+    <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('UTM Gate View.jpg');">
     <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('https://shorturl.at/iSKRY');">
         <div class="absolute inset-0 bg-black opacity-40"></div>
         <div class="container relative flex flex-col items-center justify-center h-full mx-auto text-center text-white">
@@ -77,6 +78,9 @@
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
 
             <!-- Facility Card 1 -->
+            <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
+                <img src="UTM Sports Hall Badminton.jpg" alt="UTM Sports Hall" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
+
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="https://shorturl.at/KZ5v4" alt="UTM Sports Hall" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">BADMINTON</p>
@@ -97,6 +101,8 @@
 
             <!-- Facility Card 2 -->
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
+                <img src="UTM Swimming Pool.jpg" alt="Swimming Pool UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
+            <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="https://shorturl.at/PNk2g" alt="Swimming Pool UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">SWIMMING</p>
                 <h3 class="mb-2 text-lg font-bold">Swimming Pool</h3>
@@ -116,6 +122,8 @@
 
             <!-- Facility Card 3 -->
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
+                <img src="UTM Stadium.jpg" alt="Stadium Azman Hashim UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
+            <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="https://shashinki.com/blog/wp-content/uploads/2016/12/wp-image-1335549841jpg.jpg" alt="Stadium Azman Hashim UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">TRACK & FIELD</p>
                 <h3 class="mb-2 text-lg font-bold">Field</h3>
@@ -134,6 +142,8 @@
             </div>
 
             <!-- Facility Card 4 -->
+            <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
+                <img src="UTM Gym.jpg" alt="UTM Gym" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
                 <img src="https://shorturl.at/hZt24" alt="UTM Gym" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">GYM</p>

@@ -38,6 +38,7 @@ Route::get('/register', function () {
 })->name('register.page');
 
 
+
 // Facility Pages
 Route::get('/facility/badminton', function () {
     return view('badminton'); // Ensure this view exists
@@ -68,3 +69,8 @@ Route::get('/facility/gym', [GymController::class, 'index'])->name('gym');
 // Customer Booking Page
 Route::get('/customer-booking', [CustomerBookingController::class, 'index'])->name('customer.booking');
 
+
+// About us Page
+Route::get('/about-us', function () {
+    return view('AboutUsModule.AboutUs'); // Correct path to the view file
+})->name('about-us');
