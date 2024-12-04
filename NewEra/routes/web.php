@@ -32,10 +32,10 @@ Route::get('/MainPageModule', function () {
 })->name('MainPage.page'); // Alias for compatibility
 
 // Facility routes
-Route::get('/facility/badminton', [BadmintonController::class, 'index'])->name('facility.badminton');
-Route::get('/facility/swimming', [SwimmingController::class, 'index'])->name('facility.swimming');
-Route::get('/facility/stadium', [StadiumController::class, 'index'])->name('facility.stadium');
-Route::get('/facility/gym', [GymController::class, 'index'])->name('facility.gym');
+Route::get('/facility/badminton', [BadmintonController::class, 'index'])->name('badminton');
+Route::get('/facility/swimming', [SwimmingController::class, 'index'])->name('swimming');
+Route::get('/facility/stadium', [StadiumController::class, 'index'])->name('stadium');
+Route::get('/facility/gym', [GymController::class, 'index'])->name('gym');
 
 // Customer booking page
 Route::get('/customer-booking', [CustomerBookingController::class, 'index'])->name('customer.booking');
@@ -44,3 +44,8 @@ Route::get('/customer-booking', [CustomerBookingController::class, 'index'])->na
 Route::get('/about-us', function () {
     return view('AboutUsModule.AboutUs'); // Corrected path for the About Us view
 })->name('about-us');
+
+//View Profile Page
+Route::get('/view-profile', function(){
+    return view('ViewProfileModule.ViewProfile');
+})->name('view-profile');
