@@ -8,12 +8,9 @@ use App\Http\Controllers\BadmintonController;
 use App\Http\Controllers\SwimmingController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\GymController;
-<<<<<<< Updated upstream
-=======
 use App\Http\Controllers\CustomerBookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
->>>>>>> Stashed changes
 
 // Default route to load the login page
 Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
@@ -67,8 +64,6 @@ Route::get('/facility/gym', function () {
 })->name('facility.gym');
 
 Route::get('/facility/gym', [GymController::class, 'index'])->name('gym');
-<<<<<<< Updated upstream
-=======
 
 // Customer booking history page
 Route::get('/customer-booking', function(){
@@ -101,4 +96,3 @@ Route::get('/booking/payment', fn() => view('Payment'));
 Route::post('/booking/payment', [BookingController::class, 'storePaymentDetails']);
 
 Route::get('/booking/success', [BookingController::class, 'success']);
->>>>>>> Stashed changes
