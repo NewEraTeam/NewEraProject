@@ -1,143 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Sports Hall | User Profile</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <style>
-        /* Add your CSS styles here */
+        /* General Styling */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f9f9f9;
         }
-        .container {
-            display: flex;
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #fff;
-            padding: 20px;
-            border-right: 1px solid #ddd;
-            height: 100vh;
-        }
-        .sidebar a {
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            margin: 10px 0;
-            color: #555;
-            font-weight: bold;
-        }
-        .sidebar a:hover {
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        }
-        .main-content {
-            flex: 1;
-            padding: 20px;
-        }
-        .profile-header {
-            text-align: center;
-            background-color: #007BFF;
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-        }
-        .profile-header img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
-        .stats {
+
+        /* Navbar */
+        .navbar {
             display: flex;
             justify-content: space-between;
-            margin: 20px 0;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
         }
-        .stats div {
-            flex: 1;
-            background: #f0f0f0;
-            margin: 0 10px;
+
+        .navbar .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .navbar ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navbar ul li {
+            margin: 0 15px;
+            cursor: pointer;
+        }
+
+        .navbar .user-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 20%;
+            background-color: #ffffff;
             padding: 20px;
-            text-align: center;
-            border-radius: 5px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }
-        .section {
-            margin-bottom: 20px;
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
         }
-        .section h3 {
-            border-bottom: 2px solid #007BFF;
-            padding-bottom: 10px;
+
+        .sidebar ul li {
             margin-bottom: 15px;
         }
-        .button {
-            text-align: center;
-            padding: 15px;
-            background-color: #007BFF;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
+
+        .sidebar ul li button {
+            margin: 5px;
         }
-        .button:hover {
-            background-color: #0056b3;
+
+        /* Profile Section */
+        .profile-section {
+            width: 80%;
+            padding: 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            background-color: #f1f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .profile-info h2 {
+            margin: 0;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stats div {
+            text-align: center;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .box {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
     </style>
+
 </head>
+
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <h3>ME</h3>
-            <a href="#">My Profile</a>
-            <a href="#">My Bookings</a>
-            <a href="#">My Games</a>
-            <a href="#">My Invoices</a>
-            <h3>ACCOUNT SETTINGS</h3>
-            <a href="#">Edit Profile</a>
-            <a href="#">Link Social Accounts</a>
-            <a href="#">Create Password</a>
-            <a href="#">Language</a>
-            <h3>SUPPORT</h3>
-            <a href="#">Help Centre</a>
-            <a href="#">WhatsApp Us</a>
+    <header class="navbar">
+        <div class="logo">UTM Sports Hall</div>
+        <nav>
+            <ul>
+                <li>Explore</li>
+                <li>Book</li>
+                <li>Games</li>
+                <li>Deals</li>
+            </ul>
+        </nav>
+        <div class="user-icon">
+            <img src="profile-picture.jpg" alt="Profile Picture">
         </div>
-        <div class="main-content">
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <ul>
+                <li><a href="#">My Profile</a></li>
+                <li><a href="#">My Bookings</a></li>
+                <li><a href="#">My Games</a></li>
+                <li><a href="#">My Invoices</a></li>
+                <li><a href="#">Edit Profile</a></li>
+                <li><a href="#">Link Social Accounts</a></li>
+                <li><a href="#">Create Password</a></li>
+                <li>
+                    <span>Language:</span>
+                    <button>EN</button>
+                    <button>BM</button>
+                    <button>中文</button>
+                </li>
+            </ul>
+        </aside>
+
+        <section class="profile-section">
             <div class="profile-header">
-                <img src="profile.jpg" alt="Profile Picture">
-                <h2><?php echo htmlspecialchars($name); ?></h2>
-                <p><?php echo htmlspecialchars($email); ?></p>
-                <p>Joined since <?php echo htmlspecialchars($joinedSince); ?></p>
+                <img src="profile-picture.jpg" alt="Profile" class="profile-pic">
+                <div class="profile-info">
+                    <h2></h2>
+                    <p></p>
+                    <p>Joined since </p>
+                </div>
             </div>
+
             <div class="stats">
                 <div>
-                    <h3><?php echo htmlspecialchars($bookingsMade); ?></h3>
-                    <p>Bookings Made</p>
+                    <h3>0</h3>
+                    <p>Bookings made</p>
                 </div>
                 <div>
-                    <h3><?php echo htmlspecialchars($bookingHours); ?></h3>
-                    <p>Booking Hours</p>
+                    <h3>0</h3>
+                    <p>Booking hours</p>
                 </div>
                 <div>
-                    <h3><?php echo htmlspecialchars($gamesJoined); ?></h3>
-                    <p>Games Joined</p>
+                    <h3>0</h3>
+                    <p>Games joined</p>
                 </div>
             </div>
-            <div class="section">
-                <h3>My Bookings</h3>
-                <p><?php echo $bookingsMade > 0 ? "View your bookings here" : "No bookings made"; ?></p>
-                <a href="#" class="button">Book Now</a>
+
+            <div class="content">
+                <div class="box">
+                    <h3>My Bookings</h3>
+                    <p>No booking made</p>
+                    <button>Book Now</button>
+                </div>
+                <div class="box">
+                    <h3>My Invoices</h3>
+                    <p>RM 0 spent on sports this year</p>
+                </div>
+                <div class="box">
+                    <h3>My Games</h3>
+                    <p>No games have been joined</p>
+                </div>
+                <div class="box">
+                    <h3>My Contact</h3>
+                    <p></p>
+                </div>
             </div>
-            <div class="section">
-                <h3>My Invoices</h3>
-                <p>RM<?php echo htmlspecialchars($spentAmount); ?> spent on sports this year</p>
-            </div>
-            <div class="section">
-                <h3>My Games</h3>
-                <p><?php echo $gamesJoined > 0 ? "View your games here" : "No games have been joined"; ?></p>
-            </div>
-        </div>
-    </div>
+        </section>
+    </main>
 </body>
+
 </html>
