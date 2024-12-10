@@ -17,14 +17,6 @@
                 <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
             </a>
 
-    <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('https://shorturl.at/iSKRY');">
-        <div class="absolute inset-0 bg-black opacity-40"></div>
-            <div class="container relative flex flex-col items-center justify-center h-full mx-auto text-center text-white">
-            <h1 class="mb-4 text-4xl font-bold"> UTM Sports Management </h1>
-            <p class="mb-6 text-lg">Welcome to Admin Page </p>
-        </div>
-    </header>
-
             <!-- Profile Button -->
             <div class="relative inline-block text-left">
                 <button onclick="toggleAdminProfileMenu()" class="flex items-center space-x-2 bg-blue-100 text-blue-600 px-3 py-1.5 rounded-full font-semibold hover:bg-blue-200 focus:outline-none">
@@ -38,6 +30,15 @@
             </div>
         </div>
     </nav>
+
+    <!-- Picture Section -->
+    <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('https://via.placeholder.com/1920x1080');">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <div class="container relative flex flex-col items-center justify-center h-full mx-auto text-center text-white">
+            <h1 class="mb-4 text-4xl font-bold">UTM Sports Management </h1>
+            <p class="mb-6 text-lg">Welcome to Admin's Page </p>
+        </div>
+    </header>
 
     <!-- Dashboard Section -->
     <main class="container px-4 py-8 mx-auto">
