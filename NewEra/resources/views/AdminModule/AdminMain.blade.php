@@ -31,6 +31,7 @@
         </div>
     </nav>
 
+
     <!-- Picture Section -->
     <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('https://via.placeholder.com/1920x1080');">
         <div class="absolute inset-0 bg-black opacity-40"></div>
@@ -40,9 +41,18 @@
         </div>
     </header>
 
+
     <!-- Dashboard Section -->
     <main class="container px-4 py-8 mx-auto">
         <h1 class="mb-6 text-2xl font-bold text-center">Admin Dashboard</h1>
+    <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('https://shorturl.at/iSKRY');">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+            <div class="container relative flex flex-col items-center justify-center h-full mx-auto text-center text-white">
+            <h1 class="mb-4 text-4xl font-bold"> UTM Sports Management </h1>
+            <p class="mb-6 text-lg"> Welcome to Admin's Page </p>
+        </div>
+    </header>
+
 
         <!-- Admin Actions -->
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
