@@ -18,21 +18,28 @@
                     <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
                 </a>
 
-                <!-- Language & Account Buttons -->
-                <div class="relative flex items-center space-x-4">
+                <!-- Language, Help, and Profile Buttons (Aligned to the right) -->
+                <div class="flex items-center space-x-4 ml-auto">
                     <!-- Language Dropdown -->
                     <div class="relative">
-                        <!-- Language Button -->
                         <button onclick="toggleDropdown()" class="flex items-center bg-blue-100 text-blue-600 px-3 py-1.5 rounded-full font-semibold hover:bg-blue-200 focus:outline-none">
                             <span class="mr-1 text-base material-symbols-outlined">language</span>
-                            EN
+                            {{ app()->getLocale() == 'en' ? 'EN' : (app()->getLocale() == 'bm' ? 'BM' : '中文') }}
                             <span class="ml-1 material-symbols-outlined">expand_more</span>
                         </button>
 
-                        <!-- Dropdown Menu -->
+                        <!-- Language Switcher Dropdown -->
                         <div id="languageMenu" class="absolute right-0 z-10 hidden w-20 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg">
-                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">BM</a>
-                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">中文</a>
+                            @if (app()->getLocale() == 'en')
+                                <a href="{{ url('bm') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">BM</a>
+                                <a href="{{ url('cn') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">中文</a>
+                            @elseif (app()->getLocale() == 'bm')
+                                <a href="{{ url('en') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">EN</a>
+                                <a href="{{ url('cn') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">中文</a>
+                            @elseif (app()->getLocale() == 'cn')
+                                <a href="{{ url('en') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">EN</a>
+                                <a href="{{ url('bm') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">BM</a>
+                            @endif
                         </div>
                     </div>
 
@@ -41,7 +48,6 @@
 
                     <!-- Profile Icon and Dropdown -->
                     <div class="relative inline-block text-left">
-                        <!-- Profile Icon Button -->
                         <button onclick="toggleProfileMenu()" class="flex items-center space-x-2 bg-blue-100 text-blue-600 px-3 py-1.5 rounded-full font-semibold hover:bg-blue-200 focus:outline-none">
                             <span class="text-lg material-symbols-outlined">person</span>
                         </button>
@@ -57,6 +63,7 @@
                 </div>
             </div>
         </nav>
+
 
         <!-- Link to the JavaScript files -->
         <script src="{{ asset('js/profileDropdown.js') }}"></script>

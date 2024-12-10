@@ -51,3 +51,12 @@ Route::get('/about-us', function () {
 Route::get('/view-profile', function(){
     return view('ViewProfileModule.ViewProfile');
 })->name('view-profile');
+
+//Localization Features
+Route::get('/lang/{locale}', function ($locale) {
+    // Validate the locale before setting it
+    if (in_array($locale, ['en', 'bm', 'cn'])) {
+        session(['locale' => $locale]);  // Store the selected language in the session
+    }
+    return redirect()->back();  // Redirect back to the previous page
+});
