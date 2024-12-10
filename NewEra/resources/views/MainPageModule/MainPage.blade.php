@@ -96,7 +96,7 @@
                         View
                     </button>
                     <!-- Book Now Button -->
-                    <button class="px-4 py-2 font-semibold text-blue-600 bg-blue-100 rounded-lg hover:bg-blue-200">
+                    <button onclick="window.location='{{ route('bookingBadminton') }}'" class="px-4 py-2 font-semibold text-blue-600 bg-blue-100 rounded-lg hover:bg-blue-200">
                         Book Now
                     </button>
                 </div>
