@@ -21,7 +21,7 @@
         <div class="absolute inset-0 bg-black opacity-40"></div>
             <div class="container relative flex flex-col items-center justify-center h-full mx-auto text-center text-white">
             <h1 class="mb-4 text-4xl font-bold"> UTM Sports Management </h1>
-            <p class="mb-6 text-lg">Welcome to Admin Page </p>
+            <p class="mb-6 text-lg">Welcome to Admin  </p>
         </div>
     </header>
 
