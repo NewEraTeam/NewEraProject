@@ -85,7 +85,8 @@
             <div class="step">3</div>
         </div>
         <h2>Personal Details</h2>
-        <form method="POST" action="/booking/personal-details">
+        <form method="POST" action="{{ route('submitPersonalDetails') }}">
+            @csrf
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
 
@@ -97,12 +98,7 @@
 
             <label for="phone">Phone:</label>
             <input type="text" id="phone" name="phone" required>
-
-            <form method="POST" action="/booking/personal-details">
-                @csrf
-                <!-- Existing form fields -->
                 <button type="submit">Next</button>
-            </form>
         </form>
     </div>
 </body>

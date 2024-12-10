@@ -89,7 +89,8 @@
             <div class="step">3</div>
         </div>
         <h2>Booking Details - Badminton</h2>
-        <form method="POST" action="/booking/details/badminton">
+        <form method="POST" action="{{ route('submitBookingBadminton') }}">
+            @csrf
             <label for="date">Date:</label>
             <input type="date" id="date" name="date" required>
 
@@ -121,11 +122,7 @@
                 <option value="5">Court 5</option>
                 <option value="6">Court 6</option>
             </select>
-            <form method="POST" action="/booking/badminton">
-                @csrf
-                <!-- Existing form fields -->
-                <button onclick="window.location='{{ route('bookingPersonalDetails') }}'" type="submit">Next</button>
-            </form>
+            <button type="submit">Next</button>
         </form>
     </div>
 

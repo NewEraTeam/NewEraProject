@@ -79,6 +79,7 @@ Route::get('/view-profile', function(){
     return view('ViewProfileModule.ViewProfile');
 })->name('view-profile');
 
+<<<<<<< Updated upstream
 Route::get('/booking/badminton', fn() => view('bookingBadminton'));
 Route::post('/booking/badminton', [BookingController::class, 'submitBookingBadminton']);
 Route::get('/booking/badminton', function () {
@@ -95,3 +96,22 @@ Route::get('/booking/payment', fn() => view('Payment'));
 Route::post('/booking/payment', [BookingController::class, 'storePaymentDetails']);
 
 Route::get('/booking/success', [BookingController::class, 'success']);
+=======
+
+//Localization Features
+Route::get('/lang/{locale}', function ($locale) {
+    // Validate the locale before setting it
+    if (in_array($locale, ['en', 'bm', 'cn'])) {
+        session(['locale' => $locale]);  // Store the selected language in the session
+    }
+    return redirect()->back();  // Redirect back to the previous page
+});
+
+Route::get('/bookingBadminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
+Route::post('/submitBookingBadminton', [BookingController::class, 'submitBookingBadminton'])->name('submitBookingBadminton');
+Route::get('/bookingPersonalDetails', [BookingController::class, 'showPersonalDetails'])->name('bookingPersonalDetails');
+Route::post('/submitPersonalDetails', [BookingController::class, 'submitPersonalDetails'])->name('submitPersonalDetails');
+Route::get('/bookingPayment', [BookingController::class, 'showPayment'])->name('bookingPayment');
+Route::post('/submitPayment', [BookingController::class, 'submitPayment'])->name('submitPayment');
+Route::get('/bookingSuccess', [BookingController::class, 'showSuccess'])->name('bookingSuccess');
+>>>>>>> Stashed changes

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Booking; // Assuming there is a Booking model to handle database interaction
+use App\Models\Booking;
 
 class BookingController extends Controller
 {
@@ -12,7 +12,7 @@ class BookingController extends Controller
      */
     public function showBookingBadminton()
     {
-        return view('bookingBadminton');
+        return view('BookingModule.bookingBadminton'); // Matches your view path
     }
 
     /**
@@ -20,6 +20,9 @@ class BookingController extends Controller
      */
     public function submitBookingBadminton(Request $request)
     {
+
+        dd($request->all()); // Check the incoming data
+
         // Validate the input
         $validated = $request->validate([
             'date' => 'required|date|after_or_equal:today',
@@ -27,18 +30,19 @@ class BookingController extends Controller
             'court' => 'required',
         ]);
 
-        // Save the data to the session or database
+        // Save the data to the database
         $booking = new Booking();
         $booking->date = $validated['date'];
         $booking->time = $validated['time'];
         $booking->court = $validated['court'];
+        $booking->status = 'pending'; // Set default status
         $booking->save();
 
-        // Save the booking ID in the session for later reference
+        // Save the booking ID in the session for reference
         $request->session()->put('booking_id', $booking->id);
 
-        // Redirect to the next page
-        return redirect()->route('booking.personalDetails');
+        // Redirect to the personal details page
+        return redirect()->route('bookingPersonalDetails');
     }
 
     /**
@@ -46,7 +50,7 @@ class BookingController extends Controller
      */
     public function showPersonalDetails()
     {
-        return view('BookingPersonalDetails');
+        return view('BookingModule.BookingPersonalDetails'); // Matches your view path
     }
 
     /**
@@ -65,12 +69,13 @@ class BookingController extends Controller
         // Retrieve the booking ID from the session
         $bookingId = $request->session()->get('booking_id');
 
-        // Update the booking with personal details
+        // Find the booking by ID
         $booking = Booking::find($bookingId);
         if (!$booking) {
-            return redirect()->route('booking.badminton')->with('error', 'Booking not found.');
+            return redirect()->route('bookingBadminton')->with('error', 'Booking not found.');
         }
 
+        // Update the booking with personal details
         $booking->name = $validated['name'];
         $booking->matric_number = $validated['matric_number'];
         $booking->email = $validated['email'];
@@ -78,7 +83,7 @@ class BookingController extends Controller
         $booking->save();
 
         // Redirect to the payment page
-        return redirect()->route('booking.payment');
+        return redirect()->route('bookingPayment');
     }
 
     /**
@@ -86,7 +91,7 @@ class BookingController extends Controller
      */
     public function showPayment()
     {
-        return view('BookingPayment');
+        return view('BookingModule.BookingPayment'); // Matches your view path
     }
 
     /**
@@ -94,10 +99,21 @@ class BookingController extends Controller
      */
     public function submitPayment(Request $request)
     {
-        // Add payment logic here
-        // For now, just display a success message
+        // Retrieve the booking ID from the session
+        $bookingId = $request->session()->get('booking_id');
+        $booking = Booking::find($bookingId);
+        if (!$booking) {
+            return redirect()->route('bookingBadminton')->with('error', 'Booking not found.');
+        }
 
-        return redirect()->route('booking.success')->with('success', 'Booking completed successfully!');
+        // Mark the booking as completed
+        $booking->status = 'completed'; // Assuming a status column exists in the database
+        $booking->save();
+
+        // Clear the session booking ID
+        $request->session()->forget('booking_id');
+
+        return redirect()->route('bookingSuccess')->with('success', 'Booking completed successfully!');
     }
 
     /**
@@ -105,6 +121,6 @@ class BookingController extends Controller
      */
     public function showSuccess()
     {
-        return view('BookingSuccess'); // Create a success page view
+        return view('BookingModule.BookingSuccess'); // Matches your view path
     }
 }
