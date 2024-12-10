@@ -9,7 +9,6 @@ use App\Http\Controllers\SwimmingController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\CustomerBookingController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 
 // Default route to load the login page
