@@ -1,8 +1,8 @@
 // languageDropdown.js
 
 function toggleDropdown() {
-    const languageMenu = document.getElementById('languageMenu');
-    languageMenu.classList.toggle('hidden');
+    const dropdown = document.getElementById("languageMenu");
+    dropdown.classList.toggle("hidden");
 }
 
 // Close the dropdown if clicked outside
