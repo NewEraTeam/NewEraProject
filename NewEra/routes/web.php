@@ -8,6 +8,8 @@ use App\Http\Controllers\BadmintonController;
 use App\Http\Controllers\SwimmingController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\GymController;
+use App\Http\Controllers\BookingController;
+
 
 // Default route to load the login page
 Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
@@ -77,16 +79,13 @@ Route::get('/view-profile', function(){
     return view('ViewProfileModule.ViewProfile');
 })->name('view-profile');
 
-Route::get('/booking/badminton', fn() => view('bookingBadminton'));
-// Booking routes
-Route::get('/booking/badminton', fn() => view('BookingModule.bookingBadminton'))->name('bookingBadminton');
-Route::post('/booking/badminton', [BookingController::class, 'submitBookingBadminton']);
-Route::get('/booking/personal-details', fn() => view('BookingModule.BookingPersonalDetails'))->name('bookingPersonalDetails');
-Route::post('/booking/personal-details', [BookingController::class, 'storePersonalDetails']);
-Route::get('/booking/payment', fn() => view('BookingModule.Payment'))->name('payment');
-Route::post('/booking/payment', [BookingController::class, 'storePaymentDetails']);
-
-Route::get('/booking/success', [BookingController::class, 'success']);
+Route::get('/bookingBadminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
+Route::post('/submitBookingBadminton', [BookingController::class, 'submitBookingBadminton'])->name('submitBookingBadminton');
+Route::get('/bookingPersonalDetails', [BookingController::class, 'showPersonalDetails'])->name('bookingPersonalDetails');
+Route::post('/submitPersonalDetails', [BookingController::class, 'submitPersonalDetails'])->name('submitPersonalDetails');
+Route::get('/bookingPayment', [BookingController::class, 'showPayment'])->name('bookingPayment');
+Route::post('/submitPayment', [BookingController::class, 'submitPayment'])->name('submitPayment');
+Route::get('/bookingSuccess', [BookingController::class, 'showSuccess'])->name('bookingSuccess');
 
 //Localization Features
 Route::get('/lang/{locale}', function ($locale) {
