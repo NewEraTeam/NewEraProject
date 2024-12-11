@@ -87,12 +87,3 @@ Route::get('/lang/{locale}', function ($locale) {
     }
     return redirect()->back();  // Redirect back to the previous page
 });
-
-Route::get('/bookingBadminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
-Route::post('/submitBookingBadminton', [BookingController::class, 'submitBookingBadminton'])->name('submitBookingBadminton');
-Route::get('/bookingPersonalDetails', [BookingController::class, 'showPersonalDetails'])->name('bookingPersonalDetails');
-Route::post('/submitPersonalDetails', [BookingController::class, 'submitPersonalDetails'])->name('submitPersonalDetails');
-Route::get('/bookingPayment', [BookingController::class, 'showPayment'])->name('bookingPayment');
-Route::post('/submitPayment', [BookingController::class, 'submitPayment'])->name('submitPayment');
-Route::get('/bookingSuccess', [BookingController::class, 'showSuccess'])->name('bookingSuccess');
-Route::get('/booking/success', [BookingController::class, 'success'])->name('success');

@@ -207,7 +207,7 @@
             </div>
             <!-- Centered Book Button at the Bottom -->
             <!-- should out this "onclick="window.location.href='{ route('booking.page') }}'"" inside the button-->
-            <button class="book-btn">Book Facility</button>
+            <button onclick="window.location='{{ route('bookingBadminton') }}'" class="book-btn">Book Facility</button>
         </div>
     </div>
 
