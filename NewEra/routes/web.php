@@ -1,48 +1,60 @@
-use Illuminate\Support\Facades\Route;
+<?php
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDataController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\BadmintonController;
 use App\Http\Controllers\SwimmingController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\GymController;
-use App\Http\Controllers\CustomerBookingController;
 use App\Http\Controllers\BookingController;
 
-// Default route
+
+// Default route to load the login page
 Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
 
-// Login and registration routes
+// Show login page
 Route::get('/login', [UserDataController::class, 'showLogin'])->name('login.page');
+
+// Handle login form submission
 Route::post('/login', [UserDataController::class, 'login'])->name('login.submit');
+
+// Show register page
 Route::get('/register', [UserDataController::class, 'showForm'])->name('register.page');
+
+// Handle registration form submission
 Route::post('/register', [UserController::class, 'register'])->name('register.submit');
 
-// Main page
 Route::get('/mainpage', [MainPageController::class, 'index'])->name('mainpage');
 
-// Facility routes
-Route::get('/facility/badminton', [BadmintonController::class, 'index'])->name('facility.badminton');
-Route::get('/facility/swimming', [SwimmingController::class, 'index'])->name('facility.swimming');
-Route::get('/facility/stadium', [StadiumController::class, 'index'])->name('facility.stadium');
-Route::get('/facility/gym', [GymController::class, 'index'])->name('facility.gym');
+// Route to Main Page (once logged in)
+Route::get('/MainPageModule', function () {
+    return view('MainPageModule.MainPage');
+})->name('MainPage.page');
 
-// Customer booking history
-Route::get('/customer-booking', fn() => view('CustomerBookingModule.CustomerBooking'))->name('customer-booking');
+// Redirect button from login page to register page (New User Signup)
+Route::get('/register', function () {
+    return view('register'); // Load register.blade.php
+})->name('register.page');
 
-// About Us
-Route::get('/about-us', fn() => view('AboutUsModule.AboutUs'))->name('about-us');
 
-// Profile
-Route::get('/view-profile', fn() => view('ViewProfileModule.ViewProfile'))->name('view-profile');
+// Facility Pages
+Route::get('/facility/badminton', function () {
+    return view('badminton'); // Ensure this view exists
+})->name('facility.badminton');
 
-// Localization
-Route::get('/lang/{locale}', function ($locale) {
-    if (in_array($locale, ['en', 'bm', 'cn'])) {
-        session(['locale' => $locale]);
-    }
-    return redirect()->back();
-});
+Route::get('/facility/badminton', [BadmintonController::class, 'index'])->name('badminton');
+
+Route::get('/facility/swimming', function () {
+    return view('swimming'); // Ensure this view exists
+})->name('facility.swimming');
+
+Route::get('/facility/swimming', [SwimmingController::class, 'index'])->name('swimming');
+
+Route::get('/facility/stadium', function () {
+    return view('stadium'); // Ensure this view exists
+})->name('facility.stadium');
 
 Route::get('/facility/stadium', [StadiumController::class, 'index'])->name('stadium');
 
@@ -67,17 +79,13 @@ Route::get('/view-profile', function(){
     return view('ViewProfileModule.ViewProfile');
 })->name('view-profile');
 
-Route::get('/booking/badminton', fn() => view('bookingBadminton'));
-// Booking routes
-Route::get('/booking/badminton', fn() => view('BookingModule.bookingBadminton'))->name('bookingBadminton');
-Route::post('/booking/badminton', [BookingController::class, 'submitBookingBadminton']);
-Route::get('/booking/personal-details', fn() => view('BookingModule.BookingPersonalDetails'))->name('bookingPersonalDetails');
-Route::post('/booking/personal-details', [BookingController::class, 'storePersonalDetails']);
-Route::get('/booking/payment', fn() => view('BookingModule.Payment'))->name('payment');
-Route::post('/booking/payment', [BookingController::class, 'storePaymentDetails']);
-
-Route::get('/booking/success', [BookingController::class, 'success']);
-
+Route::get('/bookingBadminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
+Route::post('/submitBookingBadminton', [BookingController::class, 'submitBookingBadminton'])->name('submitBookingBadminton');
+Route::get('/bookingPersonalDetails', [BookingController::class, 'showPersonalDetails'])->name('bookingPersonalDetails');
+Route::post('/submitPersonalDetails', [BookingController::class, 'submitPersonalDetails'])->name('submitPersonalDetails');
+Route::get('/bookingPayment', [BookingController::class, 'showPayment'])->name('bookingPayment');
+Route::post('/submitPayment', [BookingController::class, 'submitPayment'])->name('submitPayment');
+Route::get('/bookingSuccess', [BookingController::class, 'showSuccess'])->name('bookingSuccess');
 
 //Localization Features
 Route::get('/lang/{locale}', function ($locale) {
@@ -88,11 +96,8 @@ Route::get('/lang/{locale}', function ($locale) {
     return redirect()->back();  // Redirect back to the previous page
 });
 
-Route::get('/bookingBadminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
-Route::post('/submitBookingBadminton', [BookingController::class, 'submitBookingBadminton'])->name('submitBookingBadminton');
-Route::get('/bookingPersonalDetails', [BookingController::class, 'showPersonalDetails'])->name('bookingPersonalDetails');
-Route::post('/submitPersonalDetails', [BookingController::class, 'submitPersonalDetails'])->name('submitPersonalDetails');
-Route::get('/bookingPayment', [BookingController::class, 'showPayment'])->name('bookingPayment');
-Route::post('/submitPayment', [BookingController::class, 'submitPayment'])->name('submitPayment');
-Route::get('/bookingSuccess', [BookingController::class, 'showSuccess'])->name('bookingSuccess');
-Route::get('/booking/success', [BookingController::class, 'success'])->name('success');
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/main', [UserController::class, 'showAdminMainPage'])->name('admin.main');
+});
+
+

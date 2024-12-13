@@ -57,6 +57,4 @@ class UserController extends Controller
         return view('AdminModule.AdminMain');
     }
     
-
-
 }
