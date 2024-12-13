@@ -52,4 +52,11 @@ class UserController extends Controller
         return view('MainPageModule.MainPage');
     }
 
+    public function showAdminMainPage()
+    {
+        return view('AdminModule.AdminMain');
+    }
+    
+
+
 }
