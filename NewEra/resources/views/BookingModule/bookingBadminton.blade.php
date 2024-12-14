@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Details - Badminton</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,8 +20,8 @@
         }
 
         .container {
-            width: 100%;
-            max-width: 600px;
+            width: 90%; /* Adjust width of the container to make it responsive */
+            max-width: 500px; /* Set a max width for larger screens */
             background: white;
             padding: 20px;
             border-radius: 10px;
@@ -50,6 +53,7 @@
         h2 {
             text-align: center;
             margin-bottom: 20px;
+            font-size: 1.5em; /* Make the title smaller */
         }
 
         label {
@@ -76,8 +80,20 @@
             background-color: #0056b3;
         }
 
-        select option[disabled] {
-            color: gray;
+        .toggle-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            background-color: white;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .toggle-btn.active {
+            background-color: #007bff;
+            color: white;
         }
     </style>
 </head>
@@ -113,65 +129,79 @@
             </select>
 
             <label for="court">Court:</label>
-            <select id="court" name="court" required>
-                <option value="">Select Court</option>
-                <option value="1">Court 1</option>
-                <option value="2">Court 2</option>
-                <option value="3">Court 3</option>
-                <option value="4">Court 4</option>
-                <option value="5">Court 5</option>
-                <option value="6">Court 6</option>
-            </select>
+            <div id="court-container">
+                <div class="toggle-btn" data-court="1">Court 1</div>
+                <div class="toggle-btn" data-court="2">Court 2</div>
+                <div class="toggle-btn" data-court="3">Court 3</div>
+                <div class="toggle-btn" data-court="4">Court 4</div>
+                <div class="toggle-btn" data-court="5">Court 5</div>
+                <div class="toggle-btn" data-court="6">Court 6</div>
+            </div>
+            <input type="hidden" id="selected-courts" name="court">
 
             <button type="submit">Next</button>
         </form>
     </div>
 
     <script>
-        // Disable past dates in the date picker
-        const dateInput = document.getElementById('date');
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Add leading zero
-        const dd = String(today.getDate()).padStart(2, '0'); // Add leading zero
-        const minDate = `${yyyy}-${mm}-${dd}`; // Correct template syntax
-        dateInput.setAttribute('min', minDate);
-
-        // Disable past times based on the current time
-        const timeSelect = document.getElementById('time');
-        const disablePastTimes = () => {
+        // Function to disable past times based on selected date
+        function disablePastTimes() {
+            const dateInput = document.getElementById('date');
+            const timeSelect = document.getElementById('time');
+            const today = new Date();
+            const selectedDate = new Date(dateInput.value);
             const options = timeSelect.options;
-            const currentTime = today.getHours();
 
+            // Disable times for today that have already passed
             for (let i = 0; i < options.length; i++) {
                 const timeValue = options[i].value;
                 const timeHour = parseInt(timeValue.split(':')[0]);
 
-                // Disable times that are before the current hour
-                if (timeHour <= currentTime) {
+                if (
+                    selectedDate.toDateString() === today.toDateString() &&
+                    timeHour <= today.getHours()
+                ) {
                     options[i].disabled = true;
-                }
-            }
-        };
-
-        // Run the function when the page loads
-        disablePastTimes();
-
-        // Re-enable all times when the date changes to a future date
-        dateInput.addEventListener('change', () => {
-            const selectedDate = new Date(dateInput.value);
-            const options = timeSelect.options;
-
-            if (selectedDate > today) {
-                // If the selected date is in the future, enable all times
-                for (let i = 0; i < options.length; i++) {
+                } else {
                     options[i].disabled = false;
                 }
-            } else {
-                // If the selected date is today, disable past times
-                disablePastTimes();
             }
+        }
+
+        // Set up date picker with today's date as minimum
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const minDate = `${yyyy}-${mm}-${dd}`;
+        dateInput.setAttribute('min', minDate);
+
+        // Ensure time is displayed and update time options when date changes
+        dateInput.addEventListener('change', function () {
+            disablePastTimes();
         });
+
+        // Court selection toggle buttons
+        const courtButtons = document.querySelectorAll('.toggle-btn');
+        const selectedCourtsInput = document.getElementById('selected-courts');
+
+        courtButtons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+
+                const selectedCourts = Array.from(courtButtons)
+                    .filter((btn) => btn.classList.contains('active'))
+                    .map((btn) => btn.getAttribute('data-court'));
+
+                selectedCourtsInput.value = selectedCourts.join(',');
+            });
+        });
+
+        // Disable past times initially on page load if a date is selected
+        if (dateInput.value) {
+            disablePastTimes();
+        }
     </script>
 </body>
 </html>
