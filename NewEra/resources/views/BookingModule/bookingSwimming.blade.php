@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Details - Badminton</title>
+    <title>Booking Details - Swimming</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -100,7 +100,7 @@
 </head>
 <body>
     <div class="container">
-        <h2>Booking Details - Badminton</h2>
+        <h2>Booking Details - Swimming</h2>
         <form method="POST" action="{{ route('submitPayment') }}">
         @csrf
 
@@ -142,18 +142,8 @@
             <option value="20">8:00 PM</option>
         </select>
 
-        <!-- Court Selection -->
-        <label for="court">Court:</label>
-        <div class="court-buttons">
-            <div class="toggle-btn" data-court="Court 1">Court 1</div>
-            <div class="toggle-btn" data-court="Court 2">Court 2</div>
-            <div class="toggle-btn" data-court="Court 3">Court 3</div>
-            <div class="toggle-btn" data-court="Court 4">Court 4</div>
-            <div class="toggle-btn" data-court="Court 5">Court 5</div>
-            <div class="toggle-btn" data-court="Court 6">Court 6</div>
-        </div>
-
         <hr style="margin: 20px 0; border: 1px solid #ccc;">
+
 
         <!-- Personal Details Fetched from Authenticated User -->
         <div class="personal-details" style="text-align: left;">
@@ -166,7 +156,7 @@
         </div>
 
         <!-- Next Button -->
-        <button type="submit" id="total-price" >Total Price: RM 0.00</button>
+        <button type="submit" id="total-price">Total Price: RM 4.00</button>
         </form>
     </div>
 
@@ -214,25 +204,16 @@
             updateTimeOptions();
         });
 
-        // Court button selection logic
+        // Court button selection logic (not used anymore as price is fixed)
         const courtButtons = document.querySelectorAll('.toggle-btn');
         const totalPriceElement = document.getElementById('total-price');
-        const pricePerCourtPerHour = 5.0;
 
         courtButtons.forEach((btn) => {
             btn.addEventListener('click', () => {
                 btn.classList.toggle('active');
 
-                // Get the selected courts and times
-                const selectedCourts = document.querySelectorAll('.toggle-btn.active');
-                const selectedStartTime = parseInt(startTimeSelect.value);
-                const selectedEndTime = parseInt(endTimeSelect.value);
-
-                // Calculate the duration
-                const duration = selectedEndTime - selectedStartTime;
-                const totalPrice = selectedCourts.length * pricePerCourtPerHour * duration;
-
-                totalPriceElement.textContent = `Total Price: RM ${totalPrice.toFixed(2)}`;
+                // Remove price calculation logic, since price is fixed
+                totalPriceElement.textContent = `Total Price: RM 4.00`;
             });
         });
     </script>
