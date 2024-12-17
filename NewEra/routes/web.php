@@ -9,6 +9,8 @@ use App\Http\Controllers\SwimmingController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\AdminMiddleware;
 
 
 // Default route to load the login page
@@ -96,3 +98,18 @@ Route::get('/lang/{locale}', function ($locale) {
     return redirect()->back();  // Redirect back to the previous page
 });
 
+// Regular user login
+Route::get('/login', function () {
+    return view('login'); // Login page for both users and admins
+})->name('login.page');
+
+// Handle login form submission (for both normal users and admin)
+Route::post('/login', [AdminController::class, 'login'])->name('login.submit');
+
+// Admin Main Page (protected for Admin users only)
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/main', [AdminController::class, 'showMainPage'])->name('admin.main');
+});
+
+// Logout route for both normal users and admin
+Route::post('/logout', [AdminController::class, 'logout'])->name('logout');

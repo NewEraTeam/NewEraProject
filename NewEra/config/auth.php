@@ -60,10 +60,11 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+    'users' => [
+        'driver' => 'eloquent',  // Use eloquent for MongoDB
+        'model' => App\Models\UserData::class,  // Your MongoDB model
         ],
+
 
         // 'users' => [
         //     'driver' => 'database',
