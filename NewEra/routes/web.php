@@ -96,3 +96,7 @@ Route::get('/lang/{locale}', function ($locale) {
     return redirect()->back();  // Redirect back to the previous page
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/booking-badminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
+    Route::post('/booking-badminton', [BookingController::class, 'submitBookingBadminton']);
+});

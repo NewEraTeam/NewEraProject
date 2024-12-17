@@ -37,8 +37,7 @@
             text-align: left;
         }
 
-        input[type="date"],
-        select {
+        input[type="date"], select {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
@@ -71,6 +70,13 @@
             color: white;
         }
 
+        #total-price {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+
         button {
             background-color: #007bff;
             color: white;
@@ -80,105 +86,123 @@
             font-size: 16px;
             cursor: pointer;
             width: 100%;
+            margin-top: 10px;
         }
 
         button:hover {
             background-color: #0056b3;
+        }
+
+        option:disabled {
+            color: gray;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Booking Details - Badminton</h2>
-        <form id="booking-form">
-            <!-- Date Input -->
-            <label for="date">Date:</label>
-            <input type="date" id="date" name="date" required>
 
-            <!-- Time Dropdown -->
-            <label for="time">Time:</label>
-            <select id="time" name="time" required>
-                <option value="" selected disabled>Select a time</option>
-                <option value="8:00">8:00 AM</option>
-                <option value="9:00">9:00 AM</option>
-                <option value="10:00">10:00 AM</option>
-                <option value="11:00">11:00 AM</option>
-                <option value="12:00">12:00 PM</option>
-                <option value="13:00">1:00 PM</option>
-                <option value="14:00">2:00 PM</option>
-                <option value="15:00">3:00 PM</option>
-                <option value="16:00">4:00 PM</option>
-                <option value="17:00">5:00 PM</option>
-            </select>
+        <!-- Date Input -->
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
 
-            <!-- Court Selection -->
-            <label for="court">Court:</label>
-            <div class="court-buttons">
-                <div class="toggle-btn" data-court="Court 1">Court 1</div>
-                <div class="toggle-btn" data-court="Court 2">Court 2</div>
-                <div class="toggle-btn" data-court="Court 3">Court 3</div>
-                <div class="toggle-btn" data-court="Court 4">Court 4</div>
-                <div class="toggle-btn" data-court="Court 5">Court 5</div>
-                <div class="toggle-btn" data-court="Court 6">Court 6</div>
-            </div>
-            <input type="hidden" id="selected-courts" name="selected-courts">
+        <!-- Time Dropdown -->
+        <label for="time">Time:</label>
+        <select id="time">
+            <option value="8">8:00 AM</option>
+            <option value="9">9:00 AM</option>
+            <option value="10">10:00 AM</option>
+            <option value="11">11:00 AM</option>
+            <option value="12">12:00 PM</option>
+            <option value="13">1:00 PM</option>
+            <option value="14">2:00 PM</option>
+            <option value="15">3:00 PM</option>
+            <option value="16">4:00 PM</option>
+            <option value="17">5:00 PM</option>
+            <option value="18">6:00 PM</option>
+            <option value="19">7:00 PM</option>
+        </select>
 
-            <!-- Submit Button -->
-            <button type="submit">Next</button>
-        </form>
+        <!-- Court Selection -->
+        <label for="court">Court:</label>
+        <div class="court-buttons">
+            <div class="toggle-btn" data-court="Court 1">Court 1</div>
+            <div class="toggle-btn" data-court="Court 2">Court 2</div>
+            <div class="toggle-btn" data-court="Court 3">Court 3</div>
+            <div class="toggle-btn" data-court="Court 4">Court 4</div>
+            <div class="toggle-btn" data-court="Court 5">Court 5</div>
+            <div class="toggle-btn" data-court="Court 6">Court 6</div>
+        </div>
+
+        <!-- Total Price Section -->
+        <div id="total-price">Total Price: RM 0.00</div>
+
+        <hr style="margin: 20px 0; border: 1px solid #ccc;">
+
+        <!-- Personal Details Fetched from Authenticated User -->
+        <div class="personal-details">
+            <h3>Your Personal Details</h3>
+            <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
+            <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
+            <p><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
+            <p><strong>Phone Number:</strong> {{ Auth::user()->phone_number }}</p>
+            <p><strong>Role:</strong> {{ Auth::user()->role }}</p>
+        </div>
+
+        <!-- Next Button -->
+        <button type="button">Next</button>
     </div>
 
     <script>
-        // Disable past times logic
-        function disablePastTimes() {
-            const dateInput = document.getElementById('date');
-            const timeSelect = document.getElementById('time');
-            const today = new Date();
-            const selectedDate = new Date(dateInput.value);
-
-            const options = timeSelect.options;
-
-            // Reset all time options
-            for (let i = 0; i < options.length; i++) {
-                options[i].disabled = false;
-            }
-
-            if (selectedDate.toDateString() === today.toDateString()) {
-                for (let i = 0; i < options.length; i++) {
-                    const timeValue = options[i].value;
-                    const timeHour = parseInt(timeValue.split(':')[0]);
-
-                    if (timeHour <= today.getHours()) {
-                        options[i].disabled = true;
-                    }
-                }
-            }
-        }
-
-        // Set minimum date for the date picker
         const dateInput = document.getElementById('date');
+        const timeSelect = document.getElementById('time');
         const today = new Date();
+
+        // Set minimum date to today
         const yyyy = today.getFullYear();
         const mm = String(today.getMonth() + 1).padStart(2, '0');
         const dd = String(today.getDate()).padStart(2, '0');
         dateInput.setAttribute('min', `${yyyy}-${mm}-${dd}`);
 
-        // Add event listener to date picker
-        dateInput.addEventListener('change', disablePastTimes);
+        // Disable times that have passed
+        function updateTimeOptions() {
+            const selectedDate = new Date(dateInput.value);
+            const currentTime = new Date();
+            const isToday = selectedDate.toDateString() === currentTime.toDateString();
 
-        // Toggle court button selection
+            // Enable all options first
+            Array.from(timeSelect.options).forEach(option => option.disabled = false);
+
+            if (isToday) {
+                const currentHour = currentTime.getHours();
+                Array.from(timeSelect.options).forEach(option => {
+                    if (parseInt(option.value) <= currentHour) {
+                        option.disabled = true;
+                    }
+                });
+            }
+        }
+
+        // Add event listeners
+        dateInput.addEventListener('change', updateTimeOptions);
+        window.addEventListener('load', () => {
+            dateInput.value = `${yyyy}-${mm}-${dd}`;
+            updateTimeOptions();
+        });
+
+        // Court button selection logic
         const courtButtons = document.querySelectorAll('.toggle-btn');
-        const selectedCourtsInput = document.getElementById('selected-courts');
+        const totalPriceElement = document.getElementById('total-price');
+        const pricePerCourt = 5.0;
 
         courtButtons.forEach((btn) => {
             btn.addEventListener('click', () => {
                 btn.classList.toggle('active');
 
-                const selectedCourts = Array.from(courtButtons)
-                    .filter((btn) => btn.classList.contains('active'))
-                    .map((btn) => btn.getAttribute('data-court'));
+                const selectedCourts = document.querySelectorAll('.toggle-btn.active');
+                const totalPrice = selectedCourts.length * pricePerCourt;
 
-                selectedCourtsInput.value = selectedCourts.join(',');
+                totalPriceElement.textContent = `Total Price: RM ${totalPrice.toFixed(2)}`;
             });
         });
     </script>
