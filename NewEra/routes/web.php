@@ -96,8 +96,3 @@ Route::get('/lang/{locale}', function ($locale) {
     return redirect()->back();  // Redirect back to the previous page
 });
 
-// Admin Routes
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [UserController::class, 'showAdminMainPage'])->name('admin.dashboard');
-});
-

@@ -20,9 +20,6 @@ class BookingController extends Controller
      */
     public function submitBookingBadminton(Request $request)
     {
-
-        dd($request->all()); // Check the incoming data
-
         // Validate the input
         $validated = $request->validate([
             'date' => 'required|date|after_or_equal:today',
