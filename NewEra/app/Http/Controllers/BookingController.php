@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Booking;
 
 class BookingController extends Controller
@@ -12,8 +13,17 @@ class BookingController extends Controller
      */
     public function showBookingBadminton()
     {
-        return view('BookingModule.bookingBadminton'); // Matches your view path
+        // Ensure the user is authenticated
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Please login to proceed.');
+        }
+
+        // Pass necessary booking data to the view
+        return view('BookingModule.bookingBadminton', [
+            'total_price' => 50.00 // Example total price; replace this with your logic
+        ]);
     }
+
 
     /**
      * Handle the submission of booking details (Badminton).
