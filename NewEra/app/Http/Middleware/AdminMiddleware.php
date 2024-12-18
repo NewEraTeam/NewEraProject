@@ -4,24 +4,21 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        // Ensure the user is logged in and has the correct role (admin)
-        if (auth()->check() && auth()->user()->username === 'admin123' && auth()->user()->role === 'Staff') {
+        if (auth()->user() && auth()->user()->is_admin) {
             return $next($request);
         }
-
-        // Redirect if not an admin
-        return redirect('/')->with('error', 'You do not have access to this page.');
+        return redirect('/')->with('error', 'You do not have admin access');
     }
+    
 }

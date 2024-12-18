@@ -35,25 +35,15 @@
         <div class="max-w-4xl mx-auto bg-white p-6 border border-gray-200 rounded-lg shadow-lg">
             <form action="{{ route('admin-profile-update') }}" method="POST" enctype="multipart/form-data">
                 <div class="flex flex-col space-y-4">
-                    <!-- Profile Picture Upload -->
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700">Profile Picture:</label>
-                        <input type="file" name="profile_picture" accept="image/*" class="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-full file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-blue-50 file:text-blue-700
-                            hover:file:bg-blue-100
-                        ">
-                    </div>
+                    
                     <!-- Full Name -->
                     <div>
                         <label class="block text-sm font-semibold text-gray-700">Full Name:</label>
-                        <input type="text" name="full_name" placeholder="Your Full Name" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                        <input type="text" name="full_name" placeholder=" Eg : ALI BIN ABU " required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                     </div>
                     <!-- UTM Gmail -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700">UTM Gmail:</label>
+                        <label class="block text-sm font-semibold text-gray-700">UTM Email:</label>
                         <input type="email" name="utm_gmail" placeholder="yourname@utm.my" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                     </div>
                     <!-- Living Address -->
@@ -64,11 +54,13 @@
                     <!-- Contact Number -->
                     <div>
                         <label class="block text-sm font-semibold text-gray-700">Contact Number:</label>
-                        <input type="text" name="contact_number" placeholder="Your Contact Number" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                        <input type="text" name="contact_number" placeholder="Eg : 01234567 " required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
                     </div>
                     <!-- Submit Button -->
-                    <div>
-                        <button type="submit" class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">Update Profile</button>
+                    <div class="flex justify-center">
+                        <button type="submit" class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                         Update Profile
+                        </button>
                     </div>
                 </div>
             </form>

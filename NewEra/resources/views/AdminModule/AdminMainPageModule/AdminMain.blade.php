@@ -16,8 +16,6 @@
             <a href="#" class="flex items-center">
                 <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
             </a>
-
-    
             <!-- Profile Button -->
             <div class="relative inline-block text-left">
                 <button onclick="toggleAdminProfileMenu()" class="flex items-center space-x-2 bg-blue-100 text-blue-600 px-3 py-1.5 rounded-full font-semibold hover:bg-blue-200 focus:outline-none">
@@ -26,25 +24,22 @@
                 <!-- Profile Dropdown -->
                 <div id="adminProfileMenu" class="absolute right-0 z-10 hidden w-48 mt-2 bg-gray-100 border border-gray-200 rounded-lg shadow-lg">
                     <a href="{{ route('admin-profile') }}" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Profile</a>
-                    <a href="logout" class="block px-4 py-2 text-sm font-semibold text-gray-700 border-t border-gray-200 hover:bg-gray-200">Log Out</a>
+                    <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm font-semibold text-gray-700 border-t border-gray-200 hover:bg-gray-200">Log Out</a>
                 </div>
             </div>
         </div>
     </nav>
 
-
-
     <!-- Dashboard Section -->
     <main class="container px-4 py-8 mx-auto">
         <h1 class="mb-6 text-2xl font-bold text-center">Admin Dashboard</h1>
-    <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('https://shorturl.at/iSKRY');">
-        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('https://shorturl.at/iSKRY');">
+            <div class="absolute inset-0 bg-black opacity-40"></div>
             <div class="container relative flex flex-col items-center justify-center h-full mx-auto text-center text-white">
-            <h1 class="mb-4 text-4xl font-bold"> UTM Sports Management </h1>
-            <p class="mb-6 text-lg"> Welcome to Admin's Page </p>
-        </div>
-    </header>
-
+                <h1 class="mb-4 text-4xl font-bold">UTM Sports Management</h1>
+                <p class="mb-6 text-lg">Welcome to Admin's Page</p>
+            </div>
+        </header>
 
         <!-- Admin Actions -->
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -84,3 +79,4 @@
 
 </body>
 </html>
+

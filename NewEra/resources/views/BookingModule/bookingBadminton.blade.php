@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Details - Badminton</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,192 +13,198 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f9f9f9;
+            background-color: #f8f9fa;
         }
 
         .container {
-            width: 90%; /* Adjust width of the container to make it responsive */
-            max-width: 500px; /* Set a max width for larger screens */
-            background: white;
-            padding: 20px;
+            background-color: white;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .progress-bar {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .step {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: lightgray;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-        }
-
-        .step.active {
-            background-color: #007bff;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+            padding: 20px;
         }
 
         h2 {
-            text-align: center;
             margin-bottom: 20px;
-            font-size: 1.5em; /* Make the title smaller */
+            font-size: 20px;
         }
 
         label {
             font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            text-align: left;
         }
 
-        input, select, button {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        input[type="date"], select {
             width: 100%;
+            padding: 8px;
             margin-top: 5px;
-            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
-        button {
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            border: none;
-        }
-
-        button:hover {
-            background-color: #0056b3;
+        .court-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 15px 0;
         }
 
         .toggle-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 5px;
+            width: 30%;
+            margin-bottom: 10px;
+            padding: 8px 0;
             border: 2px solid #007bff;
-            border-radius: 5px;
-            background-color: white;
             color: #007bff;
+            font-size: 14px;
             cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            transition: background 0.3s, color 0.3s;
         }
 
         .toggle-btn.active {
             background-color: #007bff;
             color: white;
         }
+
+        #total-price {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        option:disabled {
+            color: gray;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="progress-bar">
-            <div class="step active">1</div>
-            <div class="step">2</div>
-            <div class="step">3</div>
-        </div>
         <h2>Booking Details - Badminton</h2>
-        <form method="POST" action="{{ route('submitBookingBadminton') }}">
-            @csrf
-            <label for="date">Date:</label>
-            <input type="date" id="date" name="date" required>
 
-            <label for="time">Time:</label>
-            <select id="time" name="time" required>
-                <option value="">Select Time</option>
-                <option value="07:00">7:00 AM</option>
-                <option value="08:00">8:00 AM</option>
-                <option value="09:00">9:00 AM</option>
-                <option value="10:00">10:00 AM</option>
-                <option value="11:00">11:00 AM</option>
-                <option value="12:00">12:00 PM</option>
-                <option value="13:00">1:00 PM</option>
-                <option value="14:00">2:00 PM</option>
-                <option value="15:00">3:00 PM</option>
-                <option value="16:00">4:00 PM</option>
-                <option value="17:00">5:00 PM</option>
-                <option value="18:00">6:00 PM</option>
-                <option value="19:00">7:00 PM</option>
-            </select>
+        <!-- Date Input -->
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
 
-            <label for="court">Court:</label>
-            <div id="court-container">
-                <div class="toggle-btn" data-court="1">Court 1</div>
-                <div class="toggle-btn" data-court="2">Court 2</div>
-                <div class="toggle-btn" data-court="3">Court 3</div>
-                <div class="toggle-btn" data-court="4">Court 4</div>
-                <div class="toggle-btn" data-court="5">Court 5</div>
-                <div class="toggle-btn" data-court="6">Court 6</div>
-            </div>
-            <input type="hidden" id="selected-courts" name="court">
+        <!-- Time Dropdown -->
+        <label for="time">Time:</label>
+        <select id="time">
+            <option value="8">8:00 AM</option>
+            <option value="9">9:00 AM</option>
+            <option value="10">10:00 AM</option>
+            <option value="11">11:00 AM</option>
+            <option value="12">12:00 PM</option>
+            <option value="13">1:00 PM</option>
+            <option value="14">2:00 PM</option>
+            <option value="15">3:00 PM</option>
+            <option value="16">4:00 PM</option>
+            <option value="17">5:00 PM</option>
+            <option value="18">6:00 PM</option>
+            <option value="19">7:00 PM</option>
+        </select>
 
-            <button type="submit">Next</button>
-        </form>
+        <!-- Court Selection -->
+        <label for="court">Court:</label>
+        <div class="court-buttons">
+            <div class="toggle-btn" data-court="Court 1">Court 1</div>
+            <div class="toggle-btn" data-court="Court 2">Court 2</div>
+            <div class="toggle-btn" data-court="Court 3">Court 3</div>
+            <div class="toggle-btn" data-court="Court 4">Court 4</div>
+            <div class="toggle-btn" data-court="Court 5">Court 5</div>
+            <div class="toggle-btn" data-court="Court 6">Court 6</div>
+        </div>
+
+        <!-- Total Price Section -->
+        <div id="total-price">Total Price: RM 0.00</div>
+
+        <hr style="margin: 20px 0; border: 1px solid #ccc;">
+
+        <!-- Personal Details Fetched from Authenticated User -->
+        <div class="personal-details">
+            <h3>Your Personal Details</h3>
+            <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
+            <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
+            <p><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
+            <p><strong>Phone Number:</strong> {{ Auth::user()->phone_number }}</p>
+            <p><strong>Role:</strong> {{ Auth::user()->role }}</p>
+        </div>
+
+        <!-- Next Button -->
+        <button type="button">Next</button>
     </div>
 
     <script>
-        // Function to disable past times based on selected date
-        function disablePastTimes() {
-            const dateInput = document.getElementById('date');
-            const timeSelect = document.getElementById('time');
-            const today = new Date();
-            const selectedDate = new Date(dateInput.value);
-            const options = timeSelect.options;
-
-            // Disable times for today that have already passed
-            for (let i = 0; i < options.length; i++) {
-                const timeValue = options[i].value;
-                const timeHour = parseInt(timeValue.split(':')[0]);
-
-                if (
-                    selectedDate.toDateString() === today.toDateString() &&
-                    timeHour <= today.getHours()
-                ) {
-                    options[i].disabled = true;
-                } else {
-                    options[i].disabled = false;
-                }
-            }
-        }
-
-        // Set up date picker with today's date as minimum
         const dateInput = document.getElementById('date');
+        const timeSelect = document.getElementById('time');
         const today = new Date();
+
+        // Set minimum date to today
         const yyyy = today.getFullYear();
         const mm = String(today.getMonth() + 1).padStart(2, '0');
         const dd = String(today.getDate()).padStart(2, '0');
-        const minDate = `${yyyy}-${mm}-${dd}`;
-        dateInput.setAttribute('min', minDate);
+        dateInput.setAttribute('min', `${yyyy}-${mm}-${dd}`);
 
-        // Ensure time is displayed and update time options when date changes
-        dateInput.addEventListener('change', function () {
-            disablePastTimes();
+        // Disable times that have passed
+        function updateTimeOptions() {
+            const selectedDate = new Date(dateInput.value);
+            const currentTime = new Date();
+            const isToday = selectedDate.toDateString() === currentTime.toDateString();
+
+            // Enable all options first
+            Array.from(timeSelect.options).forEach(option => option.disabled = false);
+
+            if (isToday) {
+                const currentHour = currentTime.getHours();
+                Array.from(timeSelect.options).forEach(option => {
+                    if (parseInt(option.value) <= currentHour) {
+                        option.disabled = true;
+                    }
+                });
+            }
+        }
+
+        // Add event listeners
+        dateInput.addEventListener('change', updateTimeOptions);
+        window.addEventListener('load', () => {
+            dateInput.value = `${yyyy}-${mm}-${dd}`;
+            updateTimeOptions();
         });
 
-        // Court selection toggle buttons
+        // Court button selection logic
         const courtButtons = document.querySelectorAll('.toggle-btn');
-        const selectedCourtsInput = document.getElementById('selected-courts');
+        const totalPriceElement = document.getElementById('total-price');
+        const pricePerCourt = 5.0;
 
         courtButtons.forEach((btn) => {
             btn.addEventListener('click', () => {
                 btn.classList.toggle('active');
 
-                const selectedCourts = Array.from(courtButtons)
-                    .filter((btn) => btn.classList.contains('active'))
-                    .map((btn) => btn.getAttribute('data-court'));
+                const selectedCourts = document.querySelectorAll('.toggle-btn.active');
+                const totalPrice = selectedCourts.length * pricePerCourt;
 
-                selectedCourtsInput.value = selectedCourts.join(',');
+                totalPriceElement.textContent = `Total Price: RM ${totalPrice.toFixed(2)}`;
             });
         });
-
-        // Disable past times initially on page load if a date is selected
-        if (dateInput.value) {
-            disablePastTimes();
-        }
     </script>
 </body>
 </html>
