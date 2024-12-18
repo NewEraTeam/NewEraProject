@@ -67,7 +67,7 @@ Route::get('/facility/gym', [GymController::class, 'index'])->name('gym');
 
 // Customer booking history page
 Route::get('/customer-booking', function(){
-    return view('CustomerBookingModule.CustomerBooking'); // Corrected path for the customer-booking
+    return view('CustomerModule.CustomerBooking'); // Corrected path for the customer-booking
 })->name('customer-booking');
 
 // About Us page
