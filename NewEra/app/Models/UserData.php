@@ -29,7 +29,7 @@ class UserData extends Eloquent implements Authenticatable
     ];
 
     protected $casts = [
-        'password' => 'hashed',
+        'password' => 'hashed', // Ensure password is hashed
     ];
 
     /**
@@ -39,7 +39,7 @@ class UserData extends Eloquent implements Authenticatable
      */
     public function getAuthIdentifier()
     {
-        return $this->id; // Use the 'id' field as the identifier
+        return (string) $this->_id;  // Use '_id' as the MongoDB identifier
     }
 
     /**
@@ -49,7 +49,7 @@ class UserData extends Eloquent implements Authenticatable
      */
     public function getAuthPassword()
     {
-        return $this->password; // Return the password stored in the model
+        return $this->password;  // Return the password stored in the model
     }
 
     /**
@@ -59,7 +59,7 @@ class UserData extends Eloquent implements Authenticatable
      */
     public function getAuthIdentifierName()
     {
-        return 'id'; // This can be adjusted to match your identifier column
+        return '_id'; // MongoDB uses '_id' as the default identifier
     }
 
     /**
