@@ -51,7 +51,7 @@ class AdminController extends Controller
     // Show the AdminMain page (only for admin)
     public function showMainPage()
     {
-        return view('AdminModule.AdminProfileModule.AdminMain');
+        return view('AdminModule.AdminMainPageModule.AdminMain');
     }
 
     // Logout staff/admin
