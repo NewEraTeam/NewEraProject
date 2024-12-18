@@ -74,7 +74,7 @@
             font-size: 18px;
             font-weight: bold;
             margin-top: 10px;
-            color: #e6e6e6;
+            color: #ffffff;
         }
 
         button {
@@ -143,7 +143,6 @@
         </select>
 
         <hr style="margin: 20px 0; border: 1px solid #ccc;">
-
 
         <!-- Personal Details Fetched from Authenticated User -->
         <div class="personal-details" style="text-align: left;">

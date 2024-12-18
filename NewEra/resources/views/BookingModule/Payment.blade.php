@@ -80,7 +80,7 @@
         <!-- Order Summary -->
         <div class="summary">
             <div><span>Order Number:</span> #12345</div>
-            <div><span>Total:</span> $50.00</div>
+            <div><span>Total:</span> RM0.00</div>
         </div>
 
         <!-- Customer Information (Optional) -->
