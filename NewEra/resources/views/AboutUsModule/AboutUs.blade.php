@@ -7,9 +7,65 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Material Symbols Outlined -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('{{ asset("UTM Campus.png") }}');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #2563eb;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-800 min-h-screen">
-    
+<body class="bg-gray-50 text-gray-800 min-h-screen">
+
     <!-- Navbar Section -->
     <nav class="bg-white shadow-md">
         <div class="container mx-auto px-4 flex justify-between items-center py-4">
@@ -46,6 +102,14 @@
         </div>
     </nav>
 
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container mx-auto px-4">
+            <h1 class="text-5xl font-bold mb-4 animate-fade-in">About UTM Sports Facilities</h1>
+            <p class="text-xl mb-8 animate-fade-in">Empowering athletes, fostering community</p>
+        </div>
+    </div>
+
     <!-- About Us Section -->
     <section class="container mx-auto px-4 py-8">
         <h1 class="text-center text-3xl font-bold mb-4">About Us</h1>
@@ -65,9 +129,33 @@
             </div>
         </div>
 
+        <!-- Facilities Overview -->
+        <div class="bg-blue-50 py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">Our Facilities</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="section-card text-center">
+                        <span class="material-symbols-outlined text-5xl text-blue-600 mb-4">sports_soccer</span>
+                        <h3 class="text-xl font-bold mb-2">Sports Fields</h3>
+                        <p class="text-gray-600">Professional-grade fields for football, rugby, and more</p>
+                    </div>
+                    <div class="section-card text-center">
+                        <span class="material-symbols-outlined text-5xl text-blue-600 mb-4">pool</span>
+                        <h3 class="text-xl font-bold mb-2">Swimming Pool</h3>
+                        <p class="text-gray-600">Olympic-sized swimming pool with training facilities</p>
+                    </div>
+                    <div class="section-card text-center">
+                        <span class="material-symbols-outlined text-5xl text-blue-600 mb-4">fitness_center</span>
+                        <h3 class="text-xl font-bold mb-2">Gymnasium</h3>
+                        <p class="text-gray-600">State-of-the-art gym equipment and training areas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Team Section -->
         <h2 class="text-center text-2xl font-bold mb-6">Meet Our Team</h2>
-        
+
         <!-- Sports Director -->
         <div class="bg-white shadow-lg rounded-lg p-4 mb-6 border border-gray-200">
             <h3 class="text-xl font-semibold text-center text-blue-600">Sports Director</h3>
