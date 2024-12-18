@@ -1,27 +1,26 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-return new class extends Migration
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Booking extends Model
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('bookings', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+    use HasFactory;
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('bookings');
-    }
-};
+    // Specify the table if it doesn't match the model name
+    protected $table = 'bookings';
+
+    // Specify the fillable attributes
+    protected $fillable = [
+        'date',
+        'time',
+        'court',
+        'name',
+        'matric_number',
+        'email',
+        'phone',
+        'status',
+    ];
+}

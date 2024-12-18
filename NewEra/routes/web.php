@@ -8,9 +8,9 @@ use App\Http\Controllers\BadmintonController;
 use App\Http\Controllers\SwimmingController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\GymController;
-use App\Http\Controllers\CustomerBookingController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
+
 
 // Default route to load the login page
 Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
@@ -80,19 +80,24 @@ Route::get('/view-profile', function(){
     return view('ViewProfileModule.ViewProfile');
 })->name('view-profile');
 
-Route::get('/booking/badminton', fn() => view('bookingBadminton'));
-Route::post('/booking/badminton', [BookingController::class, 'submitBookingBadminton']);
-Route::get('/booking/badminton', function () {
-    return view('BookingModule.bookingBadminton');
-})->name('bookingBadminton');
+Route::get('/bookingBadminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
+Route::post('/submitBookingBadminton', [BookingController::class, 'submitBookingBadminton'])->name('submitBookingBadminton');
+Route::get('/bookingPersonalDetails', [BookingController::class, 'showPersonalDetails'])->name('bookingPersonalDetails');
+Route::post('/submitPersonalDetails', [BookingController::class, 'submitPersonalDetails'])->name('submitPersonalDetails');
+Route::get('/bookingPayment', [BookingController::class, 'showPayment'])->name('bookingPayment');
+Route::post('/submitPayment', [BookingController::class, 'submitPayment'])->name('submitPayment');
+Route::get('/bookingSuccess', [BookingController::class, 'showSuccess'])->name('bookingSuccess');
 
-Route::get('/booking/personal-details', fn() => view('BookingPersonalDetails'));
-Route::post('/booking/personal-details', [BookingController::class, 'storePersonalDetails']);
-Route::get('/booking/personal-details', function () {
-    return view('BookingModule.BookingPersonalDetails');
-})->name('bookingPersonalDetails');
+//Localization Features
+Route::get('/lang/{locale}', function ($locale) {
+    // Validate the locale before setting it
+    if (in_array($locale, ['en', 'bm', 'cn'])) {
+        session(['locale' => $locale]);  // Store the selected language in the session
+    }
+    return redirect()->back();  // Redirect back to the previous page
+});
 
-Route::get('/booking/payment', fn() => view('Payment'));
-Route::post('/booking/payment', [BookingController::class, 'storePaymentDetails']);
-
-Route::get('/booking/success', [BookingController::class, 'success']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/booking-badminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
+    Route::post('/booking-badminton', [BookingController::class, 'submitBookingBadminton']);
+});
