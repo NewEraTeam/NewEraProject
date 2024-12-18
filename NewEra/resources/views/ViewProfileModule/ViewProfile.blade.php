@@ -30,9 +30,14 @@
         }
 
         .profile-header {
-            background: linear-gradient(to right, #fff, #f8f9fa);
-            border-radius: 15px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header .text-gray-600 {
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .profile-image {
@@ -48,18 +53,41 @@
         .stats-card {
             background: white;
             border-radius: 12px;
-            transition: transform 0.3s ease;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s ease;
         }
 
         .stats-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.08);
         }
 
         .booking-table {
+            background: white;
             border-radius: 12px;
-            overflow: hidden;
+        }
+
+        .booking-table thead tr {
+            background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+            color: white;
+        }
+
+        .booking-table th {
+            padding: 1rem;
+            font-weight: 500;
+        }
+
+        .booking-table tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .stats-card h3 {
+            color: #4b5563;
+        }
+
+        .stats-card p {
+            color: #1e40af;
         }
 
         .booking-table th {
@@ -70,10 +98,6 @@
 
         .booking-table tr:nth-child(even) {
             background-color: #f8f9fa;
-        }
-
-        .booking-table tr:hover {
-            background-color: #e9ecef;
         }
 
         .status-badge {
@@ -108,9 +132,62 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: #ffffff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .utm-logo {
+            height: 50px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .utm-logo:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0.8rem 1rem;
+            }
+
+            .utm-logo {
+                height: 40px;
+            }
+        }
+
+        /* Adjust body padding to account for fixed header */
+        body {
+            padding-top: 82px;
+        }
     </style>
 </head>
 <body class="profile-container">
+    <div class="header">
+        <div class="header-container">
+            <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="utm-logo">
+        </div>
+    </div>
     <div class="container mx-auto">
         <!-- Sidebar Navigation -->
         <div class="flex">
