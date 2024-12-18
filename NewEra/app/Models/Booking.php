@@ -2,25 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    use HasFactory;
+    protected $connection = 'mongodb'; // Use the MongoDB connection
+    protected $collection = 'bookings'; // MongoDB collection name
 
-    // Specify the table if it doesn't match the model name
-    protected $table = 'bookings';
-
-    // Specify the fillable attributes
     protected $fillable = [
         'date',
-        'time',
+        'start_time',
+        'end_time',
         'court',
         'name',
-        'matric_number',
         'email',
-        'phone',
-        'status',
+        'matric_number',
+        'phone_number',
+        'role',
+        'total_price',
+        'date_booked',
     ];
 }
