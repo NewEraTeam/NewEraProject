@@ -10,6 +10,7 @@ use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 
 
 // Default route to load the login page
@@ -100,4 +101,9 @@ Route::get('/lang/{locale}', function ($locale) {
 Route::middleware(['auth'])->group(function () {
     Route::get('/booking-badminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
     Route::post('/booking-badminton', [BookingController::class, 'submitBookingBadminton']);
+});
+
+// Admin Routes (protected by admin middleware)
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/main', [AdminController::class, 'showMainPage'])->name('adminMain');
 });
