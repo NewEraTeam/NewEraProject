@@ -108,7 +108,7 @@ Route::get('/lang/{locale}', function ($locale) {
 Route::middleware(['auth'])->group(function () {
     Route::get('/booking-badminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
     Route::post('/booking-badminton', [BookingController::class, 'submitBookingBadminton']);
-
+});
 
 // Admin Routes (protected by admin middleware)
 Route::middleware(['admin'])->group(function () {
@@ -117,3 +117,10 @@ Route::middleware(['admin'])->group(function () {
 
 Route::get('/payment', [PaymentController::class, 'index']);
 Route::post('/payment', [PaymentController::class, 'processPayment']);
+
+Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking'])->name('bookingBadminton');
+
+// Handle Payment Submission
+Route::post('/submit-payment', [BookingController::class, 'submitPayment'])->name('submitPayment');
+
+Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking']);

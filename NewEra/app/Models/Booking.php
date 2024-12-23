@@ -20,6 +20,8 @@ class Booking extends Model
         'phone_number',
         'role',
         'total_price',
-        'date_booked',
+        'status', // Added for booking status
+        'payment_amount', // Added for payment amount
+        'user_id', // Added for associating with the user
     ];
 }

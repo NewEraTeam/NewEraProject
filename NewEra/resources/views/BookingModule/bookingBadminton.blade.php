@@ -103,6 +103,10 @@
         <h2>Booking Details - Badminton</h2>
         <form method="POST" action="{{ route('submitPayment') }}">
         @csrf
+        <input type="hidden" name="start_time" id="hidden-start-time">
+        <input type="hidden" name="end_time" id="hidden-end-time">
+        <input type="hidden" name="court[]" id="hidden-court">
+        <input type="hidden" name="total_price" id="hidden-total-price">
 
         <!-- Date Input -->
         <label for="date">Date:</label>
@@ -165,11 +169,21 @@
             <p><strong>Role:</strong> {{ Auth::user()->role }}</p>
         </div>
 
+        <!-- Payment Section -->
+        <hr>
+        <h3 style="text-align: center;">Payment Section</h3>
+        <label for="card-element">Enter your card details:</label>
+        <div id="card-element">
+            <!-- Stripe Element will be inserted here -->
+        </div>
+        <div id="card-element"></div>
+        <div id="card-errors" role="alert" style="color: red; margin-top: 10px;"></div>
+
         <!-- Next Button -->
         <button type="submit" id="total-price" >Total Price: RM 0.00</button>
         </form>
     </div>
-
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
         const dateInput = document.getElementById('date');
         const startTimeSelect = document.getElementById('start-time');
@@ -233,8 +247,121 @@
                 const totalPrice = selectedCourts.length * pricePerCourtPerHour * duration;
 
                 totalPriceElement.textContent = `Total Price: RM ${totalPrice.toFixed(2)}`;
+                courtButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+
+        // Get the selected courts and times
+        const selectedCourts = document.querySelectorAll('.toggle-btn.active');
+        const selectedStartTime = parseInt(startTimeSelect.value);
+        const selectedEndTime = parseInt(endTimeSelect.value);
+
+        // Calculate the duration
+        const duration = selectedEndTime - selectedStartTime;
+        const totalPrice = selectedCourts.length * pricePerCourtPerHour * duration;
+
+        // Update the total price display
+        totalPriceElement.textContent = `Total Price: RM ${totalPrice.toFixed(2)}`;
+
+        // Update the hidden input field for total_price
+        const totalPriceInput = document.querySelector('input[name="total_price"]');
+        if (totalPriceInput) {
+            totalPriceInput.value = totalPrice.toFixed(2);
+            courtButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+
+        // Get the selected courts and times
+        const selectedCourts = document.querySelectorAll('.toggle-btn.active');
+        const selectedStartTime = parseInt(startTimeSelect.value);
+        const selectedEndTime = parseInt(endTimeSelect.value);
+
+        // Calculate the duration
+        const duration = selectedEndTime - selectedStartTime;
+        const totalPrice = selectedCourts.length * pricePerCourtPerHour * duration;
+
+        // Update the total price display
+        totalPriceElement.textContent = `Total Price: RM ${totalPrice.toFixed(2)}`;
+
+        // Update the hidden input field for total_price
+        const totalPriceInput = document.querySelector('input[name="total_price"]');
+        if (totalPriceInput) {
+            totalPriceInput.value = totalPrice.toFixed(2);
+        }
+    });
+});
+
+        }
+    });
+});
+
             });
         });
+
+        const stripe = Stripe("{{ env('STRIPE_KEY') }}");
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        const form = document.querySelector('form');
+        const cardErrors = document.getElementById('card-errors');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const { paymentMethod, error } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+            });
+
+            if (error) {
+                cardErrors.textContent = error.message;
+            } else {
+                // Submit the payment method ID along with the form
+                const hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'payment_method_id');
+                hiddenInput.setAttribute('value', paymentMethod.id);
+                form.appendChild(hiddenInput);
+                form.submit();
+            }
+        });
+
+        form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const selectedCourts = Array.from(document.querySelectorAll('.toggle-btn.active')).map((btn) =>
+        btn.getAttribute('data-court')
+    );
+    const totalPrice = calculateTotalPrice(selectedCourts.length);
+    document.getElementById('hidden-start-time').value = startTimeSelect.value;
+    document.getElementById('hidden-end-time').value = endTimeSelect.value;
+    document.getElementById('hidden-court').value = JSON.stringify(selectedCourts);
+    document.getElementById('hidden-total-price').value = totalPrice;
+
+    // Proceed with Stripe Payment
+    const { paymentMethod, error } = await stripe.createPaymentMethod({
+        type: 'card',
+        card: cardElement,
+    });
+
+    if (error) {
+        cardErrors.textContent = error.message;
+    } else {
+        const hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'payment_method_id');
+        hiddenInput.setAttribute('value', paymentMethod.id);
+        form.appendChild(hiddenInput);
+        form.submit();
+    }
+});
+
+function calculateTotalPrice(numCourts) {
+    const duration = parseInt(endTimeSelect.value) - parseInt(startTimeSelect.value);
+    return numCourts * duration * pricePerCourtPerHour;
+}
+
     </script>
 </body>
 </html>
+
