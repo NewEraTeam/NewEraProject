@@ -11,6 +11,7 @@ use App\Http\Controllers\GymController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 
 
 // Default route to load the login page
@@ -108,6 +109,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/booking-badminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
     Route::post('/booking-badminton', [BookingController::class, 'submitBookingBadminton']);
 
+
+// Admin Routes (protected by admin middleware)
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/main', [AdminController::class, 'showMainPage'])->name('adminMain');
+});
+
 Route::get('/payment', [PaymentController::class, 'index']);
 Route::post('/payment', [PaymentController::class, 'processPayment']);
-
