@@ -24,7 +24,6 @@ class BookingController extends Controller
         ]);
     }
 
-
     /**
      * Handle the submission of booking details (Badminton).
      */
@@ -43,13 +42,14 @@ class BookingController extends Controller
         $booking->time = $validated['time'];
         $booking->court = $validated['court'];
         $booking->status = 'pending'; // Set default status
+        $booking->user_id = Auth::id(); // Associate the booking with the authenticated user
         $booking->save();
 
         // Save the booking ID in the session for reference
         $request->session()->put('booking_id', $booking->id);
 
         // Redirect to the personal details page
-        return redirect()->route('bookingPersonalDetails');
+        return redirect()->route('bookingPayment');
     }
 
     /**
@@ -96,9 +96,18 @@ class BookingController extends Controller
     /**
      * Show the payment page.
      */
-    public function showPayment()
+    public function showPayment(Request $request)
     {
-        return view('BookingModule.BookingPayment'); // Matches your view path
+        // Retrieve the booking ID from the session
+        $bookingId = $request->session()->get('booking_id');
+        $booking = Booking::find($bookingId);
+
+        if (!$booking) {
+            return redirect()->route('bookingBadminton')->with('error', 'Booking not found.');
+        }
+
+        // Pass the booking details to the payment page
+        return view('BookingModule.BookingPayment', ['booking' => $booking]);
     }
 
     /**
@@ -113,8 +122,14 @@ class BookingController extends Controller
             return redirect()->route('bookingBadminton')->with('error', 'Booking not found.');
         }
 
-        // Mark the booking as completed
+        // Validate the payment amount if necessary
+        $validated = $request->validate([
+            'payment_amount' => 'required|numeric|min:1', // Ensure payment amount is provided
+        ]);
+
+        // Update the booking status and store payment amount (if applicable)
         $booking->status = 'completed'; // Assuming a status column exists in the database
+        $booking->payment_amount = $validated['payment_amount']; // Add this column in your bookings table if not already present
         $booking->save();
 
         // Clear the session booking ID
@@ -129,5 +144,18 @@ class BookingController extends Controller
     public function showSuccess()
     {
         return view('BookingModule.BookingSuccess'); // Matches your view path
+    }
+
+    /**
+     * (New) Retrieve all bookings for the authenticated user.
+     */
+    public function myBookings()
+    {
+        $user = Auth::user();
+        $bookings = Booking::where('user_id', $user->id)->get();
+
+        return view('BookingModule.MyBookings', [
+            'bookings' => $bookings
+        ]);
     }
 }
