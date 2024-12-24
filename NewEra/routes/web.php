@@ -12,6 +12,8 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\DB;
+
 
 
 // Default route to load the login page
@@ -99,6 +101,15 @@ Route::post('/submitPersonalDetails', [BookingController::class, 'submitPersonal
 Route::get('/bookingPayment', [BookingController::class, 'showPayment'])->name('bookingPayment');
 Route::post('/submitPayment', [BookingController::class, 'submitPayment'])->name('submitPayment');
 Route::get('/bookingSuccess', [BookingController::class, 'showSuccess'])->name('bookingSuccess');
+
+Route::get('/debug-db', function () {
+    try {
+        $pdo = DB::connection()->getPdo();
+        return "Connected to database successfully: " . $pdo->getAttribute(\PDO::ATTR_CONNECTION_STATUS);
+    } catch (\Exception $e) {
+        return "Database connection error: " . $e->getMessage();
+    }
+});
 
 //Localization Features
 Route::get('/lang/{locale}', function ($locale) {

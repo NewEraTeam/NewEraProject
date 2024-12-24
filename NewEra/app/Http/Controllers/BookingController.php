@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Booking;
+use Illuminate\Support\Facades\DB; // Add this at the top of your controller
 
 class BookingController extends Controller
 {
     /**
      * Show the booking badminton page.
      */
-
-     public function showBadmintonBooking()
-{
-    return view('booking.bookingBadminton');
-}
+    public function showBadmintonBooking()
+    {
+        return view('BookingModule.bookingBadminton');
+    }
 
     public function showBookingBadminton()
     {
@@ -120,51 +120,51 @@ class BookingController extends Controller
 
     /**
      * Handle the booking payment process.
-     */public function submitPayment(Request $request)
-{
-    // Validate the input
-    $request->validate([
-        'date' => 'required|date',
-        'start_time' => 'required|integer',
-        'end_time' => 'required|integer|gt:start_time',
-        'court' => 'required|array',
-        'payment_method_id' => 'required|string',
-    ]);
+     */
 
-    // Calculate total price
-    $duration = $request->end_time - $request->start_time;
-    $totalPrice = count($request->court) * $duration * 5.0; // RM5 per court per hour
+    public function submitPayment(Request $request)
+    {
+        try {
+            DB::connection()->getPdo();
+            // Validate the input
+            $validated = $request->validate([
+                'date' => 'required|date',
+                'start_time' => 'required|integer',
+                'end_time' => 'required|integer|gt:start_time',
+                'court' => 'required|array',
+                'payment_method_id' => 'required|string',
+            ]);
 
-    // Save Booking Data
-    $booking = Booking::create([
+            // Calculate total price
+            $duration = $validated['end_time'] - $validated['start_time'];
+            $totalPrice = count($validated['court']) * $duration * 5.0; // RM5 per court per hour
 
-        'date' => $request->date,
-        'start_time' => $request->start_time,
-        'end_time' => $request->end_time,
-        'courts' => $request->court,
-        'total_price' => $totalPrice,
-    ]);
+            // Save Booking Data
+            $booking = Booking::create([
+                'user_id' => Auth::id(),
+                'date' => $validated['date'],
+                'start_time' => $validated['start_time'],
+                'end_time' => $validated['end_time'],
+                'court' => implode(', ', $validated['court']),
+                'total_price' => $totalPrice,
+                'status' => 'pending',
+            ]);
 
-    // Now process the payment using Stripe
-    try {
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
-        $paymentIntent = $stripe->paymentIntents->create([
-            'amount' => $totalPrice * 100, // Convert RM to cents
-            'currency' => 'myr',
-            'payment_method' => $request->payment_method_id,
-            'confirmation_method' => 'manual',
-            'confirm' => true,
-        ]);
+            // Process the payment using Stripe
+            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+            $paymentIntent = $stripe->paymentIntents->create([
+                'amount' => $totalPrice * 100, // Convert RM to cents
+                'currency' => 'myr',
+                'payment_method' => $validated['payment_method_id'],
+                'confirmation_method' => 'manual',
+                'confirm' => true,
+            ]);
 
-        // Return success response
-        return redirect()->back()->with('success', 'Payment successful! Your booking is confirmed.');
-    } catch (\Exception $e) {
-        // If payment fails, you might want to delete the booking
-        $booking->delete();
-
-        return redirect()->back()->with('error', 'Payment failed: ' . $e->getMessage());
+            return redirect()->back()->with('success', 'Payment successful! Your booking is confirmed.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
-}
 
     /**
      * Show the booking success page.
@@ -186,5 +186,4 @@ class BookingController extends Controller
             'bookings' => $bookings
         ]);
     }
-
 }
