@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDataController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainPageController;
 use App\Http\Controllers\BadmintonController;
 use App\Http\Controllers\SwimmingController;
@@ -76,6 +76,10 @@ Route::get('/customer-booking', function(){
 Route::get('/about-us', function () {
     return view('AboutUsModule.AboutUs'); // Corrected path for the About Us view
 })->name('about-us');
+
+Route::get('/view-mainpage', function(){
+    return view('MainPageModule.MainPage');
+})->name('view-mainpage');
 
 //View Profile Page
 Route::get('/view-profile', function(){

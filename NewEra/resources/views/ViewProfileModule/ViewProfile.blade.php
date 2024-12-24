@@ -185,7 +185,9 @@
 <body class="profile-container">
     <div class="header">
         <div class="header-container">
-            <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="utm-logo">
+            <a href="{{ route('view-mainpage') }}" class="flex items-center">
+                <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="utm-logo">
+            </a>
         </div>
     </div>
     <div class="container mx-auto">
