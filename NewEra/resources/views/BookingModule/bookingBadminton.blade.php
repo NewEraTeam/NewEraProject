@@ -109,6 +109,7 @@
         <input type="hidden" name="total_price" id="hidden-total-price">
 
         <!-- Date Input -->
+        <p style="text-align: left;"><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
         <label for="date">Date:</label>
         <input type="date" id="date" name="date" required>
 
@@ -155,18 +156,6 @@
             <div class="toggle-btn" data-court="Court 4">Court 4</div>
             <div class="toggle-btn" data-court="Court 5">Court 5</div>
             <div class="toggle-btn" data-court="Court 6">Court 6</div>
-        </div>
-
-        <hr style="margin: 20px 0; border: 1px solid #ccc;">
-
-        <!-- Personal Details Fetched from Authenticated User -->
-        <div class="personal-details" style="text-align: left;">
-            <h3 style="text-align: center;">Your Personal Details</h3>
-            <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
-            <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
-            <p><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
-            <p><strong>Phone Number:</strong> {{ Auth::user()->phone_number }}</p>
-            <p><strong>Role:</strong> {{ Auth::user()->role }}</p>
         </div>
 
         <!-- Payment Section -->
