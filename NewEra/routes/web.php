@@ -9,7 +9,9 @@ use App\Http\Controllers\SwimmingController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 
 
 // Default route to load the login page
@@ -67,7 +69,7 @@ Route::get('/facility/gym', [GymController::class, 'index'])->name('gym');
 
 // Customer booking history page
 Route::get('/customer-booking', function(){
-    return view('CustomerBookingModule.CustomerBooking'); // Corrected path for the customer-booking
+    return view('CustomerModule.CustomerBooking'); // Corrected path for the customer-booking
 })->name('customer-booking');
 
 // About Us page
@@ -83,6 +85,12 @@ Route::get('/view-mainpage', function(){
 Route::get('/view-profile', function(){
     return view('ViewProfileModule.ViewProfile');
 })->name('view-profile');
+
+Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
+// Route for the payment page
+Route::post('/booking/submit-badminton', [BookingController::class, 'submitBookingBadminton'])->name('submitBookingBadminton');
+Route::get('/booking/payment', [BookingController::class, 'showPayment'])->name('bookingPayment');
+
 
 Route::get('/bookingBadminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
 Route::post('/submitBookingBadminton', [BookingController::class, 'submitBookingBadminton'])->name('submitBookingBadminton');
@@ -104,4 +112,12 @@ Route::get('/lang/{locale}', function ($locale) {
 Route::middleware(['auth'])->group(function () {
     Route::get('/booking-badminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
     Route::post('/booking-badminton', [BookingController::class, 'submitBookingBadminton']);
+
+
+// Admin Routes (protected by admin middleware)
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/main', [AdminController::class, 'showMainPage'])->name('adminMain');
 });
+
+Route::get('/payment', [PaymentController::class, 'index']);
+Route::post('/payment', [PaymentController::class, 'processPayment']);
