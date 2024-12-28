@@ -139,3 +139,4 @@ Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBookin
 Route::post('/submit-payment', [BookingController::class, 'submitPayment'])->name('submitPayment');
 
 Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking']);
+Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');

@@ -9,6 +9,29 @@ use Illuminate\Support\Facades\DB; // Add this at the top of your controller
 
 class BookingController extends Controller
 {
+
+    public function store(Request $request)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i|after:start_time',
+            'court' => 'required|string',
+        ]);
+
+        // Save booking details to the database
+        $booking = Booking::create([
+            'date' => $validated['date'],
+            'start_time' => $validated['start_time'],
+            'end_time' => $validated['end_time'],
+            'court' => $validated['court'],
+            'payment_status' => 'Pending', // Default payment status
+        ]);
+
+        return redirect()->back()->with('success', 'Booking successfully created! Your Booking ID: ' . $booking->booking_id);
+    }
+    
     /**
      * Show the booking badminton page.
      */
