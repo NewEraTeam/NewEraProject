@@ -2,24 +2,31 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    protected $connection = 'mongodb'; // Use the MongoDB connection
-    protected $collection = 'bookings'; // MongoDB collection name
+    use HasFactory;
 
     protected $fillable = [
+        'booking_id',
         'date',
         'start_time',
         'end_time',
         'court',
-        'name',
-        'email',
-        'matric_number',
-        'phone_number',
-        'role',
-        'total_price',
-        'date_booked',
+        'payment_status',
     ];
+
+    // Automatically generate BookingID
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $latest = self::latest('id')->first();
+            $nextId = $latest ? $latest->id + 1 : 1;
+            $model->booking_id = 'UTM' . str_pad($nextId, 5, '0', STR_PAD_LEFT);
+        });
+    }
 }

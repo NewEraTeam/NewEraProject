@@ -74,7 +74,7 @@
             font-size: 18px;
             font-weight: bold;
             margin-top: 10px;
-            color: #e6e6e6;
+            color:#ffffff;
         }
 
         button {
@@ -101,139 +101,125 @@
 <body>
     <div class="container">
         <h2>Booking Details - Badminton</h2>
-        <form method="POST" action="{{ route('submitPayment') }}">
-        @csrf
+        <form method="POST" action="{{ route('bookings.store') }}">
+            @csrf
+            <!-- Matric Number -->
+            <p style="text-align: left;"><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
 
-        <!-- Date Input -->
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
+            <!-- Date Input -->
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
 
-        <!-- Start Time Dropdown -->
-        <label for="start-time">Start Time:</label>
-        <select id="start-time">
-            <option value="8">8:00 AM</option>
-            <option value="9">9:00 AM</option>
-            <option value="10">10:00 AM</option>
-            <option value="11">11:00 AM</option>
-            <option value="12">12:00 PM</option>
-            <option value="13">1:00 PM</option>
-            <option value="14">2:00 PM</option>
-            <option value="15">3:00 PM</option>
-            <option value="16">4:00 PM</option>
-            <option value="17">5:00 PM</option>
-            <option value="18">6:00 PM</option>
-            <option value="19">7:00 PM</option>
-        </select>
+            <!-- Start Time Dropdown -->
+            <label for="start-time">Start Time:</label>
+            <select id="start-time" name="start_time" required>
+                @for ($hour = 8; $hour <= 19; $hour++)
+                    <option value="{{ $hour }}">{{ $hour }}:00 {{ $hour < 12 ? 'AM' : 'PM' }}</option>
+                @endfor
+            </select>
 
-        <!-- End Time Dropdown -->
-        <label for="end-time">End Time:</label>
-        <select id="end-time">
-            <option value="9">9:00 AM</option>
-            <option value="10">10:00 AM</option>
-            <option value="11">11:00 AM</option>
-            <option value="12">12:00 PM</option>
-            <option value="13">1:00 PM</option>
-            <option value="14">2:00 PM</option>
-            <option value="15">3:00 PM</option>
-            <option value="16">4:00 PM</option>
-            <option value="17">5:00 PM</option>
-            <option value="18">6:00 PM</option>
-            <option value="19">7:00 PM</option>
-            <option value="20">8:00 PM</option>
-        </select>
+            <!-- End Time Dropdown -->
+            <label for="end-time">End Time:</label>
+            <select id="end-time" name="end_time" required>
+                @for ($hour = 9; $hour <= 20; $hour++)
+                    <option value="{{ $hour }}">{{ $hour }}:00 {{ $hour < 12 ? 'AM' : 'PM' }}</option>
+                @endfor
+            </select>
 
-        <!-- Court Selection -->
-        <label for="court">Court:</label>
-        <div class="court-buttons">
-            <div class="toggle-btn" data-court="Court 1">Court 1</div>
-            <div class="toggle-btn" data-court="Court 2">Court 2</div>
-            <div class="toggle-btn" data-court="Court 3">Court 3</div>
-            <div class="toggle-btn" data-court="Court 4">Court 4</div>
-            <div class="toggle-btn" data-court="Court 5">Court 5</div>
-            <div class="toggle-btn" data-court="Court 6">Court 6</div>
-        </div>
+            <!-- Court Selection -->
+            <label for="court">Court:</label>
+            <div class="court-buttons">
+                @for ($i = 1; $i <= 6; $i++)
+                    <div class="toggle-btn" data-court="Court {{ $i }}">Court {{ $i }}</div>
+                @endfor
+            </div>
+            <input type="hidden" name="courts" id="selected-courts">
 
-        <hr style="margin: 20px 0; border: 1px solid #ccc;">
+            <!-- Payment Section -->
+            <hr>
+            <h3 style="text-align: center;">Payment Section</h3>
+            <label for="card-element">Enter your card details:</label>
+            <div id="card-element"></div>
+            <div id="card-errors" role="alert" style="color: red; margin-top: 10px;"></div>
 
-        <!-- Personal Details Fetched from Authenticated User -->
-        <div class="personal-details" style="text-align: left;">
-            <h3 style="text-align: center;">Your Personal Details</h3>
-            <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
-            <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
-            <p><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
-            <p><strong>Phone Number:</strong> {{ Auth::user()->phone_number }}</p>
-            <p><strong>Role:</strong> {{ Auth::user()->role }}</p>
-        </div>
-
-        <!-- Next Button -->
-        <button type="submit" id="total-price" >Total Price: RM 0.00</button>
+            <!-- Total Price -->
+            <input type="hidden" name="total_price" id="total-price-hidden">
+            <button type="submit" id="total-price">Total Price: RM 0.00</button>
         </form>
     </div>
 
+    <script src="https://js.stripe.com/v3/"></script>
     <script>
         const dateInput = document.getElementById('date');
         const startTimeSelect = document.getElementById('start-time');
         const endTimeSelect = document.getElementById('end-time');
-        const today = new Date();
+        const totalPriceElement = document.getElementById('total-price');
+        const totalPriceInput = document.getElementById('total-price-hidden');
+        const courtsInput = document.getElementById('selected-courts');
+        const courtButtons = document.querySelectorAll('.toggle-btn');
+        const pricePerCourtPerHour = 5.0;
 
         // Set minimum date to today
+        const today = new Date();
         const yyyy = today.getFullYear();
         const mm = String(today.getMonth() + 1).padStart(2, '0');
         const dd = String(today.getDate()).padStart(2, '0');
         dateInput.setAttribute('min', `${yyyy}-${mm}-${dd}`);
 
-        // Disable times that have passed
-        function updateTimeOptions() {
-            const selectedDate = new Date(dateInput.value);
-            const currentTime = new Date();
-            const isToday = selectedDate.toDateString() === currentTime.toDateString();
+        // Calculate total price
+        function calculateTotalPrice() {
+            const selectedCourts = Array.from(document.querySelectorAll('.toggle-btn.active'));
+            const selectedStartTime = parseInt(startTimeSelect.value);
+            const selectedEndTime = parseInt(endTimeSelect.value);
+            const duration = selectedEndTime - selectedStartTime;
+            const totalPrice = selectedCourts.length * pricePerCourtPerHour * duration;
 
-            // Enable all options first
-            Array.from(startTimeSelect.options).forEach(option => option.disabled = false);
-            Array.from(endTimeSelect.options).forEach(option => option.disabled = false);
+            // Update price display and hidden input
+            totalPriceElement.textContent = `Total Price: RM ${totalPrice.toFixed(2)}`;
+            totalPriceInput.value = totalPrice.toFixed(2);
 
-            if (isToday) {
-                const currentHour = currentTime.getHours();
-                Array.from(startTimeSelect.options).forEach(option => {
-                    if (parseInt(option.value) <= currentHour) {
-                        option.disabled = true;
-                    }
-                });
-                Array.from(endTimeSelect.options).forEach(option => {
-                    if (parseInt(option.value) <= currentHour) {
-                        option.disabled = true;
-                    }
-                });
-            }
+            // Update selected courts input
+            const courts = selectedCourts.map(court => court.getAttribute('data-court'));
+            courtsInput.value = courts.join(',');
         }
 
-        // Add event listeners
-        dateInput.addEventListener('change', updateTimeOptions);
-        window.addEventListener('load', () => {
-            dateInput.value = `${yyyy}-${mm}-${dd}`;
-            updateTimeOptions();
-        });
-
-        // Court button selection logic
-        const courtButtons = document.querySelectorAll('.toggle-btn');
-        const totalPriceElement = document.getElementById('total-price');
-        const pricePerCourtPerHour = 5.0;
-
-        courtButtons.forEach((btn) => {
+        // Event listeners
+        courtButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 btn.classList.toggle('active');
-
-                // Get the selected courts and times
-                const selectedCourts = document.querySelectorAll('.toggle-btn.active');
-                const selectedStartTime = parseInt(startTimeSelect.value);
-                const selectedEndTime = parseInt(endTimeSelect.value);
-
-                // Calculate the duration
-                const duration = selectedEndTime - selectedStartTime;
-                const totalPrice = selectedCourts.length * pricePerCourtPerHour * duration;
-
-                totalPriceElement.textContent = `Total Price: RM ${totalPrice.toFixed(2)}`;
+                calculateTotalPrice();
             });
+        });
+
+        startTimeSelect.addEventListener('change', calculateTotalPrice);
+        endTimeSelect.addEventListener('change', calculateTotalPrice);
+
+        // Stripe Payment
+        const stripe = Stripe("{{ env('STRIPE_KEY') }}");
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        const form = document.querySelector('form');
+        const cardErrors = document.getElementById('card-errors');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const { paymentMethod, error } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+            });
+
+            if (error) {
+                cardErrors.textContent = error.message;
+            } else {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'payment_method_id');
+                hiddenInput.setAttribute('value', paymentMethod.id);
+                form.appendChild(hiddenInput);
+                form.submit();
+            }
         });
     </script>
 </body>

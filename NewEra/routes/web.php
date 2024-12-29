@@ -12,6 +12,8 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\DB;
+
 
 
 // Default route to load the login page
@@ -100,6 +102,15 @@ Route::get('/bookingPayment', [BookingController::class, 'showPayment'])->name('
 Route::post('/submitPayment', [BookingController::class, 'submitPayment'])->name('submitPayment');
 Route::get('/bookingSuccess', [BookingController::class, 'showSuccess'])->name('bookingSuccess');
 
+Route::get('/debug-db', function () {
+    try {
+        $pdo = DB::connection()->getPdo();
+        return "Connected to database successfully: " . $pdo->getAttribute(\PDO::ATTR_CONNECTION_STATUS);
+    } catch (\Exception $e) {
+        return "Database connection error: " . $e->getMessage();
+    }
+});
+
 //Localization Features
 Route::get('/lang/{locale}', function ($locale) {
     // Validate the locale before setting it
@@ -112,7 +123,7 @@ Route::get('/lang/{locale}', function ($locale) {
 Route::middleware(['auth'])->group(function () {
     Route::get('/booking-badminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
     Route::post('/booking-badminton', [BookingController::class, 'submitBookingBadminton']);
-
+});
 
 // Admin Routes (protected by admin middleware)
 Route::middleware(['admin'])->group(function () {
@@ -121,3 +132,11 @@ Route::middleware(['admin'])->group(function () {
 
 Route::get('/payment', [PaymentController::class, 'index']);
 Route::post('/payment', [PaymentController::class, 'processPayment']);
+
+Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking'])->name('bookingBadminton');
+
+// Handle Payment Submission
+Route::post('/submit-payment', [BookingController::class, 'submitPayment'])->name('submitPayment');
+
+Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking']);
+Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
