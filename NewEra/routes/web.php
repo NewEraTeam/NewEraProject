@@ -140,3 +140,11 @@ Route::post('/submit-payment', [BookingController::class, 'submitPayment'])->nam
 
 Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking']);
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/checkout', 'App\Http\Controllers\StripeController@checkout')->name('checkout');
+Route::post('/session', 'App\Http\Controllers\StripeController@session')->name('session');
+Route::get('/success', 'App\Http\Controllers\StripeController@success')->name('success');

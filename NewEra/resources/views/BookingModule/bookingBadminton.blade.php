@@ -143,8 +143,10 @@
             <div id="card-errors" role="alert" style="color: red; margin-top: 10px;"></div>
 
             <!-- Total Price -->
+            <form action="/session" method="POST">
             <input type="hidden" name="total_price" id="total-price-hidden">
             <button type="submit" id="total-price">Total Price: RM 0.00</button>
+            </form>
         </form>
     </div>
 
