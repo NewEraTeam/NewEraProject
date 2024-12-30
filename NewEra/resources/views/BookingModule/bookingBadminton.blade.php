@@ -105,6 +105,7 @@
             @csrf
             <!-- Matric Number -->
             <p style="text-align: left;"><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
+            <input type="hidden" name="matric_number" value="{{ Auth::user()->matric_number }}">
 
             <!-- Date Input -->
             <label for="date">Date:</label>
@@ -114,7 +115,7 @@
             <label for="start-time">Start Time:</label>
             <select id="start-time" name="start_time" required>
                 @for ($hour = 8; $hour <= 19; $hour++)
-                    <option value="{{ $hour }}">{{ $hour }}:00 {{ $hour < 12 ? 'AM' : 'PM' }}</option>
+                    <option value="{{ sprintf('%02d:00', $hour) }}">{{ $hour }}:00 {{ $hour < 12 ? 'AM' : 'PM' }}</option>
                 @endfor
             </select>
 
@@ -122,7 +123,7 @@
             <label for="end-time">End Time:</label>
             <select id="end-time" name="end_time" required>
                 @for ($hour = 9; $hour <= 20; $hour++)
-                    <option value="{{ $hour }}">{{ $hour }}:00 {{ $hour < 12 ? 'AM' : 'PM' }}</option>
+                    <option value="{{ sprintf('%02d:00', $hour) }}">{{ $hour }}:00 {{ $hour < 12 ? 'AM' : 'PM' }}</option>
                 @endfor
             </select>
 
@@ -133,25 +134,23 @@
                     <div class="toggle-btn" data-court="Court {{ $i }}">Court {{ $i }}</div>
                 @endfor
             </div>
-            <input type="hidden" name="courts" id="selected-courts">
-
-            <!-- Payment Section -->
-            <hr>
-            <h3 style="text-align: center;">Payment Section</h3>
-            <label for="card-element">Enter your card details:</label>
-            <div id="card-element"></div>
-            <div id="card-errors" role="alert" style="color: red; margin-top: 10px;"></div>
+            <input type="hidden" name="court" id="selected-court">
 
             <!-- Total Price -->
-            <form action="/session" method="POST">
             <input type="hidden" name="total_price" id="total-price-hidden">
             <button type="submit" id="total-price">Total Price: RM 0.00</button>
-            </form>
         </form>
     </div>
 
     <script src="https://js.stripe.com/v3/"></script>
     <script>
+
+document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            document.getElementById('selected-court').value = this.dataset.court;
+        });
+    });
+
         const dateInput = document.getElementById('date');
         const startTimeSelect = document.getElementById('start-time');
         const endTimeSelect = document.getElementById('end-time');

@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use MongoDB\Laravel\Eloquent\Model as Eloquent; // Use MongoDB Eloquent model
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Booking extends Model
+class Booking extends Eloquent
 {
     use HasFactory;
+    protected $connection = 'mongodb';  // Ensure the model is using the MongoDB connection
 
     protected $fillable = [
         'booking_id',
+        'matric_number',
         'date',
         'start_time',
         'end_time',
@@ -24,9 +27,7 @@ class Booking extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            $latest = self::latest('id')->first();
-            $nextId = $latest ? $latest->id + 1 : 1;
-            $model->booking_id = 'UTM' . str_pad($nextId, 5, '0', STR_PAD_LEFT);
+            $model->booking_id = 'UTM' . strtoupper(uniqid());
         });
     }
 }
