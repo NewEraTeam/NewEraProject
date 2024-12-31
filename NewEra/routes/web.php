@@ -128,15 +128,6 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/main', [AdminController::class, 'showMainPage'])->name('adminMain');
 });
 
-Route::get('/payment', [PaymentController::class, 'index']);
-Route::post('/payment', [PaymentController::class, 'processPayment']);
-
 Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking'])->name('bookingBadminton');
-
-// Handle Payment Submission
-Route::post('/submit-payment', [BookingController::class, 'submitPayment'])->name('submitPayment');
-
 Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking']);
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-
-

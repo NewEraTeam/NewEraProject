@@ -35,6 +35,8 @@ class BookingController extends Controller
                 'payment_status' => 'Pending', // Default payment status
             ]);
 
+        dd('DONE SUBMIT TO DATABASE');
+
         \Stripe\Stripe::setApiKey(config('stripe.sk'));
 
         $productname = $request->get('courts');

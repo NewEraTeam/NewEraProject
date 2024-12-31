@@ -113,19 +113,11 @@
 
             <!-- Start Time Dropdown -->
             <label for="start-time">Start Time:</label>
-            <select id="start-time" name="start_time" required>
-                @for ($hour = 8; $hour <= 19; $hour++)
-                    <option value="{{ sprintf('%02d:00', $hour) }}">{{ $hour }}:00 {{ $hour < 12 ? 'AM' : 'PM' }}</option>
-                @endfor
-            </select>
+            <select id="start-time" name="start_time" required></select>
 
             <!-- End Time Dropdown -->
             <label for="end-time">End Time:</label>
-            <select id="end-time" name="end_time" required>
-                @for ($hour = 9; $hour <= 20; $hour++)
-                    <option value="{{ sprintf('%02d:00', $hour) }}">{{ $hour }}:00 {{ $hour < 12 ? 'AM' : 'PM' }}</option>
-                @endfor
-            </select>
+            <select id="end-time" name="end_time" required></select>
 
             <!-- Court Selection -->
             <label for="court">Court:</label>
@@ -167,6 +159,37 @@ document.querySelectorAll('.toggle-btn').forEach(btn => {
         const dd = String(today.getDate()).padStart(2, '0');
         dateInput.setAttribute('min', `${yyyy}-${mm}-${dd}`);
 
+        function populateStartTime() {
+            const selectedDate = new Date(dateInput.value);
+            const currentHour = today.getHours();
+            const isToday = selectedDate.toDateString() === today.toDateString();
+
+            startTimeSelect.innerHTML = ''; // Clear previous options
+            for (let hour = 8; hour <= 19; hour++) {
+                if (isToday && hour <= currentHour) continue; // Skip past hours if today
+
+                const option = document.createElement('option');
+                option.value = `${hour}:00`;
+                option.textContent = `${hour}:00 ${hour < 12 ? 'AM' : 'PM'}`;
+                startTimeSelect.appendChild(option);
+            }
+            populateEndTime(); // Update end-time based on start-time
+        }
+
+        function populateEndTime() {
+            const selectedStartTime = startTimeSelect.value
+                ? parseInt(startTimeSelect.value.split(':')[0])
+                : 8;
+            endTimeSelect.innerHTML = ''; // Clear previous options
+
+            for (let hour = selectedStartTime + 1; hour <= 20; hour++) {
+                const option = document.createElement('option');
+                option.value = `${hour}:00`;
+                option.textContent = `${hour}:00 ${hour < 12 ? 'AM' : 'PM'}`;
+                endTimeSelect.appendChild(option);
+            }
+        }
+
         // Calculate total price
         function calculateTotalPrice() {
             const selectedCourts = Array.from(document.querySelectorAll('.toggle-btn.active'));
@@ -195,33 +218,15 @@ document.querySelectorAll('.toggle-btn').forEach(btn => {
         startTimeSelect.addEventListener('change', calculateTotalPrice);
         endTimeSelect.addEventListener('change', calculateTotalPrice);
 
-        // Stripe Payment
-        const stripe = Stripe("{{ env('STRIPE_KEY') }}");
-        const elements = stripe.elements();
-        const cardElement = elements.create('card');
-        cardElement.mount('#card-element');
+        // Event listeners
+        dateInput.addEventListener('change', populateStartTime);
+        startTimeSelect.addEventListener('change', populateEndTime);
 
-        const form = document.querySelector('form');
-        const cardErrors = document.getElementById('card-errors');
+        // Initialize with today's options
+        dateInput.value = `${yyyy}-${mm}-${dd}`;
+        populateStartTime();
+        populateEndTimes();
 
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const { paymentMethod, error } = await stripe.createPaymentMethod({
-                type: 'card',
-                card: cardElement,
-            });
-
-            if (error) {
-                cardErrors.textContent = error.message;
-            } else {
-                const hiddenInput = document.createElement('input');
-                hiddenInput.setAttribute('type', 'hidden');
-                hiddenInput.setAttribute('name', 'payment_method_id');
-                hiddenInput.setAttribute('value', paymentMethod.id);
-                form.appendChild(hiddenInput);
-                form.submit();
-            }
-        });
     </script>
 </body>
 </html>
