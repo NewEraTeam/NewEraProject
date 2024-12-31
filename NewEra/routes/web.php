@@ -19,8 +19,6 @@ use Illuminate\Support\Facades\DB;
 // Default route to load the login page
 Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
 
-// Show login page
-Route::get('/login', [UserDataController::class, 'showLogin'])->name('login.page');
 
 // Handle login form submission
 Route::post('/login', [UserDataController::class, 'login'])->name('login.submit');
@@ -140,3 +138,5 @@ Route::post('/submit-payment', [BookingController::class, 'submitPayment'])->nam
 
 Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking']);
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+
+

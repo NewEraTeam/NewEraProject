@@ -32,7 +32,9 @@ return [
     'connections' => [
         'mongodb' => [
             'driver' => 'mongodb',
-            'dsn' => env('DB_CONNECTION_STRING', 'mongodb+srv://newera:newera5@newera.u3gj7.mongodb.net/'), // Use connection string from .env
+            'dsn' => env('DB_CONNECTION_STRING', 'mongodb+srv://newera:newera5@newera.u3gj7.mongodb.net/'),
+            'host'     => env('MONGO_HOST', '127.0.0.1'),
+            'port'     => env('MONGO_PORT', 27017), // Use connection string from .env
             'database' => env('DB_DATABASE', 'NewEra'),
             'username' => env('DB_USERNAME', 'newera'),
             'password' => env('DB_PASSWORD', 'newera5'),
