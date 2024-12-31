@@ -130,3 +130,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking'])->name('bookingBadminton');
 Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking']);
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+
+Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
+Route::get('/checkout', [BookingController::class, 'checkout'])->name('checkout');
+Route::get('/success', [BookingController::class, 'success'])->name('success');
