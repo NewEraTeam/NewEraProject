@@ -15,7 +15,7 @@
             <div class="container flex items-center justify-between px-4 py-4 mx-auto">
                 <!-- Logo -->
                 <a href="#" class="flex items-center">
-                    <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
+                    <img src="{{ asset('ALLIMAGES/UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
                 </a>
 
                 <!-- Language & Account Buttons -->
@@ -64,7 +64,7 @@
         <script src="{{ asset('js/languageDropdown.js') }}"></script>
 
     <!-- Hero Section -->
-    <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('https://shorturl.at/iSKRY');">
+    <header class="relative mx-auto bg-center bg-cover h-96" style="background-image: url('{{ asset('ALLIMAGES/MAINGATE.jpeg') }}');">
         <div class="absolute inset-0 bg-black opacity-40"></div>
         <div class="container relative flex flex-col items-center justify-center h-full mx-auto text-center text-white">
             <h1 class="mb-4 text-4xl font-bold">Get Active, Book Your Place Now</h1>
@@ -79,7 +79,7 @@
 
             <!-- Facility Card 1 -->
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
-                <img src="https://shorturl.at/KZ5v4" alt="UTM Sports Hall" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
+                <img src="{{ asset('ALLIMAGES/SPORTSHALL.jpeg') }}" alt="UTM Sports Hall" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">BADMINTON</p>
                 <h3 class="mb-2 text-lg font-bold">Sports Hall</h3>
                 <p class="mb-4 text-sm text-gray-500">UTM JB</p>
@@ -98,7 +98,7 @@
 
             <!-- Facility Card 2 -->
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
-                <img src="https://shorturl.at/PNk2g" alt="Swimming Pool UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
+                <img src="{{ asset('ALLIMAGES/SWIMMINGPOOL.jpeg') }}" alt="Swimming Pool UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">SWIMMING</p>
                 <h3 class="mb-2 text-lg font-bold">Swimming Pool</h3>
                 <p class="mb-4 text-sm text-gray-500">UTM JB</p>
@@ -117,7 +117,7 @@
 
             <!-- Facility Card 3 -->
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
-                <img src="https://shashinki.com/blog/wp-content/uploads/2016/12/wp-image-1335549841jpg.jpg" alt="Stadium Azman Hashim UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
+                <img src="{{ asset('ALLIMAGES/STADIUM.jpeg') }}" alt="Stadium Azman Hashim UTM" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">TRACK & FIELD</p>
                 <h3 class="mb-2 text-lg font-bold">Field</h3>
                 <p class="mb-4 text-sm text-gray-500">UTM JB</p>
@@ -136,7 +136,7 @@
 
             <!-- Facility Card 4 -->
             <div class="p-4 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg">
-                <img src="https://shorturl.at/hZt24" alt="UTM Gym" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
+                <img src="{{ asset('ALLIMAGES/GYM.jpeg') }}" alt="UTM Gym" class="object-cover w-full mx-auto mb-4 rounded-lg h-60">
                 <p class="text-sm font-semibold text-gray-500">GYM</p>
                 <h3 class="mb-2 text-lg font-bold">Gymnasium</h3>
                 <p class="mb-4 text-sm text-gray-500">UTM JB</p>
