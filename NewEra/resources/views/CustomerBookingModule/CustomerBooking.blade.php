@@ -194,7 +194,7 @@
     <div class="container mx-auto flex items-center justify-between px-4 py-4">
         <!-- Link to Main Page -->
         <a href="{{ route('view-mainpage') }}" class="flex items-center">
-            <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
+            <img src="{{ asset('ALLIMAGES\UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
         </a>
         <div></div>
     </div>
