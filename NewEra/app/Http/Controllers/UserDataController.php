@@ -27,7 +27,10 @@ class UserDataController extends Controller
         if ($user && Hash::check($request->password, $user->password)) {
             // Login the user using session
             Auth::login($user);
-
+            if ($request->username === 'admin123' && $request->password === 'admin123') {
+                // Redirect to the admin main page
+                return redirect()->route('AdminMainPage.page');  // Ensure this route exists in routes/web.php
+            }
             // Redirect to the main page after login
             return redirect()->route('MainPage.page');  // Ensure this route exists in routes/web.php
         }

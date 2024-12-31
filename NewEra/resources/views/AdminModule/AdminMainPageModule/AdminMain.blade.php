@@ -14,7 +14,7 @@
         <div class="container flex items-center justify-between px-4 py-4 mx-auto">
             <!-- Logo -->
             <a href="#" class="flex items-center">
-                <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
+                <img src="{{ asset('ALLIMAGES/UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
             </a>
             <!-- Profile Button -->
             <div class="relative inline-block text-left">
@@ -23,8 +23,8 @@
                 </button>
                 <!-- Profile Dropdown -->
                 <div id="adminProfileMenu" class="absolute right-0 z-10 hidden w-48 mt-2 bg-gray-100 border border-gray-200 rounded-lg shadow-lg">
-                    <a href="{{ route('admin-profile') }}" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Profile</a>
-                    <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm font-semibold text-gray-700 border-t border-gray-200 hover:bg-gray-200">Log Out</a>
+                    <a href="{{ route('AdminMainPage.page') }}" class="block px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200">Profile</a>
+                    <a href="login" class="block px-4 py-2 text-sm font-semibold text-gray-700 border-t border-gray-200 hover:bg-gray-200">Log Out</a>
                 </div>
             </div>
         </div>
@@ -44,19 +44,19 @@
         <!-- Admin Actions -->
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
             <!-- Manage Bookings -->
-            <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg text-center">
+            <div class="p-6 text-center bg-white border border-gray-200 rounded-lg shadow-lg">
                 <h2 class="mb-4 text-xl font-bold text-gray-800">Manage Bookings</h2>
-                <button onclick="window.location='{{ route('admin-bookings') }}'" class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                {{-- <button onclick="window.location='{{ route('admin-bookings') }}'" class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
                     View Bookings
-                </button>
+                </button> --}}
             </div>
 
             <!-- Manage Facilities -->
-            <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg text-center">
+            <div class="p-6 text-center bg-white border border-gray-200 rounded-lg shadow-lg">
                 <h2 class="mb-4 text-xl font-bold text-gray-800">Manage Facilities</h2>
-                <button onclick="window.location='{{ route('admin-facilities') }}'" class="px-4 py-2 font-semibold text-white bg-green-600 rounded-lg hover:bg-green-700">
+                {{-- <button onclick="window.location='{{ route('admin-facilities') }}'" class="px-4 py-2 font-semibold text-white bg-green-600 rounded-lg hover:bg-green-700">
                     Manage Facilities
-                </button>
+                </button> --}}
             </div>
         </div>
     </main>

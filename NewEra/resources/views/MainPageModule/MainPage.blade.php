@@ -163,7 +163,7 @@
             <div class="flex flex-col items-center justify-between space-y-6 lg:flex-row lg:items-start lg:space-y-0">
                 <!-- Logo Section -->
                 <a href="#" class="flex items-center">
-                    <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
+                    <img src="{{ asset('ALLIMAGES/UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
                 </a>
 
                 <!-- Links Section -->

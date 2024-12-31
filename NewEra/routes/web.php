@@ -34,7 +34,11 @@ Route::get('/mainpage', [MainPageController::class, 'index'])->name('mainpage');
 // Route to Main Page (once logged in)
 Route::get('/MainPageModule', function () {
     return view('MainPageModule.MainPage');
-})->name('MainPage.page');
+})->name(name: 'MainPage.page');
+
+Route::get('/AdminModule/AdminMainPageModule', function () {
+    return view('AdminModule.AdminMainPageModule.AdminMain');
+})->name(name: 'AdminMainPage.page');
 
 // Redirect button from login page to register page (New User Signup)
 Route::get('/register', function () {
@@ -121,11 +125,6 @@ Route::get('/lang/{locale}', function ($locale) {
 Route::middleware(['auth'])->group(function () {
     Route::get('/booking-badminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
     Route::post('/booking-badminton', [BookingController::class, 'submitBookingBadminton']);
-});
-
-// Admin Routes (protected by admin middleware)
-Route::middleware(['admin'])->group(function () {
-    Route::get('/admin/main', [AdminController::class, 'showMainPage'])->name('adminMain');
 });
 
 Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking'])->name('bookingBadminton');
