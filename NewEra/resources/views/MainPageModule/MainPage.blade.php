@@ -14,7 +14,7 @@
         <nav class="bg-white shadow-md">
             <div class="container flex items-center justify-between px-4 py-4 mx-auto">
                 <!-- Logo -->
-                <a href="#" class="flex items-center">
+                <a href="{{ route('view-mainpage') }}" class="flex items-center">
                     <img src="{{ asset('ALLIMAGES/UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
                 </a>
 
