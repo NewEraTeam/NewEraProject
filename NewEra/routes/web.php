@@ -36,6 +36,7 @@ Route::get('/MainPageModule', function () {
     return view('MainPageModule.MainPage');
 })->name(name: 'MainPage.page');
 
+//Route to Admin Main Page (only for Admin user)
 Route::get('/AdminModule/AdminMainPageModule', function () {
     return view('AdminModule.AdminMainPageModule.AdminMain');
 })->name(name: 'AdminMainPage.page');
@@ -44,6 +45,11 @@ Route::get('/AdminModule/AdminMainPageModule', function () {
 Route::get('/register', function () {
     return view('register'); // Load register.blade.php
 })->name('register.page');
+
+//Route for Admin Profile Page
+Route::get('/AdminModule/AdminProfileModule', function () {
+    return view('AdminModule.AdminProfileModule.AdminProfile');
+})->name(name: 'admin-profile');
 
 
 // Facility Pages
@@ -134,3 +140,13 @@ Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.st
 Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
 Route::get('/checkout', [BookingController::class, 'checkout'])->name('checkout');
 Route::get('/success', [BookingController::class, 'success'])->name('success');
+
+//Route from Admin Main to Admin Action Page
+Route::get('/AdminModule/AdminActionModule', function () {
+    return view('AdminModule.AdminActionModule.AdminAction');
+})->name(name: 'admin-bookings');
+
+//Route from Admin Main to Admin Manage Facilities
+Route::get('/AdminModule/AdminManageFacilitiesModule', function () {
+    return view('AdminModule.AdminManageFaciltiesModule.AdminManageFacilties');
+})->name(name: 'admin-facilities');
