@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +8,108 @@
     <style>
     .booking-row {
         display: table-row;
+    }
+
+    .booking-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .booking-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        background: white;
+    }
+
+    .booking-table thead {
+        background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
+    }
+
+    .booking-table th {
+        color: white;
+        font-weight: 600;
+        padding: 1.25rem 1rem;
+        text-align: left;
+        text-transform: uppercase;
+        font-size: 0.875rem;
+        letter-spacing: 0.05em;
+    }
+
+    .booking-row {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .booking-row:hover {
+        background-color: #f8fafc !important;
+        transform: scale(1.005);
+    }
+
+    .booking-row td {
+        padding: 1rem;
+        vertical-align: middle;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-weight: 600;
+        text-align: center;
+        min-width: 100px;
+    }
+
+    .status-paid {
+        background-color: #dcfce7;
+        color: #16a34a;
+    }
+
+    .status-pending {
+        background-color: #fef3c7;
+        color: #d97706;
+    }
+
+    .search-filter {
+        padding: 0.75rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        width: 100%;
+        max-width: 300px;
+        transition: all 0.3s ease;
+    }
+
+    .search-filter:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        outline: none;
+    }
+
+    @media (max-width: 768px) {
+        .booking-table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .booking-table th,
+        .booking-table td {
+            padding: 0.75rem;
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 0.3s ease-out forwards;
     }
     </style>
 
@@ -92,8 +193,8 @@
 <nav class="bg-white shadow-md">
     <div class="container mx-auto flex items-center justify-between px-4 py-4">
         <!-- Link to Main Page -->
-        <a href="{{ route('mainpage') }}" class="flex items-center">
-            <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
+        <a href="{{ route('view-mainpage') }}" class="flex items-center">
+            <img src="{{ asset('ALLIMAGES\UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
         </a>
         <div></div>
     </div>
@@ -105,23 +206,23 @@
 
         <div class="flex items-center justify-center space-x-4 mb-6">
             <!-- Search Bar -->
-            <input 
-                id="search-bar" 
-                type="text" 
-                placeholder="Search by date, receipt number..." 
-                class="w-full max-w-lg border border-gray-300 rounded-lg py-2 px-4 shadow-sm focus:ring focus:ring-indigo-300" 
+            <input
+                id="search-bar"
+                type="text"
+                placeholder="Search by date, receipt number..."
+                class="w-full max-w-lg border border-gray-300 rounded-lg py-2 px-4 shadow-sm focus:ring focus:ring-indigo-300"
             />
-            
+
             <!-- Search Button -->
-            <button 
+            <button
                 class="bg-indigo-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-indigo-600 focus:outline-none"
                 onclick="searchBookings()"
             >
                 Search
             </button>
-            
+
             <!-- Reset Button -->
-            <button 
+            <button
                 class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg shadow-md hover:bg-gray-400 focus:outline-none"
                 onclick="resetSearch()"
             >
@@ -130,8 +231,8 @@
 
             <!-- Filter Dropdown Button -->
             <div class="relative">
-                <button 
-                    id="filter-button" 
+                <button
+                    id="filter-button"
                     class="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 focus:outline-none flex items-center space-x-2"
                     onclick="toggleFilterDropdown()"
                 >
@@ -143,25 +244,25 @@
 
                 <!-- Dropdown Menu -->
                 <div id="filter-dropdown" class="hidden absolute bg-white border border-gray-200 rounded-lg shadow-lg p-4 mt-2 z-10">
-                    <button 
+                    <button
                         class="block w-full text-left px-4 py-2 hover:bg-gray-100"
                         onclick="filterBookings('thisWeek')"
                     >
                         This Week
                     </button>
-                    <button 
+                    <button
                         class="block w-full text-left px-4 py-2 hover:bg-gray-100"
                         onclick="filterBookings('thisMonth')"
                     >
                         This Month
                     </button>
-                    <button 
+                    <button
                         class="block w-full text-left px-4 py-2 hover:bg-gray-100"
                         onclick="filterBookings('thisSemester')"
                     >
                         This Semester
                     </button>
-                    <button 
+                    <button
                         class="block w-full text-left px-4 py-2 hover:bg-gray-100"
                         onclick="filterBookings('allTime')"
                     >

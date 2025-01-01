@@ -13,7 +13,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\BookingSwimmingController;
 
 
 // Default route to load the login page
@@ -134,7 +134,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking'])->name('bookingBadminton');
-Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking']);
 Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 
 Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
@@ -150,3 +149,9 @@ Route::get('/AdminModule/AdminActionModule', function () {
 Route::get('/AdminModule/AdminManageFacilitiesModule', function () {
     return view('AdminModule.AdminManageFacilitiesModule.AdminManageFacilities');
 })->name(name: 'admin-facilities');
+
+Route::get('/bookingSwimming', [BookingSwimmingController::class, 'showSwimmingBooking'])->name('bookingSwimming');
+Route::post('/bookings', [BookingSwimmingController::class, 'store'])->name('bookings.store');
+Route::post('/bookings/store', [BookingSwimmingController::class, 'store'])->name('bookings.store');
+Route::get('/checkout', [BookingSwimmingController::class, 'checkout'])->name('checkout');
+Route::get('/success', [BookingSwimmingController::class, 'success'])->name('success');
