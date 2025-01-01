@@ -10,7 +10,7 @@
     <style>
         .hero-section {
             background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                        url('{{ asset("ALLIMAGES/UTM Campus.png") }}');
+                        url('{{ asset("ALLIMAGES/STADIUM.jpeg") }}');
             background-size: cover;
             background-position: center;
             height: 60vh;
