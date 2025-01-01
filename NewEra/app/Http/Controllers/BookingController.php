@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Booking;
 use Illuminate\Support\Facades\DB; // Add this at the top of your controller
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 
 class BookingController extends Controller
 {
@@ -35,36 +37,37 @@ class BookingController extends Controller
                 'payment_status' => 'Pending', // Default payment status
             ]);
 
-        dd('DONE SUBMIT TO DATABASE');
+            //dd('DONE');
 
-        \Stripe\Stripe::setApiKey(config('stripe.sk'));
+        // Set up Stripe
+        Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        $productname = $request->get('courts');
-        $totalprice = $request->get('total-price');
-        $two0 = "00";
-        $total = "$totalprice$two0";
+        // Prepare product and price details for Stripe
+        $productname = $validated['court'];
+        $totalprice = $request->get('total_price');
+        $total_in_cents = intval($totalprice * 100); // Convert to cents for Stripe
 
+        // Create a Stripe Checkout session
         $session = \Stripe\Checkout\Session::create([
-            'line_items'  => [
+            'payment_method_types' => ['card'],
+            'line_items' => [
                 [
                     'price_data' => [
-                        'currency'     => 'MYR',
+                        'currency' => 'myr', // Malaysian Ringgit
                         'product_data' => [
-                            "name" => $productname,
+                            'name' => $productname,
                         ],
-                        'unit_amount'  => $total,
+                        'unit_amount' => $total_in_cents, // Stripe requires amount in cents
                     ],
-                    'quantity'   => 1,
+                    'quantity' => 1,
                 ],
-
             ],
-            'mode'        => 'payment',
-            'success_url' => route('success'),
-            'cancel_url'  => route('checkout'),
+            'mode' => 'payment',
+            'success_url' => route('success', ['booking_id' => $booking->id]),
+            'cancel_url' => route('checkout'),
         ]);
 
-
-        return redirect()->back()->with('success', 'Booking successfully created! Your Booking ID: ' . $booking->booking_id);
+        return redirect($session->url); // Redirect to Stripe checkout
     }
 
     public function checkout()
@@ -72,10 +75,17 @@ class BookingController extends Controller
         return view('checkout');
     }
 
-
-    public function success()
+    public function success(Request $request)
     {
-        return "Thanks for you order You have just completed your payment. The seeler will reach out to you as soon as possible";
+        $bookingId = $request->get('booking_id');
+
+        // Update the payment status to "Success"
+        $booking = Booking::find($bookingId);
+        if ($booking) {
+            $booking->update(['payment_status' => 'Success']);
+        }
+
+        return view('BookingModule.BookingSuccess', ['booking' => $booking]);
     }
     /**
      * Show the booking badminton page.
@@ -96,14 +106,6 @@ class BookingController extends Controller
         return view('BookingModule.bookingBadminton', [
             'total_price' => 50.00 // Example total price; replace this with your logic
         ]);
-    }
-
-    /**
-     * Show the booking success page.
-     */
-    public function showSuccess()
-    {
-        return view('BookingModule.BookingSuccess'); // Matches your view path
     }
 
 }
