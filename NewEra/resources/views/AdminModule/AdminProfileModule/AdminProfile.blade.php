@@ -12,7 +12,7 @@
     <nav class="bg-white shadow-md">
         <div class="container flex items-center justify-between px-4 py-4 mx-auto">
             <!-- Logo -->
-            <a href="#" class="flex items-center">
+            <a href="{{route('AdminMainPage.page')}}" class="flex items-center">
                 <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="h-8 md:h-10" />
             </a>
             <!-- Profile Button -->
@@ -29,11 +29,13 @@
         </div>
     </nav>
 
+    
     <!-- Profile Management Section -->
     <main class="container px-4 py-8 mx-auto">
         <h1 class="mb-6 text-2xl font-bold text-center">Admin Profile</h1>
         <div class="max-w-4xl mx-auto bg-white p-6 border border-gray-200 rounded-lg shadow-lg">
-            <form action="{{ route('admin-profile-update') }}" method="POST" enctype="multipart/form-data">
+            {{--
+            <form action="{{ route('admin-profile-update') }}" method="POST" enctype="multipart/form-data"> 
                 <div class="flex flex-col space-y-4">
                     
                     <!-- Full Name -->
@@ -63,12 +65,12 @@
                         </button>
                     </div>
                 </div>
-            </form>
+            </form> --}}
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="py-4 bg-white border-t border-gray-200">
+    <footer class="py-4 bg-gray-100 mt-6">
         <div class="container px-4 mx-auto text-center">
             <p class="text-gray-500">© 2024 | UTM Sports Hall Admin Panel</p>
         </div>
