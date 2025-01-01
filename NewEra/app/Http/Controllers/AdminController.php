@@ -54,10 +54,4 @@ class AdminController extends Controller
         return view('AdminModule.AdminMainPageModule.AdminMain');
     }
 
-    // Logout staff/admin
-    public function logout()
-    {
-        Auth::logout();
-        return redirect()->route('login.page')->with('success', 'You have been logged out.');
-    }
 }
