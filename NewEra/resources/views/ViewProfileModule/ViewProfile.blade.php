@@ -201,7 +201,7 @@
                         <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-500 hover:text-white">My Bookings</a>
                         <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-500 hover:text-white">Facilities</a>
                         <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-500 hover:text-white">Settings</a>
-                        <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-blue-500 hover:text-white">Logout</a>
+                        <a href="{{ route('login.page') }}" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-500 hover:text-white">Logout</a>
                     </nav>
                 </div>
             </div>

@@ -13,73 +13,126 @@
         }
 
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
             height: 100vh;
-            font-family: Arial, sans-serif;
-            color: white;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Background Image with Blur */
         .background-image {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyYwz565mvoGTdviUr9mhH2oh2XLEzi4pRyg&s');
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+                        url('{{ asset("ALLIMAGES/LOGIN.png") }}');
             background-size: cover;
             background-position: center;
-            filter: blur(8px);
             z-index: -1;
+            filter: blur(2px);
         }
 
-        /* Register Form Container */
-        .register-container {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-            width: 300px;
-            text-align: center;
+        .title {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-top: 8rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in;
             position: relative;
             z-index: 1;
         }
 
-        .register-container h2 {
-            margin-bottom: 1rem;
-            color: black;
+        .register-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+            animation: slideUpCenter 0.5s ease-out;
         }
 
-        .register-container input, .register-container select {
-            width: 100%;
-            padding: 0.5rem;
-            margin: 0.5rem 0;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+        @keyframes slideUpCenter {
+            from {
+                opacity: 0;
+                transform: translate(-50%, calc(-50% + 20px));
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
         }
 
-        .register-container button {
-            width: 100%;
-            padding: 0.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 1rem;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .register-btn {
-            background-color: #4CAF50;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
             color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .login-return-btn {
-            background-color: #2196F3;
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        .back-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             color: white;
-            margin-top: 0.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .register-btn:hover, .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            outline: none;
         }
 
         /* Error message styling */
@@ -98,6 +151,44 @@
             border-radius: 5px;
             margin-bottom: 15px;
         }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .role-select {
+            width: 100%;
+            padding: 12px;
+            background-color: white;
+            color: #1e293b;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231e293b'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 40px;
+        }
+
+        .role-select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            outline: none;
+        }
+
+        .role-select option {
+            color: #1e293b;
+            padding: 12px;
+        }
     </style>
 </head>
 <body>
@@ -113,7 +204,7 @@
             </div>
         @endif
 
-        <h2>New User Registration</h2>
+        <h2 style="text-align: center; color: #1e40af; font-size: 1.8rem; margin-bottom: 1.5rem;">New User Registration</h2>
 
         <form action="{{ route('register.submit') }}" method="POST">
             @csrf
@@ -152,7 +243,7 @@
                 <p class="error-message">{{ $message }}</p>
             @enderror
 
-            <select name="role" required>
+            <select name="role" class="role-select" required>
                 <option value="" disabled selected>Choose Role</option>
                 <option value="Student">Student</option>
                 <option value="Staff">Staff</option>
@@ -161,11 +252,10 @@
                 <p class="error-message">{{ $message }}</p>
             @enderror
 
-            <button type="submit" class="register-btn">Register</button>
-        </form>
-
-        <form action="{{ route('login.page') }}" method="GET">
-            <button type="submit" class="login-return-btn">Back to Login</button>
+            <div class="button-container">
+                <button type="submit" class="register-btn">Register</button>
+                <a href="{{ route('login.page') }}" class="back-btn">Back to Login</a>
+            </div>
         </form>
     </div>
 </body>
