@@ -19,6 +19,7 @@ class Booking extends Eloquent
         'end_time',
         'court',
         'payment_status',
+        'session',
     ];
 
     // Automatically generate BookingID

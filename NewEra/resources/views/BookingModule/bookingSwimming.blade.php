@@ -45,17 +45,10 @@
             border-radius: 4px;
         }
 
-        .court-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin: 15px 0;
-        }
-
         .toggle-btn {
-            width: 30%;
+            width: 100%;
             margin-bottom: 10px;
-            padding: 8px 0;
+            padding: 8px;
             border: 2px solid #007bff;
             color: #007bff;
             font-size: 14px;
@@ -92,77 +85,46 @@
         button:hover {
             background-color: #0056b3;
         }
-
-        option:disabled {
-            color: gray;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Booking Details - Swimming</h2>
-        <form method="POST" action="{{ route('submitPayment') }}">
-        @csrf
+        <form method="POST" action="{{ route('bookings.store') }}">
+            @csrf
+            <p style="text-align: left;"><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
+            <input type="hidden" name="matric_number" value="{{ Auth::user()->matric_number }}">
 
-        <!-- Date Input -->
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
+            <!-- Date Input -->
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
 
-        <!-- Start Time Dropdown -->
-        <label for="start-time">Start Time:</label>
-        <select id="start-time">
-            <option value="8">8:00 AM</option>
-            <option value="9">9:00 AM</option>
-            <option value="10">10:00 AM</option>
-            <option value="11">11:00 AM</option>
-            <option value="12">12:00 PM</option>
-            <option value="13">1:00 PM</option>
-            <option value="14">2:00 PM</option>
-            <option value="15">3:00 PM</option>
-            <option value="16">4:00 PM</option>
-            <option value="17">5:00 PM</option>
-            <option value="18">6:00 PM</option>
-            <option value="19">7:00 PM</option>
-        </select>
+            <!-- Session Selection -->
+            <label for="session">Session:</label>
+            <select id="session" name="session" required>
+                <option value="Morning">Morning (8:00 AM - 12:00 PM)</option>
+                <option value="Afternoon">Afternoon (2:30 PM - 6:30 PM)</option>
+            </select>
 
-        <!-- End Time Dropdown -->
-        <label for="end-time">End Time:</label>
-        <select id="end-time">
-            <option value="9">9:00 AM</option>
-            <option value="10">10:00 AM</option>
-            <option value="11">11:00 AM</option>
-            <option value="12">12:00 PM</option>
-            <option value="13">1:00 PM</option>
-            <option value="14">2:00 PM</option>
-            <option value="15">3:00 PM</option>
-            <option value="16">4:00 PM</option>
-            <option value="17">5:00 PM</option>
-            <option value="18">6:00 PM</option>
-            <option value="19">7:00 PM</option>
-            <option value="20">8:00 PM</option>
-        </select>
+            <!-- Rent Swimming Cap -->
+            <label for="rent-swimming-cap">Rent Swimming Cap:</label>
+            <select id="rent-swimming-cap" name="rent_swimming_cap" required>
+                <option value="No">No</option>
+                <option value="Yes">Yes (Additional RM2.00)</option>
+            </select>
 
-        <hr style="margin: 20px 0; border: 1px solid #ccc;">
-
-        <!-- Personal Details Fetched from Authenticated User -->
-        <div class="personal-details" style="text-align: left;">
-            <h3 style="text-align: center;">Your Personal Details</h3>
-            <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
-            <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
-            <p><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
-            <p><strong>Phone Number:</strong> {{ Auth::user()->phone_number }}</p>
-            <p><strong>Role:</strong> {{ Auth::user()->role }}</p>
-        </div>
-
-        <!-- Next Button -->
-        <button type="submit" id="total-price">Total Price: RM 4.00</button>
+            <!-- Submit Button -->
+            <input type="hidden" name="total_price" id="total-price-hidden">
+            <button type="submit" id="total-price">Total Price: RM 0.00</button>
         </form>
     </div>
 
     <script>
         const dateInput = document.getElementById('date');
-        const startTimeSelect = document.getElementById('start-time');
-        const endTimeSelect = document.getElementById('end-time');
+        const sessionSelect = document.getElementById('session');
+        const rentCapSelect = document.getElementById('rent-swimming-cap');
+        const totalPriceInput = document.getElementById('total-price-hidden');
+        const totalPriceDisplay = document.getElementById('total-price');
         const today = new Date();
 
         // Set minimum date to today
@@ -171,50 +133,22 @@
         const dd = String(today.getDate()).padStart(2, '0');
         dateInput.setAttribute('min', `${yyyy}-${mm}-${dd}`);
 
-        // Disable times that have passed
-        function updateTimeOptions() {
-            const selectedDate = new Date(dateInput.value);
-            const currentTime = new Date();
-            const isToday = selectedDate.toDateString() === currentTime.toDateString();
-
-            // Enable all options first
-            Array.from(startTimeSelect.options).forEach(option => option.disabled = false);
-            Array.from(endTimeSelect.options).forEach(option => option.disabled = false);
-
-            if (isToday) {
-                const currentHour = currentTime.getHours();
-                Array.from(startTimeSelect.options).forEach(option => {
-                    if (parseInt(option.value) <= currentHour) {
-                        option.disabled = true;
-                    }
-                });
-                Array.from(endTimeSelect.options).forEach(option => {
-                    if (parseInt(option.value) <= currentHour) {
-                        option.disabled = true;
-                    }
-                });
+        // Price Calculation
+        function calculateTotalPrice() {
+            let totalPrice = 4.00; // Base price for session
+            if (rentCapSelect.value === "Yes") {
+                totalPrice += 2.00; // Add price for swimming cap rental
             }
+            totalPriceInput.value = totalPrice.toFixed(2); // Update hidden input
+            totalPriceDisplay.textContent = `Total Price: RM ${totalPrice.toFixed(2)}`;
         }
 
-        // Add event listeners
-        dateInput.addEventListener('change', updateTimeOptions);
-        window.addEventListener('load', () => {
-            dateInput.value = `${yyyy}-${mm}-${dd}`;
-            updateTimeOptions();
-        });
+        // Event Listeners
+        rentCapSelect.addEventListener('change', calculateTotalPrice);
+        sessionSelect.addEventListener('change', calculateTotalPrice);
 
-        // Court button selection logic (not used anymore as price is fixed)
-        const courtButtons = document.querySelectorAll('.toggle-btn');
-        const totalPriceElement = document.getElementById('total-price');
-
-        courtButtons.forEach((btn) => {
-            btn.addEventListener('click', () => {
-                btn.classList.toggle('active');
-
-                // Remove price calculation logic, since price is fixed
-                totalPriceElement.textContent = `Total Price: RM 4.00`;
-            });
-        });
+        // Initialize price
+        calculateTotalPrice();
     </script>
 </body>
 </html>

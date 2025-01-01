@@ -13,11 +13,27 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f8f9fa;
+            background: url('ALLIMAGES/BADMINTONHALL.jpg') no-repeat center center/cover; /* Replace with your image */
+            position: relative;
+        }
+
+        /* Add a blur overlay */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Optional dark overlay for better text contrast */
+            backdrop-filter: blur(8px); /* Apply blur effect */
+            z-index: 0;
         }
 
         .container {
-            background-color: white;
+            position: relative;
+            z-index: 1; /* Place the content above the blurred background */
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for the form */
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
             width: 400px;
@@ -74,7 +90,7 @@
             font-size: 18px;
             font-weight: bold;
             margin-top: 10px;
-            color:#ffffff;
+            color: #ffffff;
         }
 
         button {
@@ -134,14 +150,13 @@
         </form>
     </div>
 
-    <script src="https://js.stripe.com/v3/"></script>
     <script>
 
-document.querySelectorAll('.toggle-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            document.getElementById('selected-court').value = this.dataset.court;
+        document.querySelectorAll('.toggle-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.getElementById('selected-court').value = this.dataset.court;
+            });
         });
-    });
 
         const dateInput = document.getElementById('date');
         const startTimeSelect = document.getElementById('start-time');
@@ -225,8 +240,6 @@ document.querySelectorAll('.toggle-btn').forEach(btn => {
         // Initialize with today's options
         dateInput.value = `${yyyy}-${mm}-${dd}`;
         populateStartTime();
-        populateEndTimes();
-
     </script>
 </body>
 </html>
