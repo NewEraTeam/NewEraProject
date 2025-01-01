@@ -147,7 +147,7 @@ Route::get('/AdminModule/AdminActionModule', function () {
 
 //Route from Admin Main to Admin Manage Facilities
 Route::get('/AdminModule/AdminManageFacilitiesModule', function () {
-    return view('AdminModule.AdminManageFaciltiesModule.AdminManageFacilties');
+    return view('AdminModule.AdminManageFacilitiesModule.AdminManageFacilities');
 })->name(name: 'admin-facilities');
 
 Route::get('/bookingSwimming', [BookingSwimmingController::class, 'showSwimmingBooking'])->name('bookingSwimming');
