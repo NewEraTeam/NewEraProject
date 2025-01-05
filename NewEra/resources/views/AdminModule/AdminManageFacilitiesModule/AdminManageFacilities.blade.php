@@ -6,6 +6,8 @@
     <title>Admin Facilities - Sports Hall</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/adminFacilities.js" defer></script> 
 </head>
 <body class="min-h-screen text-gray-800 bg-gray-100">
 
@@ -27,38 +29,45 @@
     </nav>
 
     <main class="container px-4 py-8 mx-auto">
-        <h1 class="mb-6 text-2xl font-bold text-center">Welcome</h1>
-        <div class="flex items-center justify-center mb-8">
-            <p class="text-lg text-gray-700">Welcome to the Admin Facilities page!</p>
-        </div>
+        <h1 class="mb-6 text-2xl font-bold text-center">Admin Facility Management</h1>
 
         <div class="mb-8 p-6 bg-white rounded-lg shadow-md">
             <h2 class="text-xl font-semibold mb-4">Close Venue</h2>
             <div class="flex justify-center space-x-4">
-                <select class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full"> 
-                    <option value="">Select Venue</option>
-                    <option value="venue1">Badminton Court</option>
-                    <option value="venue2">Swimming Pool</option>
-                    <option value="venue3">Gym</option>
-                    <option value="venue4">Stadium</option>
-                </select>
-                <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">OK</button>
+                <div class="flex items-center">
+                    <select id="venueSelect" class="bg-white text-black px-4 py-2 rounded hover:bg-white-600 w-full shadow-md border border-gray-600 rounded">
+                        <option value="" disabled selected>Select Venue</option>
+                        <option value="venue1">Badminton Court</option>
+                        <option value="venue2">Swimming Pool</option>
+                        <option value="venue3">Gym</option>
+                        <option value="venue4">Stadium</option>
+                    </select>
+                </div>
+                <div class="flex items-center">
+                    <select id="reasonSelect" class="bg-white text-black px-4 py-2 rounded hover:bg-white-600 w-full shadow-md border border-gray-600 rounded">
+                        <option value="" disabled selected>Occasions</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="booked">Booked</option>
+                    </select>
+                </div>
             </div>
         </div>
 
         <div class="p-6 bg-white rounded-lg shadow-md">
             <h2 class="text-xl font-semibold mb-4">Block Date</h2>
             <p class="mb-4 text-gray-700">Select the dates you want to block for bookings:</p>
-            <input type="date" class="border border-gray-300 rounded px-4 py-2 mb-4" />
-            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Block Date</button>
+            <input type="date" id="blockDateInput" class="border border-gray-600 rounded px-4 py-2 mb-4 shadow-md" />
+            <button id="blockDateButton" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 shadow-md">Block Date</button>
         </div>
     </main>
 
-    <footer class="py-4 bg-white border-t border-gray-200">
+    <footer class="py-8 bg-white border-t border-gray-200"> 
         <div class="container px-4 mx-auto text-center">
             <p class="text-gray-500">© 2024 | UTM Sports Hall Admin Panel</p>
         </div>
     </footer>
+
+    <script src="/js/adminFacilities.js"></script> 
 
     <script>
         // Toggle the Admin Profile dropdown
