@@ -3,48 +3,49 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Booking;
-use Illuminate\Support\Facades\DB; // Add this at the top of your controller
+use App\Models\StadiumBooks;
 use Stripe\Stripe;
-use Stripe\Checkout\Session;
+use Illuminate\Support\Facades\Auth;
 
-class BookingController extends Controller
+class BookingStadiumController extends Controller
 {
+    public function showStadiumBooking()
+    {
+        return view('BookingModule.bookingStadium');
+    }
 
-    public function storeBadminton(Request $request)
+
+    public function storeStadium(Request $request)
     {
         // Validate the incoming request
         try {
             $validated = $request->validate([
                 'matric_number' => 'required|string',
-                'date' => 'required|date',
-                'start_time' => 'required|date_format:H:i',
-                'end_time' => 'required|date_format:H:i|after:start_time',
-                'court' => 'required|string',
+                'start_date' => 'required|date',
+                'end_date' => 'required|date',
+                'add_on' => 'required|array', // Ensure `add_on` is an array
+                'add_on.*' => 'string',      // Each `add_on` value must be a string
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             dd($e->errors());
         }
 
-            $booking = Booking::create([
-                'facilityID_badminton' => 'UTM_BD',
-                'booking_id' => 'UTM52612',
-                'matric_number' => $validated['matric_number'],
-                'date' => $validated['date'],
-                'start_time' => $validated['start_time'],
-                'end_time' => $validated['end_time'],
-                'court' => $validated['court'],
-                'payment_status' => 'Pending', // Default payment status
-            ]);
-
-            //dd('DONE');
+        // Create the booking record
+        $booking = StadiumBooks::create([
+            'facilityID_stadium' => 'UTM_ST',
+            'booking_id' => 'UTM52612',
+            'matric_number' => $validated['matric_number'],
+            'start_date' => $validated['start_date'],
+            'end_date' => $validated['end_date'],
+            'add_on' => $validated['add_on'], // Save as an array
+            'payment_status' => 'Pending',    // Default payment status
+        ]);
 
         // Set up Stripe
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         // Prepare product and price details for Stripe
-        $productname = $validated['court'];
+        $productname = 'STADIUM BOOK';
         $totalprice = $request->get('total_price');
         $total_in_cents = intval($totalprice * 100); // Convert to cents for Stripe
 
@@ -64,39 +65,32 @@ class BookingController extends Controller
                 ],
             ],
             'mode' => 'payment',
-            'success_url' => route('successBadminton', ['booking_id' => $booking->id]),
-            'cancel_url' => route('checkoutBadminton'),
+            'success_url' => route('successStadium', ['booking_id' => $booking->id]),
+            'cancel_url' => route('checkoutStadium'),
         ]);
 
         return redirect($session->url); // Redirect to Stripe checkout
     }
 
-    public function checkoutBadminton()
+    public function checkoutStadium()
     {
-        return view('BookingModule.bookingBadminton');
+        return view('BookingModule.bookingStadium');
     }
 
-    public function successBadminton(Request $request)
+    public function successStadium(Request $request)
     {
         $bookingId = $request->get('booking_id');
 
         // Update the payment status to "Success"
-        $booking = Booking::find($bookingId);
+        $booking = StadiumBooks::find($bookingId);
         if ($booking) {
             $booking->update(['payment_status' => 'Success']);
         }
 
         return view('BookingModule.BookingSuccess', ['booking' => $booking]);
     }
-    /**
-     * Show the booking badminton page.
-     */
-    public function showBadmintonBooking()
-    {
-        return view('BookingModule.bookingBadminton');
-    }
 
-    public function showBookingBadminton()
+    public function showBookingStadium()
     {
         // Ensure the user is authenticated
         if (!Auth::check()) {
@@ -104,9 +98,8 @@ class BookingController extends Controller
         }
 
         // Pass necessary booking data to the view
-        return view('BookingModule.bookingBadminton', [
+        return view('BookingModule.bookingStadium', [
             'total_price' => 50.00 // Example total price; replace this with your logic
         ]);
     }
-
 }

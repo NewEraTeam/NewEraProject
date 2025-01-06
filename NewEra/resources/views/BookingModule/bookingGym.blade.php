@@ -54,15 +54,17 @@
             text-align: center;
             margin-top: 20px;
             font-size: 18px;
-            color : #f4f4f4;
+            color: #333;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Booking Details - Gym</h2>
-        <form method="POST" action="{{ route('submitPayment') }}">
+        <form method="POST" action="{{ route('bookings.gym.store') }}">
             @csrf
+            <p style="text-align: left;"><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
+            <input type="hidden" name="matric_number" value="{{ Auth::user()->matric_number }}">
 
             <!-- Booking Type -->
             <label for="booking-type">Booking Type:</label>
@@ -89,21 +91,9 @@
                 <label for="end-month">End Month:</label>
                 <select id="end-month" name="end_month"></select>
             </div>
-
-            <hr style="margin: 20px 0; border: 1px solid #ccc;">
-
-            <!-- Personal Details Fetched from Authenticated User -->
-            <div class="personal-details" style="text-align: left;">
-                <h3 style="text-align: center;">Your Personal Details</h3>
-                <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
-                <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
-                <p><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
-                <p><strong>Phone Number:</strong> {{ Auth::user()->phone_number }}</p>
-                <p><strong>Role:</strong> {{ Auth::user()->role }}</p>
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" id="total-price">Total Price: RM 0.00</button>
+            
+            <input type="hidden" name="total_price" id="total-price-hidden">
+            <button type="submit" id="total-price">Total Price: RM0.00</button>
         </form>
     </div>
 
@@ -117,42 +107,37 @@
         const endMonthSelect = document.getElementById("end-month");
         const totalPriceElement = document.getElementById("total-price");
 
-        // Get today's date
+        const membershipPricePerMonth = 40.00;
+
         const today = new Date();
-        const currentMonth = today.getMonth() + 1;
-        const currentYear = today.getFullYear();
+        const todayStr = today.toISOString().split("T")[0];
 
-        // Format month names
-        const monthNames = [
-            "January", "February", "March", "April", "May",
-            "June", "July", "August", "September", "October",
-            "November", "December"
-        ];
+        startDateInput.setAttribute("min", todayStr);
 
-        // Populate start and end months for membership booking
-        const populateMonthOptions = () => {
-            startMonthSelect.innerHTML = '<option value="" disabled selected>Select Start Month</option>';
-            endMonthSelect.innerHTML = '<option value="" disabled selected>Select End Month</option>';
+        startDateInput.addEventListener("change", () => {
+            const startDate = new Date(startDateInput.value);
+            const maxEndDate = new Date(startDate);
+            maxEndDate.setDate(startDate.getDate() + 7);
 
-            // Start month (next month only)
-            for (let i = currentMonth + 1; i <= 12; i++) {
-                const monthName = `${monthNames[i - 1]} ${currentYear}`;
-                startMonthSelect.innerHTML += `<option value="${i}">${monthName}</option>`;
+            endDateInput.setAttribute("min", startDateInput.value);
+            endDateInput.setAttribute("max", maxEndDate.toISOString().split("T")[0]);
+        });
+
+        const calculateDailyPrice = () => {
+            const startDate = new Date(startDateInput.value);
+            const endDate = new Date(endDateInput.value);
+
+            if (endDate > startDate) {
+                const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+                totalPriceElement.textContent = `Total Price: RM ${(days * 5).toFixed(2)}`;
+            } else {
+                totalPriceElement.textContent = "Total Price: RM 0.00";
             }
-
-            // End month dynamically updated based on start month
-            startMonthSelect.addEventListener("change", () => {
-                const selectedStartMonth = parseInt(startMonthSelect.value);
-                endMonthSelect.innerHTML = '<option value="" disabled selected>Select End Month</option>';
-
-                for (let j = selectedStartMonth + 1; j <= Math.min(selectedStartMonth + 3, 12); j++) {
-                    const monthName = `${monthNames[j - 1]} ${currentYear}`;
-                    endMonthSelect.innerHTML += `<option value="${j}">${monthName}</option>`;
-                }
-            });
         };
 
-        // Handle booking type change
+        startDateInput.addEventListener("change", calculateDailyPrice);
+        endDateInput.addEventListener("change", calculateDailyPrice);
+
         bookingType.addEventListener("change", () => {
             if (bookingType.value === "daily") {
                 dailySection.style.display = "block";
@@ -161,34 +146,54 @@
             } else if (bookingType.value === "membership") {
                 dailySection.style.display = "none";
                 membershipSection.style.display = "block";
-                populateMonthOptions();
                 totalPriceElement.textContent = "Total Price: RM 0.00";
+                populateMonthOptions();
             }
         });
 
-        // Calculate total price for membership booking
-        const validateMembershipBooking = () => {
+        const currentMonth = today.getMonth() + 1;
+        const currentYear = today.getFullYear();
+        const monthNames = [
+            "January", "February", "March", "April", "May",
+            "June", "July", "August", "September", "October",
+            "November", "December"
+        ];
+
+        const populateMonthOptions = () => {
+            startMonthSelect.innerHTML = '<option value="" disabled selected>Select Start Month</option>';
+            endMonthSelect.innerHTML = '<option value="" disabled selected>Select End Month</option>';
+
+            for (let i = currentMonth; i <= 12; i++) {
+                const monthName = `${monthNames[i - 1]} ${currentYear}`;
+                startMonthSelect.innerHTML += `<option value="${i}">${monthName}</option>`;
+            }
+
+            startMonthSelect.addEventListener("change", () => {
+                const selectedStartMonth = parseInt(startMonthSelect.value);
+                endMonthSelect.innerHTML = '<option value="" disabled selected>Select End Month</option>';
+
+                for (let j = selectedStartMonth; j <= Math.min(selectedStartMonth + 2, 12); j++) {
+                    const monthName = `${monthNames[j - 1]} ${currentYear}`;
+                    endMonthSelect.innerHTML += `<option value="${j}">${monthName}</option>`;
+                }
+
+                calculateMembershipPrice();
+            });
+
+            endMonthSelect.addEventListener("change", calculateMembershipPrice);
+        };
+
+        const calculateMembershipPrice = () => {
             const startMonth = parseInt(startMonthSelect.value);
             const endMonth = parseInt(endMonthSelect.value);
 
-            if (endMonth <= startMonth || isNaN(endMonth)) {
-                endMonthSelect.setCustomValidity("End month must be after the start month.");
-            } else if (endMonth - startMonth > 3) {
-                endMonthSelect.setCustomValidity("You can only book up to 3 months.");
-            } else {
-                endMonthSelect.setCustomValidity("");
-            }
-
-            const months = endMonth - startMonth;
-            if (months > 0 && months <= 3) {
-                totalPriceElement.textContent = `Total Price: RM ${(months * 70).toFixed(2)}`;
+            if (startMonth && endMonth && endMonth >= startMonth) {
+                const months = endMonth - startMonth + 1;
+                totalPriceElement.textContent = `Total Price: RM ${(months * membershipPricePerMonth).toFixed(2)}`;
             } else {
                 totalPriceElement.textContent = "Total Price: RM 0.00";
             }
         };
-
-        startMonthSelect.addEventListener("change", validateMembershipBooking);
-        endMonthSelect.addEventListener("change", validateMembershipBooking);
     </script>
 </body>
 </html>

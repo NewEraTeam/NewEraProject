@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Booking;
+use App\Models\SwimmingBooks;
 use Stripe\Stripe;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +15,7 @@ class BookingSwimmingController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function storeSwimming(Request $request)
     {
         // Validate the incoming request
         try {
@@ -29,7 +29,8 @@ class BookingSwimmingController extends Controller
             dd($e->errors());
         }
 
-            $booking = Booking::create([
+            $booking = SwimmingBooks::create([
+                'facilityID_swimming' => 'UTM_SW',
                 'booking_id' => 'UTM52612',
                 'matric_number' => $validated['matric_number'],
                 'date' => $validated['date'],
@@ -62,24 +63,24 @@ class BookingSwimmingController extends Controller
                 ],
             ],
             'mode' => 'payment',
-            'success_url' => route('success', ['booking_id' => $booking->id]),
-            'cancel_url' => route('checkout'),
+            'success_url' => route('successSwimming', ['booking_id' => $booking->id]),
+            'cancel_url' => route('checkoutSwimming'),
         ]);
 
         return redirect($session->url); // Redirect to Stripe checkout
     }
 
-    public function checkout()
+    public function checkoutSwimming()
     {
-        return view('checkout');
+        return view('BookingModule.bookingSwimming');
     }
 
-    public function success(Request $request)
+    public function successSwimming(Request $request)
     {
         $bookingId = $request->get('booking_id');
 
         // Update the payment status to "Success"
-        $booking = Booking::find($bookingId);
+        $booking = SwimmingBooks::find($bookingId);
         if ($booking) {
             $booking->update(['payment_status' => 'Success']);
         }
