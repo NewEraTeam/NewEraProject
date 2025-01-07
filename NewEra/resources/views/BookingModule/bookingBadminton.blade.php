@@ -117,7 +117,7 @@
 <body>
     <div class="container">
         <h2>Booking Details - Badminton</h2>
-        <form method="POST" action="{{ route('bookings.store') }}">
+        <form method="POST" action="{{ route('bookings.badminton.store') }}">
             @csrf
             <!-- Matric Number -->
             <p style="text-align: left;"><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>

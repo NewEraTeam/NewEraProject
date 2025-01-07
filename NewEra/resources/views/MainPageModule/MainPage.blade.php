@@ -128,7 +128,7 @@
                         View
                     </button>
                     <!-- Book Now Button -->
-                    <button class="px-4 py-2 font-semibold text-blue-600 bg-blue-100 rounded-lg hover:bg-blue-200">
+                    <button onclick="window.location='{{ route('bookingStadium') }}'" class="px-4 py-2 font-semibold text-blue-600 bg-blue-100 rounded-lg hover:bg-blue-200">
                         Book Now
                     </button>
                 </div>
@@ -147,7 +147,7 @@
                         View
                     </button>
                     <!-- Book Now Button -->
-                    <button class="px-4 py-2 font-semibold text-blue-600 bg-blue-100 rounded-lg hover:bg-blue-200">
+                    <button onclick="window.location='{{ route('bookingGym') }}'" class="px-4 py-2 font-semibold text-blue-600 bg-blue-100 rounded-lg hover:bg-blue-200">
                         Book Now
                     </button>
                 </div>

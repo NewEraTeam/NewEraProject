@@ -15,7 +15,8 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\BookingSwimmingController;
 use App\Http\Controllers\AdminManageFacilitiesController;
-
+use App\Http\Controllers\BookingStadiumController;
+use App\Http\Controllers\BookingGymController;
 
 // Default route to load the login page
 Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
@@ -97,20 +98,6 @@ Route::get('/view-profile', function(){
     return view('ViewProfileModule.ViewProfile');
 })->name('view-profile');
 
-Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
-// Route for the payment page
-Route::post('/booking/submit-badminton', [BookingController::class, 'submitBookingBadminton'])->name('submitBookingBadminton');
-Route::get('/booking/payment', [BookingController::class, 'showPayment'])->name('bookingPayment');
-
-
-Route::get('/bookingBadminton', [BookingController::class, 'showBookingBadminton'])->name('bookingBadminton');
-Route::post('/submitBookingBadminton', [BookingController::class, 'submitBookingBadminton'])->name('submitBookingBadminton');
-Route::get('/bookingPersonalDetails', [BookingController::class, 'showPersonalDetails'])->name('bookingPersonalDetails');
-Route::post('/submitPersonalDetails', [BookingController::class, 'submitPersonalDetails'])->name('submitPersonalDetails');
-Route::get('/bookingPayment', [BookingController::class, 'showPayment'])->name('bookingPayment');
-Route::post('/submitPayment', [BookingController::class, 'submitPayment'])->name('submitPayment');
-Route::get('/bookingSuccess', [BookingController::class, 'showSuccess'])->name('bookingSuccess');
-
 Route::get('/debug-db', function () {
     try {
         $pdo = DB::connection()->getPdo();
@@ -135,11 +122,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/booking/badminton', [BookingController::class, 'showBadmintonBooking'])->name('bookingBadminton');
-Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-
-Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
-Route::get('/checkout', [BookingController::class, 'checkout'])->name('checkout');
-Route::get('/success', [BookingController::class, 'success'])->name('success');
+Route::post('/bookings/badminton', [BookingController::class, 'storeBadminton'])->name('bookings.badminton.store');
+Route::get('/checkout/badminton', [BookingController::class, 'checkoutBadminton'])->name('checkoutBadminton');
+Route::get('/success/badminton', [BookingController::class, 'successBadminton'])->name('successBadminton');
 
 //Route from Admin Main to Admin Action Page
 Route::get('/AdminModule/AdminActionModule', function () {
@@ -152,10 +137,19 @@ Route::get('/AdminModule/AdminManageFacilitiesModule', function () {
 })->name(name: 'admin-facilities');
 
 Route::get('/bookingSwimming', [BookingSwimmingController::class, 'showSwimmingBooking'])->name('bookingSwimming');
-Route::post('/bookings', [BookingSwimmingController::class, 'store'])->name('bookings.store');
-Route::post('/bookings/store', [BookingSwimmingController::class, 'store'])->name('bookings.store');
-Route::get('/checkout', [BookingSwimmingController::class, 'checkout'])->name('checkout');
-Route::get('/success', [BookingSwimmingController::class, 'success'])->name('success');
+Route::post('/bookings/swimming', [BookingSwimmingController::class, 'storeSwimming'])->name('bookings.swimming.store');
+Route::get('/checkout/swimming', [BookingSwimmingController::class, 'checkoutSwimming'])->name('checkoutSwimming');
+Route::get('/success/swimming', [BookingSwimmingController::class, 'successSwimming'])->name('successSwimming');
+
+Route::get('/bookingStadium', [BookingStadiumController::class, 'showStadiumBooking'])->name('bookingStadium');
+Route::post('/bookings/stadium', [BookingStadiumController::class, 'storeStadium'])->name('bookings.stadium.store');
+Route::get('/checkout/stadium', [BookingStadiumController::class, 'checkoutStadium'])->name('checkoutStadium');
+Route::get('/success/stadium', [BookingStadiumController::class, 'successStadium'])->name('successStadium');
+
+Route::get('/bookingGym', [BookingGymController::class, 'showGymBooking'])->name('bookingGym');
+Route::post('/bookings/gym', [BookingGymController::class, 'storeGym'])->name('bookings.gym.store');
+Route::get('/checkout/gym', [BookingGymController::class, 'checkoutGym'])->name('checkoutGym');
+Route::get('/success/gym', action: [BookingGymController::class, 'successGym'])->name('successGym');
 
 //Route for Admin to Manage Facilties using Block Date button
 Route::post('/admin/close-venue', [AdminManageFacilitiesController::class, 'AdminFacility']);

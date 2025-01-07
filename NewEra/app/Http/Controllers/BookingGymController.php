@@ -3,48 +3,62 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Booking;
-use Illuminate\Support\Facades\DB; // Add this at the top of your controller
+use App\Models\GymBooks;
 use Stripe\Stripe;
-use Stripe\Checkout\Session;
+use Illuminate\Support\Facades\Auth;
 
-class BookingController extends Controller
+class BookingGymController extends Controller
 {
+    public function showGymBooking()
+    {
+        return view('BookingModule.bookingGym');
+    }
 
-    public function storeBadminton(Request $request)
+
+    public function storeGym(Request $request)
     {
         // Validate the incoming request
         try {
             $validated = $request->validate([
                 'matric_number' => 'required|string',
-                'date' => 'required|date',
-                'start_time' => 'required|date_format:H:i',
-                'end_time' => 'required|date_format:H:i|after:start_time',
-                'court' => 'required|string',
+                'booking_type' => 'required|string|in:daily,membership',
+                'start_date' => 'nullable|date|required_if:booking_type,daily',
+                'end_date' => 'nullable|date|required_if:booking_type,daily',
+                'start_month' => 'nullable|string|required_if:booking_type,membership',
+                'end_month' => 'nullable|string|required_if:booking_type,membership',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             dd($e->errors());
         }
 
-            $booking = Booking::create([
-                'facilityID_badminton' => 'UTM_BD',
-                'booking_id' => 'UTM52612',
-                'matric_number' => $validated['matric_number'],
-                'date' => $validated['date'],
-                'start_time' => $validated['start_time'],
-                'end_time' => $validated['end_time'],
-                'court' => $validated['court'],
-                'payment_status' => 'Pending', // Default payment status
-            ]);
 
-            //dd('DONE');
+        $data = [
+            'facilityID_gym' => 'UTM_GYM',
+            'booking_id' => 'UTM52612',
+            'matric_number' => $validated['matric_number'],
+            'booking_type' => $validated['booking_type'],
+            'payment_status' => 'Pending', // Default payment status
+        ];
+
+        // Add daily booking details
+        if ($validated['booking_type'] === 'daily') {
+            $data['start_date'] = $validated['start_date'];
+            $data['end_date'] = $validated['end_date'];
+        }
+
+        // Add membership booking details
+        if ($validated['booking_type'] === 'membership') {
+            $data['start_month'] = $validated['start_month'];
+            $data['end_month'] = $validated['end_month'];
+        }
+
+        $booking = GymBooks::create($data);
 
         // Set up Stripe
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         // Prepare product and price details for Stripe
-        $productname = $validated['court'];
+        $productname = $validated['booking_type'];
         $totalprice = $request->get('total_price');
         $total_in_cents = intval($totalprice * 100); // Convert to cents for Stripe
 
@@ -64,39 +78,32 @@ class BookingController extends Controller
                 ],
             ],
             'mode' => 'payment',
-            'success_url' => route('successBadminton', ['booking_id' => $booking->id]),
-            'cancel_url' => route('checkoutBadminton'),
+            'success_url' => route('successGym', ['booking_id' => $booking->id]),
+            'cancel_url' => route('checkoutGym'),
         ]);
 
         return redirect($session->url); // Redirect to Stripe checkout
     }
 
-    public function checkoutBadminton()
+    public function checkoutGym()
     {
-        return view('BookingModule.bookingBadminton');
+        return view('BookingModule.bookingGym');
     }
 
-    public function successBadminton(Request $request)
+    public function successGym(Request $request)
     {
         $bookingId = $request->get('booking_id');
 
         // Update the payment status to "Success"
-        $booking = Booking::find($bookingId);
+        $booking = GymBooks::find($bookingId);
         if ($booking) {
             $booking->update(['payment_status' => 'Success']);
         }
 
         return view('BookingModule.BookingSuccess', ['booking' => $booking]);
     }
-    /**
-     * Show the booking badminton page.
-     */
-    public function showBadmintonBooking()
-    {
-        return view('BookingModule.bookingBadminton');
-    }
 
-    public function showBookingBadminton()
+    public function showBookingGym()
     {
         // Ensure the user is authenticated
         if (!Auth::check()) {
@@ -104,9 +111,8 @@ class BookingController extends Controller
         }
 
         // Pass necessary booking data to the view
-        return view('BookingModule.bookingBadminton', [
+        return view('BookingModule.bookingGym', [
             'total_price' => 50.00 // Example total price; replace this with your logic
         ]);
     }
-
 }

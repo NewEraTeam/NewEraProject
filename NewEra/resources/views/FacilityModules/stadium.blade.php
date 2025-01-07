@@ -154,7 +154,7 @@
     <div class="header transparent" id="header">
         <div class="logo">
             <a href="{{ route('MainPage.page') }}">
-                <img src="{{ asset('UTM-LOGO-FULL.png') }}" alt="UTM Logo">
+                <img src="{{ asset('ALLIMAGES/UTM-LOGO-FULL.png') }}" alt="UTM Logo">
             </a>
         </div>
         <div class="header-title">TRACK & FIELD</div>
