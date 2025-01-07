@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\BookingSwimmingController;
+use App\Http\Controllers\AdminManageFacilitiesController;
 
 
 // Default route to load the login page
@@ -155,3 +156,6 @@ Route::post('/bookings', [BookingSwimmingController::class, 'store'])->name('boo
 Route::post('/bookings/store', [BookingSwimmingController::class, 'store'])->name('bookings.store');
 Route::get('/checkout', [BookingSwimmingController::class, 'checkout'])->name('checkout');
 Route::get('/success', [BookingSwimmingController::class, 'success'])->name('success');
+
+//Route for Admin to Manage Facilties using Block Date button
+Route::post('/admin/close-venue', [AdminManageFacilitiesController::class, 'AdminFacility']);
