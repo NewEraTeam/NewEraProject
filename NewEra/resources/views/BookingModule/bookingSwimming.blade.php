@@ -90,7 +90,7 @@
 <body>
     <div class="container">
         <h2>Booking Details - Swimming</h2>
-        <form method="POST" action="{{ route('bookings.store') }}">
+        <form method="POST" action="{{ route('bookings.swimming.store') }}">
             @csrf
             <p style="text-align: left;"><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
             <input type="hidden" name="matric_number" value="{{ Auth::user()->matric_number }}">

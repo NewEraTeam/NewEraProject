@@ -6,20 +6,22 @@ use MongoDB\Laravel\Eloquent\Model as Eloquent; // Use MongoDB Eloquent model
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Booking extends Eloquent
+class StadiumBooks extends Eloquent
 {
     use HasFactory;
     protected $connection = 'mongodb';  // Ensure the model is using the MongoDB connection
 
     protected $fillable = [
-        'facilityID_badminton',
+        'facilityID_stadium',
         'booking_id',
         'matric_number',
-        'date',
-        'start_time',
-        'end_time',
-        'court',
+        'start_date',
+        'end_date',
+        'add-on',
         'payment_status',
+    ];
+    protected $casts = [
+        'add_on' => 'array',
     ];
 
     // Automatically generate BookingID

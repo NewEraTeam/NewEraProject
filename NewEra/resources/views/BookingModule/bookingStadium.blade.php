@@ -95,8 +95,10 @@
 <body>
     <div class="container">
         <h2>Booking Details - Stadium</h2>
-        <form method="POST" action="{{ route('submitPayment') }}">
+        <form method="POST" action="{{ route('bookings.stadium.store') }}">
         @csrf
+        <p style="text-align: left;"><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
+        <input type="hidden" name="matric_number" value="{{ Auth::user()->matric_number }}">
 
         <!-- Start Date -->
         <label for="start-date">Start Date:</label>
@@ -108,26 +110,23 @@
 
         <!-- Add-Ons -->
         <label for="add-ons">Add-On:</label>
-        <div class="add-ons" id="add-ons">
-            <div class="toggle-button" data-price="20" data-id="pa-system">PA System - RM20</div>
-            <div class="toggle-button" data-price="30" data-id="stadium-lights">Stadium Lights - RM30</div>
-            <div class="toggle-button" data-price="20" data-id="leaderboard">Leaderboard - RM20</div>
-            <div class="toggle-button" data-price="10" data-id="podium">Podium - RM10</div>
-        </div>
-
-        <hr style="margin: 20px 0; border: 1px solid #ccc;">
-
-        <!-- Personal Details -->
-        <div class="personal-details" style="text-align: left;">
-            <h3 style="text-align: center;">Your Personal Details</h3>
-            <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
-            <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
-            <p><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
-            <p><strong>Phone Number:</strong> {{ Auth::user()->phone_number }}</p>
-            <p><strong>Role:</strong> {{ Auth::user()->role }}</p>
+        <div id="add-ons">
+            <label>
+                <input class="toggle-button" type="checkbox" data-price="20" name="add_on[]" value="PA System"> PA System - RM20
+            </label>
+            <label>
+                <input class="toggle-button" type="checkbox"  data-price="30" name="add_on[]" value="Stadium Lights"> Stadium Lights - RM30
+            </label>
+            <label>
+                <input class="toggle-button" type="checkbox"  data-price="20" name="add_on[]" value="Leaderboard"> Leaderboard - RM20
+            </label>
+            <label>
+                <input class="toggle-button" type="checkbox"  data-price="10" name="add_on[]" value="Podium"> Podium - RM10
+            </label>
         </div>
 
         <!-- Submit Button -->
+        <input type="hidden" name="total_price" id="total-price-hidden">
         <button type="submit" id="total-price">Total Price: RM0.00</button>
         </form>
     </div>
