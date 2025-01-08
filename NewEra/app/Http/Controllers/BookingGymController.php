@@ -79,15 +79,23 @@ class BookingGymController extends Controller
             ],
             'mode' => 'payment',
             'success_url' => route('successGym', ['booking_id' => $booking->id]),
-            'cancel_url' => route('checkoutGym'),
+            'cancel_url' => route('checkoutGym', ['booking_id' => $booking->id]),
         ]);
 
         return redirect($session->url); // Redirect to Stripe checkout
     }
 
-    public function checkoutGym()
+    public function checkoutGym(Request $request)
     {
-        return view('BookingModule.bookingGym');
+        $bookingId = $request->get('booking_id');
+
+        // Update the payment status to "Success"
+        $booking = GymBooks::find($bookingId);
+        if ($booking) {
+            $booking->update(['payment_status' => 'Failed']);
+        }
+
+        return view('BookingModule.BookingFail', ['booking' => $booking]);
     }
 
     public function successGym(Request $request)

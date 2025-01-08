@@ -64,15 +64,24 @@ class BookingSwimmingController extends Controller
             ],
             'mode' => 'payment',
             'success_url' => route('successSwimming', ['booking_id' => $booking->id]),
-            'cancel_url' => route('checkoutSwimming'),
+            'cancel_url' => route('checkoutSwimming', ['booking_id' => $booking->id]),
         ]);
 
         return redirect($session->url); // Redirect to Stripe checkout
     }
 
-    public function checkoutSwimming()
+
+    public function checkoutSwimming(Request $request)
     {
-        return view('BookingModule.bookingSwimming');
+        $bookingId = $request->get('booking_id');
+
+        // Update the payment status to "Success"
+        $booking = Swimmingbooks::find($bookingId);
+        if ($booking) {
+            $booking->update(['payment_status' => 'Failed']);
+        }
+
+        return view('BookingModule.BookingFail', ['booking' => $booking]);
     }
 
     public function successSwimming(Request $request)

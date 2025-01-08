@@ -66,15 +66,23 @@ class BookingStadiumController extends Controller
             ],
             'mode' => 'payment',
             'success_url' => route('successStadium', ['booking_id' => $booking->id]),
-            'cancel_url' => route('checkoutStadium'),
+            'cancel_url' => route('checkoutStadium', ['booking_id' => $booking->id]),
         ]);
 
         return redirect($session->url); // Redirect to Stripe checkout
     }
 
-    public function checkoutStadium()
+    public function checkoutStadium(Request $request)
     {
-        return view('BookingModule.bookingStadium');
+        $bookingId = $request->get('booking_id');
+
+        // Update the payment status to "Success"
+        $booking = StadiumBooks::find($bookingId);
+        if ($booking) {
+            $booking->update(['payment_status' => 'Failed']);
+        }
+
+        return view('BookingModule.BookingFail', ['booking' => $booking]);
     }
 
     public function successStadium(Request $request)
