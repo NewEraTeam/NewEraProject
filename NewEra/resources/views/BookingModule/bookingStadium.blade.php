@@ -135,6 +135,7 @@
         const startDateInput = document.getElementById('start-date');
         const endDateInput = document.getElementById('end-date');
         const toggleButtons = document.querySelectorAll('.toggle-button');
+        const totalPriceInput = document.getElementById('total-price-hidden');
         const totalPriceElement = document.getElementById('total-price');
         const baseRate = 50; // Base rate per day
 
@@ -178,8 +179,10 @@
             if (startDate && endDate && endDate > startDate) {
                 const duration = (endDate - startDate) / (1000 * 60 * 60 * 24); // Calculate days
                 const totalPrice = duration * baseRate + addOnPrices;
+                totalPriceInput.value = totalPrice.toFixed(2); // Update hidden input
                 totalPriceElement.textContent = `Total Price: RM${totalPrice.toFixed(2)}`;
             } else {
+                totalPriceInput.value = totalPrice.toFixed(2); // Update hidden input
                 totalPriceElement.textContent = 'Total Price: RM0.00';
             }
         }

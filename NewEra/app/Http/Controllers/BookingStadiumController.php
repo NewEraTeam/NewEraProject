@@ -47,6 +47,7 @@ class BookingStadiumController extends Controller
         // Prepare product and price details for Stripe
         $productname = 'STADIUM BOOK';
         $totalprice = $request->get('total_price');
+        //dd($totalprice);
         $total_in_cents = intval($totalprice * 100); // Convert to cents for Stripe
 
         // Create a Stripe Checkout session
