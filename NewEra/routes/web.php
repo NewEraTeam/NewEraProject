@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\BookingSwimmingController;
+use App\Http\Controllers\AdminManageFacilitiesController;
 use App\Http\Controllers\BookingStadiumController;
 use App\Http\Controllers\BookingGymController;
 
@@ -149,3 +150,6 @@ Route::get('/bookingGym', [BookingGymController::class, 'showGymBooking'])->name
 Route::post('/bookings/gym', [BookingGymController::class, 'storeGym'])->name('bookings.gym.store');
 Route::get('/checkout/gym', [BookingGymController::class, 'checkoutGym'])->name('checkoutGym');
 Route::get('/success/gym', action: [BookingGymController::class, 'successGym'])->name('successGym');
+
+//Route for Admin to Manage Facilties using Block Date button
+Route::post('/admin/close-venue', [AdminManageFacilitiesController::class, 'AdminFacility']);

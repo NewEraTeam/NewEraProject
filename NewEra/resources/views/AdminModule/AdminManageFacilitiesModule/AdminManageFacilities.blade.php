@@ -7,7 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/js/adminFacilities.js" defer></script> 
+    <script src="/js/adminFacilities.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="min-h-screen text-gray-800 bg-gray-100">
 
@@ -30,12 +31,12 @@
 
     <main class="container px-4 py-8 mx-auto">
         <h1 class="mb-6 text-2xl font-bold text-center">Admin Facility Management</h1>
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <div class="mb-8 p-6 bg-white rounded-lg shadow-md">
             <h2 class="text-xl font-semibold mb-4">Close Venue</h2>
             <div class="flex justify-center space-x-4">
-                <div class="flex items-center">
-                    <select id="venueSelect" class="bg-white text-black px-4 py-2 rounded hover:bg-white-600 w-full shadow-md border border-gray-600 rounded">
+                <div class="flex items-center flex-grow">
+                    <select id="venueSelect" class="bg-white text-black px-4 py-2 rounded hover:bg-white-600 shadow-md border border-gray-600 w-full">
                         <option value="" disabled selected>Select Venue</option>
                         <option value="venue1">Badminton Court</option>
                         <option value="venue2">Swimming Pool</option>
@@ -43,8 +44,8 @@
                         <option value="venue4">Stadium</option>
                     </select>
                 </div>
-                <div class="flex items-center">
-                    <select id="reasonSelect" class="bg-white text-black px-4 py-2 rounded hover:bg-white-600 w-full shadow-md border border-gray-600 rounded">
+                <div class="flex items-center flex-grow">
+                    <select id="reasonSelect" class="bg-white text-black px-4 py-2 rounded hover:bg-white-600 shadow-md border border-gray-600 w-full">
                         <option value="" disabled selected>Occasions</option>
                         <option value="maintenance">Maintenance</option>
                         <option value="booked">Booked</option>
@@ -56,9 +57,12 @@
         <div class="p-6 bg-white rounded-lg shadow-md">
             <h2 class="text-xl font-semibold mb-4">Block Date</h2>
             <p class="mb-4 text-gray-700">Select the dates you want to block for bookings:</p>
-            <input type="date" id="blockDateInput" class="border border-gray-600 rounded px-4 py-2 mb-4 shadow-md" />
-            <button id="blockDateButton" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 shadow-md">Block Date</button>
+            <div class="flex flex-col space-y-4">
+                <input type="date" id="blockDateInput" class="border border-gray-600 rounded px-4 py-2 w-full shadow-md" />
+                <button id="blockDateButton" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 shadow-md w-full">Block Date</button>
+            </div>
         </div>
+        
     </main>
 
     <footer class="py-8 bg-white border-t border-gray-200"> 
@@ -66,8 +70,6 @@
             <p class="text-gray-500">© 2024 | UTM Sports Hall Admin Panel</p>
         </div>
     </footer>
-
-    <script src="/js/adminFacilities.js"></script> 
 
     <script>
         // Toggle the Admin Profile dropdown
