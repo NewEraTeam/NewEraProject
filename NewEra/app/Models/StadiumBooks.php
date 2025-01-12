@@ -19,6 +19,7 @@ class StadiumBooks extends Eloquent
         'end_date',
         'add-on',
         'payment_status',
+        'total_price',
     ];
     protected $casts = [
         'add_on' => 'array',

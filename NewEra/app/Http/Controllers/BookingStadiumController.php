@@ -25,6 +25,7 @@ class BookingStadiumController extends Controller
                 'end_date' => 'required|date',
                 'add_on' => 'required|array', // Ensure `add_on` is an array
                 'add_on.*' => 'string',      // Each `add_on` value must be a string
+                'total_price' => 'required|numeric|min:0', // Add validation for total_price
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             dd($e->errors());
@@ -39,14 +40,17 @@ class BookingStadiumController extends Controller
             'end_date' => $validated['end_date'],
             'add_on' => $validated['add_on'], // Save as an array
             'payment_status' => 'Pending',    // Default payment status
+            'total_price' => $validated['total_price'], // Add validation for total_price
         ]);
+
+        dd($booking->add_on);
 
         // Set up Stripe
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         // Prepare product and price details for Stripe
         $productname = 'STADIUM BOOK';
-        $totalprice = $request->get('total_price');
+        $totalprice = $validated['total_price'];
         //dd($totalprice);
         $total_in_cents = intval($totalprice * 100); // Convert to cents for Stripe
 

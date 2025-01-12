@@ -26,6 +26,7 @@ class BookingGymController extends Controller
                 'end_date' => 'nullable|date|required_if:booking_type,daily',
                 'start_month' => 'nullable|string|required_if:booking_type,membership',
                 'end_month' => 'nullable|string|required_if:booking_type,membership',
+                'total_price' => 'required|numeric|min:0', // Add validation for total_price
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             dd($e->errors());
@@ -38,6 +39,7 @@ class BookingGymController extends Controller
             'matric_number' => $validated['matric_number'],
             'booking_type' => $validated['booking_type'],
             'payment_status' => 'Pending', // Default payment status
+            'total_price' => $validated['total_price'], // Add validation for total_price
         ];
 
         // Add daily booking details
@@ -59,7 +61,7 @@ class BookingGymController extends Controller
 
         // Prepare product and price details for Stripe
         $productname = $validated['booking_type'];
-        $totalprice = $request->get('total_price');
+        $totalprice = $validated['total_price'];
         $total_in_cents = intval($totalprice * 100); // Convert to cents for Stripe
 
         // Create a Stripe Checkout session

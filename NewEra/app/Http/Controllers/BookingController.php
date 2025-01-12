@@ -22,6 +22,7 @@ class BookingController extends Controller
                 'start_time' => 'required|date_format:H:i',
                 'end_time' => 'required|date_format:H:i|after:start_time',
                 'court' => 'required|string',
+                'total_price' => 'required|numeric|min:0', // Add validation for total_price
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             dd($e->errors());
@@ -36,6 +37,7 @@ class BookingController extends Controller
                 'end_time' => $validated['end_time'],
                 'court' => $validated['court'],
                 'payment_status' => 'Pending', // Default payment status
+                'total_price' => $validated['total_price'], // Add validation for total_price
             ]);
 
             //dd('DONE');
@@ -45,7 +47,7 @@ class BookingController extends Controller
 
         // Prepare product and price details for Stripe
         $productname = $validated['court'];
-        $totalprice = $request->get('total_price');
+        $totalprice = $validated['total_price'];
         $total_in_cents = intval($totalprice * 100); // Convert to cents for Stripe
 
         // Create a Stripe Checkout session
