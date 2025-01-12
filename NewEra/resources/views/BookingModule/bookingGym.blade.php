@@ -54,7 +54,7 @@
             text-align: center;
             margin-top: 20px;
             font-size: 18px;
-            color: #333;
+            color: #ffffff;
         }
     </style>
 </head>
@@ -91,7 +91,7 @@
                 <label for="end-month">End Month:</label>
                 <select id="end-month" name="end_month"></select>
             </div>
-            
+
             <input type="hidden" name="total_price" id="total-price-hidden">
             <button type="submit" id="total-price">Total Price: RM0.00</button>
         </form>
@@ -105,6 +105,7 @@
         const endDateInput = document.getElementById("end-date");
         const startMonthSelect = document.getElementById("start-month");
         const endMonthSelect = document.getElementById("end-month");
+        const totalPriceInput = document.getElementById('total-price-hidden');
         const totalPriceElement = document.getElementById("total-price");
 
         const membershipPricePerMonth = 40.00;
@@ -124,14 +125,18 @@
         });
 
         const calculateDailyPrice = () => {
+            const basePrice = 10.00; // Constant base price
             const startDate = new Date(startDateInput.value);
             const endDate = new Date(endDateInput.value);
 
             if (endDate > startDate) {
                 const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-                totalPriceElement.textContent = `Total Price: RM ${(days * 5).toFixed(2)}`;
+                const totalPrice = basePrice + (days * 5); // Add base price to daily rate
+                totalPriceInput.value = totalPrice.toFixed(2); // Update hidden input
+                totalPriceElement.textContent = `Total Price: RM ${totalPrice.toFixed(2)}`;
             } else {
-                totalPriceElement.textContent = "Total Price: RM 0.00";
+                totalPriceInput.value = totalPrice.toFixed(2); // Update hidden input
+                totalPriceElement.textContent = `Total Price: RM ${basePrice.toFixed(2)}`; // Show base price if invalid date range
             }
         };
 
@@ -184,16 +189,22 @@
         };
 
         const calculateMembershipPrice = () => {
+            const basePrice = 20.00; // Constant base price
             const startMonth = parseInt(startMonthSelect.value);
             const endMonth = parseInt(endMonthSelect.value);
+            const membershipPricePerMonth = 15.00; // Price per month
 
             if (startMonth && endMonth && endMonth >= startMonth) {
                 const months = endMonth - startMonth + 1;
-                totalPriceElement.textContent = `Total Price: RM ${(months * membershipPricePerMonth).toFixed(2)}`;
+                const totalPrice = basePrice + (months * membershipPricePerMonth); // Add base price to monthly rate
+                totalPriceInput.value = totalPrice.toFixed(2); // Update hidden input
+                totalPriceElement.textContent = `Total Price: RM ${totalPrice.toFixed(2)}`;
             } else {
-                totalPriceElement.textContent = "Total Price: RM 0.00";
+                totalPriceInput.value = totalPrice.toFixed(2); // Update hidden input
+                totalPriceElement.textContent = `Total Price: RM ${basePrice.toFixed(2)}`; // Show base price if invalid range
             }
         };
+
     </script>
 </body>
 </html>
