@@ -17,7 +17,7 @@ class StadiumBooks extends Eloquent
         'matric_number',
         'start_date',
         'end_date',
-        'add-on',
+        'add_on',
         'payment_status',
         'total_price',
     ];

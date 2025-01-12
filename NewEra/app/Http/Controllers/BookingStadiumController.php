@@ -23,14 +23,14 @@ class BookingStadiumController extends Controller
                 'matric_number' => 'required|string',
                 'start_date' => 'required|date',
                 'end_date' => 'required|date',
-                'add_on' => 'required|array', // Ensure `add_on` is an array
+                'add_on' => 'nullable|array', // Ensure `add_on` is an array
                 'add_on.*' => 'string',      // Each `add_on` value must be a string
                 'total_price' => 'required|numeric|min:0', // Add validation for total_price
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             dd($e->errors());
         }
-
+        
         // Create the booking record
         $booking = StadiumBooks::create([
             'facilityID_stadium' => 'UTM_ST',
@@ -42,8 +42,6 @@ class BookingStadiumController extends Controller
             'payment_status' => 'Pending',    // Default payment status
             'total_price' => $validated['total_price'], // Add validation for total_price
         ]);
-
-        dd($booking->add_on);
 
         // Set up Stripe
         Stripe::setApiKey(env('STRIPE_SECRET'));

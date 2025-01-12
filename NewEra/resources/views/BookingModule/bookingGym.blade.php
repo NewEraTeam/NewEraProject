@@ -65,6 +65,7 @@
             @csrf
             <p style="text-align: left;"><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
             <input type="hidden" name="matric_number" value="{{ Auth::user()->matric_number }}">
+            <input type="hidden" name="email" value="{{ Auth::user()->email }}">
 
             <!-- Booking Type -->
             <label for="booking-type">Booking Type:</label>
