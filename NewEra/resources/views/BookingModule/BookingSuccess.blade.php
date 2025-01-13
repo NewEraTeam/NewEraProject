@@ -78,6 +78,22 @@
         <p>Your booking ID is: <strong>{{ $booking->booking_id }}</strong></p>
         <p>Payment Status: <strong>{{ $booking->payment_status }}</strong></p>
 
+        <ul type="hidden">
+            <li ><strong>Booking ID:</strong> {{ $emailData['booking_id'] }}</li>
+            <li ><strong>Matric Number:</strong> {{ $emailData['matric_number'] }}</li>
+            <li ><strong>Booking Type:</strong> {{ $emailData['booking_type'] }}</li>
+            @if($emailData['start_date'])
+                <li ><strong>Start Date:</strong> {{ $emailData['start_date'] }}</li>
+                <li ><strong>End Date:</strong> {{ $emailData['end_date'] }}</li>
+            @endif
+            @if($emailData['start_month'])
+                <li ><strong>Start Month:</strong> {{ $emailData['start_month'] }}</li>
+                <li ><strong>End Month:</strong> {{ $emailData['end_month'] }}</li>
+            @endif
+            <li ><strong>Total Price:</strong> RM{{ $emailData['total_price'] }}</li>
+            <li ><strong>Payment Status:</strong> {{ $emailData['payment_status'] }}</li>
+        </ul>
+
         <!-- Button to Main Page -->
         <a href="{{ route('view-mainpage') }}" class="mainpage-button">Go to Main Page</a>
     </div>

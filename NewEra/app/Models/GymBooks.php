@@ -21,6 +21,7 @@ class GymBooks extends Eloquent
         'start_month',
         'end_month',
         'payment_status',
+        'total_price',
     ];
 
     // Automatically generate BookingID

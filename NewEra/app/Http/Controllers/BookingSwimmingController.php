@@ -24,6 +24,7 @@ class BookingSwimmingController extends Controller
                 'date' => 'required|date',
                 'session' => 'required|string',
                 'rent_swimming_cap' => 'required|string',
+                'total_price' => 'required|numeric|min:0', // Add validation for total_price
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             dd($e->errors());
@@ -37,6 +38,7 @@ class BookingSwimmingController extends Controller
                 'session' => $validated['session'],
                 'rent_swimming_cap' => $validated['rent_swimming_cap'],
                 'payment_status' => 'Pending', // Default payment status
+                'total_price' => $validated['total_price'], // Add validation for total_price
             ]);
 
         // Set up Stripe
@@ -44,7 +46,7 @@ class BookingSwimmingController extends Controller
 
         // Prepare product and price details for Stripe
         $productname = $validated['session'];
-        $totalprice = $request->get('total_price');
+        $totalprice = $validated['total_price'];
         $total_in_cents = intval($totalprice * 100); // Convert to cents for Stripe
 
         // Create a Stripe Checkout session
