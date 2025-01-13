@@ -185,7 +185,7 @@
 <body class="profile-container">
     <div class="header">
         <div class="header-container">
-            <a href="{{ route('view-mainpage') }}" class="flex items-center">
+            <a href="{{ route('view-mainpage') }}" class="flex items-center ">
                 <img src="{{ asset('ALLIMAGES/UTM-LOGO-FULL.png') }}" alt="UTM Logo" class="utm-logo">
             </a>
         </div>
