@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\GymBooks;
 use Stripe\Stripe;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\BookingConfirmationMail;
 
 class BookingGymController extends Controller
 {
@@ -21,23 +23,26 @@ class BookingGymController extends Controller
         try {
             $validated = $request->validate([
                 'matric_number' => 'required|string',
+                'email' => 'required|email', // Ensure email exists in the database
                 'booking_type' => 'required|string|in:daily,membership',
                 'start_date' => 'nullable|date|required_if:booking_type,daily',
                 'end_date' => 'nullable|date|required_if:booking_type,daily',
                 'start_month' => 'nullable|string|required_if:booking_type,membership',
                 'end_month' => 'nullable|string|required_if:booking_type,membership',
+                'total_price' => 'required|numeric|min:0', // Add validation for total_price
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             dd($e->errors());
         }
-
+        //dd($request->email);
 
         $data = [
-            'facilityID_gym' => 'UTM_GYM',
+            'facilityID_gym' => 'UTM_GM',
             'booking_id' => 'UTM52612',
             'matric_number' => $validated['matric_number'],
             'booking_type' => $validated['booking_type'],
             'payment_status' => 'Pending', // Default payment status
+            'total_price' => $validated['total_price'], // Add validation for total_price
         ];
 
         // Add daily booking details
@@ -59,7 +64,7 @@ class BookingGymController extends Controller
 
         // Prepare product and price details for Stripe
         $productname = $validated['booking_type'];
-        $totalprice = $request->get('total_price');
+        $totalprice = $validated['total_price'];
         $total_in_cents = intval($totalprice * 100); // Convert to cents for Stripe
 
         // Create a Stripe Checkout session
@@ -107,8 +112,26 @@ class BookingGymController extends Controller
         if ($booking) {
             $booking->update(['payment_status' => 'Success']);
         }
+        $user = Auth::user(); // Get the currently logged-in user
+        $email = $user->email; // Retrieve the user's email address
 
-        return view('BookingModule.BookingSuccess', ['booking' => $booking]);
+        // Prepare data for the email
+        $emailData = [
+            'booking_id' => $booking->booking_id,
+            'matric_number' => $booking->matric_number,
+            'booking_type' => $booking->booking_type,
+            'start_date' => $booking->start_date,
+            'end_date' => $booking->end_date,
+            'start_month' => $booking->start_month,
+            'end_month' => $booking->end_month,
+            'total_price' => $booking->total_price,
+            'payment_status' => $booking->payment_status,
+        ];
+
+        // Send email using the BookingConfirmationMail mailable
+        Mail::to($email)->send(new BookingConfirmationMail($booking, $emailData));
+        return view('BookingModule.BookingSuccess', ['booking' => $booking,'emailData' => $emailData,]);
+
     }
 
     public function showBookingGym()

@@ -19,6 +19,7 @@ class SwimmingBooks extends Eloquent
         'session',
         'rent_swimming_cap',
         'payment_status',
+        'total_price',
     ];
 
     // Automatically generate BookingID
