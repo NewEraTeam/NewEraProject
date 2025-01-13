@@ -46,7 +46,7 @@
             <!-- Manage Bookings -->
             <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg text-center">
                 <h2 class="mb-4 text-xl font-bold text-gray-800">Manage Bookings</h2>
-                <button onclick="window.location='{{ route('admin-bookings') }}'" class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                <button onclick="window.location='{{ route('admin-booking-filter') }}'" class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
                     View Bookings
                 </button>
             </div>

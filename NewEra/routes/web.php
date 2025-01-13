@@ -126,10 +126,6 @@ Route::post('/bookings/badminton', [BookingController::class, 'storeBadminton'])
 Route::get('/checkout/badminton', [BookingController::class, 'checkoutBadminton'])->name('checkoutBadminton');
 Route::get('/success/badminton', [BookingController::class, 'successBadminton'])->name('successBadminton');
 
-//Route from Admin Main to Admin Action Page
-Route::get('/AdminModule/AdminActionModule', function () {
-    return view('AdminModule.AdminActionModule.AdminAction');
-})->name(name: 'admin-bookings');
 
 //Route from Admin Main to Admin Manage Facilities
 Route::get('/AdminModule/AdminManageFacilitiesModule', function () {
@@ -152,4 +148,9 @@ Route::get('/checkout/gym', [BookingGymController::class, 'checkoutGym'])->name(
 Route::get('/success/gym', action: [BookingGymController::class, 'successGym'])->name('successGym');
 
 //Route for Admin to Manage Facilties using Block Date button
-Route::post('/admin/close-venue', [AdminManageFacilitiesController::class, 'AdminFacility']);
+Route::post('/admin/close-venue', [AdminManageFacilitiesController::class, 'closeVenue']);
+
+//Route from Admin Main to Admin Filter Booking
+Route::get('/AdminModule/AdminFilterModule', function () {
+    return view('AdminModule.AdminFilterModule.AdminFilterBooking');
+})->name(name: 'admin-booking-filter');

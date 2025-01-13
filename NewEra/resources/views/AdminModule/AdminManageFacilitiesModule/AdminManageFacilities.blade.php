@@ -65,18 +65,29 @@
         
     </main>
 
-    <footer class="py-8 bg-white border-t border-gray-200"> 
-        <div class="container px-4 mx-auto text-center">
-            <p class="text-gray-500">© 2024 | UTM Sports Hall Admin Panel</p>
-        </div>
-    </footer>
-
     <script>
         // Toggle the Admin Profile dropdown
         function toggleAdminProfileMenu() {
             const menu = document.getElementById('adminProfileMenu');
             menu.classList.toggle('hidden');
         }
+
+        // Block Date Button Functionality with Notification
+        document.getElementById('blockDateButton').addEventListener('click', () => {
+            const selectedDate = document.getElementById('blockDateInput').value;
+
+            if (!selectedDate) {
+                Swal.fire('Error', 'Please select a date to block.', 'error');
+                return;
+            }
+
+            // Mock API call simulation
+            setTimeout(() => {
+                // Assuming the backend has processed successfully
+                Swal.fire('Date Blocked', `The date ${selectedDate} has been successfully blocked for bookings.`, 'success');
+            }, 1000); // Simulating a slight delay to mimic backend processing
+        });
+
     </script>
 
 </body>
