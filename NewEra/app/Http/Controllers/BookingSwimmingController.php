@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\SwimmingBooks;
 use Stripe\Stripe;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\BookingConfirmationMail;
+use Illuminate\Support\Facades\Log;
 
 class BookingSwimmingController extends Controller
 {
@@ -88,14 +91,43 @@ class BookingSwimmingController extends Controller
 
     public function successSwimming(Request $request)
     {
-        $bookingId = $request->get('booking_id');
 
-        // Update the payment status to "Success"
-        $booking = SwimmingBooks::find($bookingId);
-        if ($booking) {
-            $booking->update(['payment_status' => 'Success']);
+            $bookingId = $request->get('booking_id');
+            $booking = SwimmingBooks::find($bookingId);
+
+            if ($booking) {
+                $booking->update(['payment_status' => 'Success']);
+            }
+
+        $user = Auth::user();
+        if (!$user || !$user->email) {
+            throw new \Exception("User email not found.");
         }
 
+        $email = $user->email;
+
+        $emailData = [
+            'matric_number' => $booking->matric_number ?? 'N/A',
+            'booking_id' => $booking->booking_id ?? 'N/A',
+            'total_price' => $booking->total_price ?? 'N/A',
+            'payment_status' => $booking->payment_status ?? 'N/A',
+        ];
+
+        Log::info('Email data:', context: $emailData);emailData:
+        Mail::send('Mailables.BookingConfirmationMail', ['emailData' => $emailData], function ($message) {
+
+            $user = Auth::user();
+            if (!$user || !$user->email) {
+                throw new \Exception("User email not found.");
+            }
+
+            $email = $user->email;
+
+            $message->to($email)
+                    ->subject('Booking Confirmation');
+        });
+
+        Log::info('Email sent successfully to: ' . $email);
         return view('BookingModule.BookingSuccess', ['booking' => $booking]);
     }
 
