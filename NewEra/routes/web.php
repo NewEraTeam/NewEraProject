@@ -14,6 +14,8 @@ use App\Http\Controllers\BookingSwimmingController;
 use App\Http\Controllers\AdminManageFacilitiesController;
 use App\Http\Controllers\BookingStadiumController;
 use App\Http\Controllers\BookingGymController;
+use App\Http\Controllers\ViewProfileController;
+use App\Models\User; 
 
 // Default route to load the login page
 Route::get('/', [UserDataController::class, 'showLogin'])->name('login.page');
@@ -29,6 +31,9 @@ Route::get('/register', [UserDataController::class, 'showForm'])->name('register
 Route::post('/register', [UserController::class, 'register'])->name('register.submit');
 
 Route::get('/mainpage', [MainPageController::class, 'index'])->name('mainpage');
+
+//Route to handle Profile Display in ViewProfile
+Route::get('/view-profile', [ViewProfileController::class, 'showProfile'])->middleware('auth'); 
 
 // Route to Main Page (once logged in)
 Route::get('/MainPageModule', function () {
