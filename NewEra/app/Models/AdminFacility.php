@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
+use MongoDB\Laravel\Eloquent\Model as Eloquent; // Use MongoDB Eloquent model
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AdminFacility extends Model
+class AdminFacility extends Eloquent
 {
     use HasFactory;
-
-    // Specify the table if it does not match the plural of the model name
-    protected $table = 'admin_facility';
+    protected $connection = 'mongodb';  // Ensure the model is using the MongoDB connection
 
     // Fillable attributes
-    protected $fillable = ['venue', 'reason', 'date'];
+    protected $fillable = ['venue', 'reason', 'start_date', 'end_date'];
 }

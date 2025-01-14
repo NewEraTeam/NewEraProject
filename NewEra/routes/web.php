@@ -9,9 +9,6 @@ use App\Http\Controllers\SwimmingController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\GymController;
 use App\Http\Controllers\BookingController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\BookingSwimmingController;
 use App\Http\Controllers\AdminManageFacilitiesController;
@@ -159,3 +156,9 @@ Route::post('/admin/close-venue', [AdminManageFacilitiesController::class, 'clos
 Route::get('/AdminModule/AdminFilterModule', function () {
     return view('AdminModule.AdminFilterModule.AdminFilterBooking');
 })->name(name: 'admin-booking-filter');
+
+Route::get('/admin/facility', function () {
+    return view('AdminManageFacilitiesModule.AdminManageFacilities'); // Replace with your blade file name
+})->name('admin.facility');
+
+Route::post('/admin/facility/store', [AdminManageFacilitiesController::class, 'store'])->name('admin.facility.store');

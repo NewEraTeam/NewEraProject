@@ -8,6 +8,7 @@ use Stripe\Stripe;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BookingConfirmationMail;
+use Illuminate\Support\Facades\Log;
 
 class BookingGymController extends Controller
 {
@@ -34,7 +35,7 @@ class BookingGymController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             dd($e->errors());
         }
-        //dd($request->email);
+        // dd($validated['email']);
 
         $data = [
             'facilityID_gym' => 'UTM_GM',
@@ -105,34 +106,40 @@ class BookingGymController extends Controller
 
     public function successGym(Request $request)
     {
-        $bookingId = $request->get('booking_id');
+        try {
+            $bookingId = $request->get('booking_id');
+            $booking = GymBooks::find($bookingId);
 
-        // Update the payment status to "Success"
-        $booking = GymBooks::find($bookingId);
-        if ($booking) {
-            $booking->update(['payment_status' => 'Success']);
+            if ($booking) {
+                $booking->update(['payment_status' => 'Success']);
+            }
+
+            $user = Auth::user();
+            if (!$user || !$user->email) {
+                throw new \Exception("User email not found.");
+            }
+
+            $email = $user->email;
+
+            $emailData = [
+                'matric_number' => $booking->matric_number ?? 'N/A',
+                'booking_id' => $booking->booking_id ?? 'N/A',
+                'total_price' => $booking->total_price ?? 'N/A',
+                'payment_status' => $booking->payment_status ?? 'N/A',
+            ];
+
+            Log::info('Email data:', context: $emailData);
+            Mail::to($email)->send(new BookingConfirmationMail($emailData));
+
+
+            Log::info('Email sent successfully to: ' . $email);
+        } catch (\Exception $e) {
+            Log::error('Email sending failed: ' . $e->getMessage());
         }
-        $user = Auth::user(); // Get the currently logged-in user
-        $email = $user->email; // Retrieve the user's email address
-
-        // Prepare data for the email
-        $emailData = [
-            'booking_id' => $booking->booking_id,
-            'matric_number' => $booking->matric_number,
-            'booking_type' => $booking->booking_type,
-            'start_date' => $booking->start_date,
-            'end_date' => $booking->end_date,
-            'start_month' => $booking->start_month,
-            'end_month' => $booking->end_month,
-            'total_price' => $booking->total_price,
-            'payment_status' => $booking->payment_status,
-        ];
-
-        // Send email using the BookingConfirmationMail mailable
-        Mail::to($email)->send(new BookingConfirmationMail($booking, $emailData));
-        return view('BookingModule.BookingSuccess', ['booking' => $booking,'emailData' => $emailData,]);
-
+        return view('BookingModule.BookingSuccess', ['booking' => $booking]);
     }
+
+
 
     public function showBookingGym()
     {

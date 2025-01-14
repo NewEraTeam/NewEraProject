@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\StadiumBooks;
 use Stripe\Stripe;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\BookingConfirmationMail;
+use Illuminate\Support\Facades\Log;
 
 class BookingStadiumController extends Controller
 {
@@ -30,7 +33,7 @@ class BookingStadiumController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             dd($e->errors());
         }
-        
+
         // Create the booking record
         $booking = StadiumBooks::create([
             'facilityID_stadium' => 'UTM_ST',
@@ -97,6 +100,36 @@ class BookingStadiumController extends Controller
         if ($booking) {
             $booking->update(['payment_status' => 'Success']);
         }
+
+        $user = Auth::user();
+        if (!$user || !$user->email) {
+            throw new \Exception("User email not found.");
+        }
+
+        $email = $user->email;
+
+        $emailData = [
+            'matric_number' => $booking->matric_number ?? 'N/A',
+            'booking_id' => $booking->booking_id ?? 'N/A',
+            'total_price' => $booking->total_price ?? 'N/A',
+            'payment_status' => $booking->payment_status ?? 'N/A',
+        ];
+
+        Log::info('Email data:', context: $emailData);emailData:
+        Mail::send('Mailables.BookingConfirmationMail', ['emailData' => $emailData], function ($message) {
+
+            $user = Auth::user();
+            if (!$user || !$user->email) {
+                throw new \Exception("User email not found.");
+            }
+
+            $email = $user->email;
+
+            $message->to($email)
+                    ->subject('Booking Confirmation');
+        });
+
+        Log::info('Email sent successfully to: ' . $email);
 
         return view('BookingModule.BookingSuccess', ['booking' => $booking]);
     }
