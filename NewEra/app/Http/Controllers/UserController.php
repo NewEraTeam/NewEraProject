@@ -3,10 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\UserData; // Assuming the UserData model is set up for MongoDB
 
 class UserController extends Controller
 {
+    public function showProfile($id)
+    {
+        // Fetch user data from MongoDB
+        $user = UserData::find($id);
+
+        // Pass user data to the view
+        return view('ViewProfile', compact('user'));
+    }
+
     public function showRegisterForm()
     {
         return view('register');
@@ -26,27 +36,23 @@ class UserController extends Controller
         // Save to MongoDB
         UserData::create($request->all());
 
-
         // Redirect back to login page with success message
         return redirect()->route('login.page')->with('success', 'Registration successful! You may now log in.');
-
-        echo $request;
-
     }
 
-    //Redirect from register to login
+    // Redirect from register to login
     public function showLoginForm()
     {
         return view('login');
     }
 
-    //From login to Main Page
+    // From login to Main Page
     public function showMainPage(Request $requestMainPage)
     {
-        //Validate user information
+        // Validate user information
         $requestMainPage->validate([
-            'name' => 'required|string|max:255', //name from register or login
-            'email' => 'required|email|unique:user_data,email', //email from register or login
+            'name' => 'required|string|max:255', // name from register or login
+            'email' => 'required|email|unique:user_data,email', // email from register or login
         ]);
 
         return view('MainPageModule.MainPage');
@@ -56,5 +62,4 @@ class UserController extends Controller
     {
         return view('AdminModule.AdminMain');
     }
-    
 }
