@@ -164,7 +164,6 @@
     <div class="content-container">
         <!-- Images Section -->
         <div class="images-container" data-aos="fade-up">
-            <img src="http://surl.li/ombjlv" alt="Facility Image 1">
             <img src="http://surl.li/xbsdvi" alt="Facility Image 2">
             <img src="http://surl.li/gtbdqi" alt="Facility Image 3">
         </div>
@@ -188,7 +187,7 @@
                 <p><a href="https://maps.app.goo.gl/cauwTPj3N8GdaZbs6" target="_blank">Google Map</a></p>
             </div>
             <!-- Centered Book Button at the Bottom -->
-            <button class="book-btn">Book Facility</button>
+            <button onclick="window.location='{{ route('bookingSwimming') }}'" class="book-btn">Book Facility</button>
         </div>
     </div>
 

@@ -22,22 +22,6 @@
                 <div class="relative flex items-center space-x-4">
                     <!-- Language Dropdown -->
                     <div class="relative">
-                        <!-- Language Button -->
-                        <button onclick="toggleDropdown()" class="flex items-center bg-blue-100 text-blue-600 px-3 py-1.5 rounded-full font-semibold hover:bg-blue-200 focus:outline-none">
-                            <span class="mr-1 text-base material-symbols-outlined">language</span>
-                            EN
-                            <span class="ml-1 material-symbols-outlined">expand_more</span>
-                        </button>
-
-                        <!-- Dropdown Menu -->
-                        <div id="languageMenu" class="absolute right-0 z-10 hidden w-20 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg">
-                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">BM</a>
-                            <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">中文</a>
-                        </div>
-                    </div>
-
-                    <!-- Help Link -->
-                    <a href="#" class="text-gray-700 hover:text-blue-600">Help</a>
 
                     <!-- Profile Icon and Dropdown -->
                     <div class="relative inline-block text-left">
@@ -168,52 +152,17 @@
 
                 <!-- Links Section -->
                 <div class="grid grid-cols-2 gap-4 text-center md:grid-cols-3 lg:grid-cols-5 lg:text-left">
-                    <!-- For Business -->
-                    <div>
-                        <h5 class="font-semibold text-gray-800">For Business</h5>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-600 hover:text-blue-600">Facility Management</a></li>
-                            <li><a href="#" class="text-gray-600 hover:text-blue-600">Schedule a Demo</a></li>
-                        </ul>
-                    </div>
 
-                    <!-- About -->
-                    <div>
-                        <h5 class="font-semibold text-gray-800">About</h5>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-600 hover:text-blue-600">About Us</a></li>
-                            <li><a href="#" class="text-gray-600 hover:text-blue-600">Blog</a></li>
-                            <li><a href="#" class="text-gray-600 hover:text-blue-600">Careers</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Support -->
-                    <div>
-                        <h5 class="font-semibold text-gray-800">Support</h5>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-600 hover:text-blue-600">Help Centre</a></li>
-                            <li><a href="#" class="text-gray-600 hover:text-blue-600">Contact Us</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Legal -->
-                    <div>
-                        <h5 class="font-semibold text-gray-800">Legal</h5>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-600 hover:text-blue-600">Terms of Use</a></li>
-                            <li><a href="#" class="text-gray-600 hover:text-blue-600">Privacy Policy</a></li>
-                        </ul>
+                    <div >
+                        <!-- Copyright -->
+                        <p>
+                            © 2024 | UTM Sports Hall
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom Section of Footer -->
-            <div class="flex flex-col items-center justify-between pt-4 mt-8 border-t border-gray-200 lg:flex-row">
-                <!-- Copyright -->
-                <p class="text-center text-gray-500 lg:text-left">
-                    © 2024 | UTM Sports Hall
-                </p>
-            </div>
+
         </div>
     </footer>
 

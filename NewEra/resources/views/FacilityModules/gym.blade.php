@@ -164,9 +164,9 @@
     <div class="content-container">
         <!-- Images Section -->
         <div class="images-container" data-aos="fade-up">
-            <img src="http://surl.li/ocyeqz" alt="Facility Image 1">
-            <img src="http://surl.li/rttgop" alt="Facility Image 2">
-            <img src="http://surl.li/tlzixu" alt="Facility Image 3">
+            <img src="https://scontent-sin11-2.xx.fbcdn.net/v/t39.30808-6/459331580_3779444832327061_2064989630503825155_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=cf85f3&_nc_ohc=pG1lTPM8THgQ7kNvgEx0xMh&_nc_zt=23&_nc_ht=scontent-sin11-2.xx&_nc_gid=ALqLEOD9hf9SYaWHTZM3nK9&oh=00_AYC6P7NfPsdjlJ8m3Lc0Dak1yN8l3VCHiKYyuGWwaVbXnA&oe=678CEC75" alt="Facility Image 1">
+            <img src="https://scontent-sin6-3.xx.fbcdn.net/v/t39.30808-6/459201690_3779444712327073_8831306570954900880_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=cf85f3&_nc_ohc=tocaVLAAfXYQ7kNvgFndgTD&_nc_zt=23&_nc_ht=scontent-sin6-3.xx&_nc_gid=ArNI-qlLaJkYnzowouDGwYb&oh=00_AYAqr-ra5P8yva3CTKHxZ7ON2uBH_NYFaY5Yn6EACz0jRg&oe=678CDF69" alt="Facility Image 2">
+            <img src="https://scontent-sin11-2.xx.fbcdn.net/v/t39.30808-6/459362985_3779444842327060_1534717066899227900_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=cf85f3&_nc_ohc=QiJkYzhNQ5QQ7kNvgGYQ3XU&_nc_zt=23&_nc_ht=scontent-sin11-2.xx&_nc_gid=A7AhIzkemC-qsnDqz8s1zH7&oh=00_AYBnmaFKL0sVjP6qMR50Xo3hYRdXNpUd0WbHBRkrcmn9xg&oe=678CF578" alt="Facility Image 3">
         </div>
 
         <!-- Text Container -->
@@ -206,7 +206,7 @@
                 <p><a href="https://maps.app.goo.gl/WNt6fwxEqPTzBGos6" target="_blank">Google Map</a></p>
             </div>
             <!-- Centered Book Button at the Bottom -->
-            <button class="book-btn">Book Facility</button>
+            <button onclick="window.location='{{ route('bookingGym') }}'" class="book-btn">Book Facility</button>
         </div>
     </div>
 
