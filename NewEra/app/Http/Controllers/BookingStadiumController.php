@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BookingConfirmationMail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use MongoDB\Client as MongoClient;
+
+
 
 class BookingStadiumController extends Controller
 {
@@ -33,6 +38,43 @@ class BookingStadiumController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             dd($e->errors());
         }
+
+    // MongoDB connection
+    $client = new MongoClient(env('DB_CONNECTION_STRING'));
+    $adminDB = $client->selectDatabase('admin_facilities');
+    $stadiumDB = $client->selectDatabase('stadium_books');
+
+    $startDate = $validated['start_date'];
+    $endDate = $validated['end_date'];
+    $facilityID = 'UTM_ST';
+
+    // Check admin_manage_facility for blocked dates
+    $adminBlocked = $adminDB->selectCollection('admin_facilities')->findOne([
+        'facilityID' => $facilityID,
+        '$or' => [
+            ['start_date' => ['$lte' => $startDate], 'end_date' => ['$gte' => $startDate]],
+            ['start_date' => ['$lte' => $endDate], 'end_date' => ['$gte' => $endDate]],
+            ['start_date' => ['$gte' => $startDate], 'end_date' => ['$lte' => $endDate]],
+        ],
+    ]);
+
+    if ($adminBlocked) {
+        $reason = $adminBlocked['reason'] ?? 'Reason not specified';
+        return back()->withErrors(['error' => "Booking blocked: $reason"]);
+    }
+
+    // Check stadium_books for already booked dates
+    $existingBooking = $stadiumDB->selectCollection('stadium_books')->findOne([
+        '$or' => [
+            ['start_date' => ['$lte' => $startDate], 'end_date' => ['$gte' => $startDate]],
+            ['start_date' => ['$lte' => $endDate], 'end_date' => ['$gte' => $endDate]],
+            ['start_date' => ['$gte' => $startDate], 'end_date' => ['$lte' => $endDate]],
+        ],
+    ]);
+
+    if ($existingBooking) {
+        return back()->withErrors(['error' => 'Booking already made for the selected dates.']);
+    }
 
         // Create the booking record
         $booking = StadiumBooks::create([

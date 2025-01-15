@@ -95,6 +95,9 @@
 <body>
     <div class="container">
         <h2>Booking Details - Stadium</h2>
+        @if(session('error'))
+            <p style="color: red;">{{ session('error') }}</p>
+        @endif
         <form method="POST" action="{{ route('bookings.stadium.store') }}">
         @csrf
         <p style="text-align: left;"><strong>Matric Number:</strong> {{ Auth::user()->matric_number }}</p>
@@ -115,14 +118,22 @@
                 <input class="toggle-button" type="checkbox" data-price="20" name="add_on[]" value="PA System"> PA System - RM20
             </label>
             <label>
-                <input class="toggle-button" type="checkbox"  data-price="30" name="add_on[]" value="Stadium Lights"> Stadium Lights - RM30
+                <input class="toggle-button" type="checkbox" data-price="30" name="add_on[]" value="Stadium Lights"> Stadium Lights - RM30
             </label>
             <label>
-                <input class="toggle-button" type="checkbox"  data-price="20" name="add_on[]" value="Leaderboard"> Leaderboard - RM20
+                <input class="toggle-button" type="checkbox" data-price="20" name="add_on[]" value="Leaderboard"> Leaderboard - RM20
             </label>
             <label>
-                <input class="toggle-button" type="checkbox"  data-price="10" name="add_on[]" value="Podium"> Podium - RM10
+                <input class="toggle-button" type="checkbox" data-price="10" name="add_on[]" value="Podium"> Podium - RM10
             </label>
+            @if($errors->any())
+            <div style="color: red;">
+                @foreach($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
+
         </div>
 
         <!-- Submit Button -->

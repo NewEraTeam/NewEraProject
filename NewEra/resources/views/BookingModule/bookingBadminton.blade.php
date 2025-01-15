@@ -13,7 +13,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url('ALLIMAGES/BADMINTONHALL.jpg') no-repeat center center/cover; /* Replace with your image */
+            background: url('NewEra\public\ALLIMAGES\BADMINTONHALL.jpg') no-repeat center center/cover; /* Replace with your image */
             position: relative;
         }
 
