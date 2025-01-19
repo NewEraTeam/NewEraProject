@@ -29,7 +29,7 @@
             </div>
         </div>
     </nav>
-    
+
     <!-- Dashboard Section -->
     <main class="container px-4 py-8 mx-auto">
         <h1 class="mb-6 text-2xl font-bold text-center">Admin Dashboard</h1>
@@ -40,29 +40,29 @@
                 <p class="mb-6 text-lg">Welcome to Admin's Page</p>
             </div>
         </header>
-        
+
         <!-- Admin Actions -->
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 mt-8">
+        <div class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
             <!-- Manage Bookings -->
-            <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg text-center">
+            <div class="p-6 text-center bg-white border border-gray-200 rounded-lg shadow-lg">
                 <h2 class="mb-4 text-xl font-bold text-gray-800">Manage Bookings</h2>
-                <button onclick="window.location='{{ route('admin-booking-filter') }}'" class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                <button onclick="window.location='{{ route('AdminModule.AdminManageFacilitiesModule.booked-badminton') }}'" class="px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">
                     View Bookings
                 </button>
             </div>
-        
+
             <!-- Manage Facilities -->
-            <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-lg text-center">
+            <div class="p-6 text-center bg-white border border-gray-200 rounded-lg shadow-lg">
                 <h2 class="mb-4 text-xl font-bold text-gray-800">Manage Facilities</h2>
                 <button onclick="window.location='{{ route('admin-facilities') }}'" class="px-4 py-2 font-semibold text-white bg-green-600 rounded-lg hover:bg-green-700">
                     Manage Facilities
                 </button>
             </div>
         </div>
-    </main> 
+    </main>
 
     <!-- Footer -->
-    <footer class="py-4 bg-gray-100 mt-6">
+    <footer class="py-4 mt-6 bg-gray-100">
         <div class="container px-4 mx-auto text-center">
             <p class="text-gray-500">© 2024 | UTM Sports Hall Admin Panel</p>
         </div>

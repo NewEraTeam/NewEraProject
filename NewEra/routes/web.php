@@ -17,6 +17,7 @@ use App\Http\Controllers\BookingGymController;
 use App\Http\Controllers\ViewProfileController;
 use App\Models\User;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminBadmintonController;
 
 
 // Default route to load the login page
@@ -165,3 +166,6 @@ Route::get('/admin/facility', function () {
 
 Route::post('/admin/facility/store', [AdminManageFacilitiesController::class, 'store'])->name('admin.facility.store');
 Route::get('/admin/filter-bookings', [AdminController::class, 'adminFilterBooking'])->name('admin.filter.bookings');
+
+Route::get('/booked-badminton', [AdminBadmintonController::class, 'showBadmintonBookings'])
+    ->name('AdminModule.AdminManageFacilitiesModule.booked-badminton');
